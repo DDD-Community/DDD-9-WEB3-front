@@ -13,6 +13,10 @@ const Test: React.FC<TestProps> = () => {
   );
 };
 
-const TestBlock = styled.div``;
+const TestBlock = styled.div`
+  p {
+    color: red;
+  }
+`;
 
 export default Test;
