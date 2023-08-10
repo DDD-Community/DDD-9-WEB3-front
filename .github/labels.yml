@@ -1,5 +1,6 @@
-feature: ['feature/*', 'feat/*'];
-fix: 'fix/*';
-refactor: 'refactor/*';
-chore: 'chore/*';
-document: ['document/*', 'docs/*'];
+chore: chore/*
+docs: docs/*
+feature: ['feature/*', 'feat/*']
+fix: fix/*
+refactor: refactor/*
+test: test/*
