@@ -1,11 +1,7 @@
-import Test from '@/_components/analysis/Test';
+import AnalysisMainWrapper from '@components/analysis/AnalysisMainWrapper';
 
 const Analysis = () => {
-  return (
-    <div>
-      <Test />
-    </div>
-  );
+  return <AnalysisMainWrapper />;
 };
 
 export default Analysis;
