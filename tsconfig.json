@@ -22,8 +22,12 @@
     "paths": {
       "@/*": ["./app/*"],
       "@components/*": ["./app/_components/*"],
+      "@constants/*": ["./app/_constants/*"],
+      "@styles/*": ["./app/_styles/*"],
+      "@types/*": ["./app/_types/*"],
+      "@assets/*": ["./public/assets/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["./app/_types/common/index.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
