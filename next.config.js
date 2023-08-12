@@ -6,13 +6,8 @@ const nextConfig = {
   webpack: config => {
     config.module.rules.push({
       test: /\.svg$/i,
-      resourceQuery: { not: /url/ },
-      use: [
-        {
-          loader: '@svgr/webpack',
-          options: { svgo: false },
-        },
-      ],
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
     });
     return config;
   },
