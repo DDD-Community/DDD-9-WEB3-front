@@ -1,3 +1,5 @@
-export default function Map() {
-  return <div>map page</div>;
+import HomePage from './_features/HomePage';
+
+export default function Home() {
+  return <HomePage />;
 }
