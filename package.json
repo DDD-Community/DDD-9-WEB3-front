@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:style": "stylelint --ignore-path .gitignore \"./**/*.(css|tsx)\" --fix",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
+    "@stylelint/postcss-css-in-js": "^0.38.0",
     "@tanstack/eslint-plugin-query": "^4.32.5",
     "@types/node": "^20.4.9",
     "@types/react": "^18.2.20",
@@ -39,13 +41,21 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.0",
+    "postcss": "^8.4.27",
+    "postcss-syntax": "^0.36.2",
     "prettier": "^3.0.1",
+    "stylelint": "^15.10.2",
+    "stylelint-config-clean-order": "^5.2.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-prettier": "^4.0.2",
     "typescript": "^5.1.6"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
+    "**/*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+      "lint:style"
     ]
   }
 }
