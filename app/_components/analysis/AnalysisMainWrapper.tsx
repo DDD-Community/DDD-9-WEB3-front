@@ -3,6 +3,8 @@
 import palette from '@/_styles/palette';
 import React from 'react';
 import styled from 'styled-components';
+import ResultAmountBannerList from './ResultAmountBannerList';
+import AnalyticsDashboardMenu from './AnalyticsDashboardMenu';
 
 type AnalysisMainWrapperProps = {};
 
@@ -21,8 +23,10 @@ const AnalysisMainWrapper: React.FC<AnalysisMainWrapperProps> = () => {
         <WeekWinningNumber>3 5 7 9 1 13 4</WeekWinningNumber>{' '}
         <WeekWinningBonusNumber>34</WeekWinningBonusNumber>
       </WeekWinningNumberBox>
-
       {/* svg */}
+      {/* svg */}
+      <ResultAmountBannerList />
+      <AnalyticsDashboardMenu />
     </AnalysisMainWrapperBlock>
   );
 };
