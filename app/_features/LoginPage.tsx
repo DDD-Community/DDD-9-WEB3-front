@@ -6,7 +6,7 @@ import KakaoButton from '@/_components/home/KakaoButton';
 import LottoBallSlider from '@/_components/home/LottoBallSlider';
 import palette from '@/_styles/palette';
 
-export default function HomePage() {
+export default function LoginPage() {
   return (
     <Wrapper>
       <div>
