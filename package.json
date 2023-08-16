@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:style": "stylelint --ignore-path .gitignore \"./**/*.(css|tsx)\" --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@svgr/webpack": "^8.0.1",
@@ -16,11 +18,12 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-kakao-maps-sdk": "^1.1.11",
-    "react-query": "^3.39.3",
-    "styled-components": "^6.0.7",
-    "typescript": "5.1.6"
+    "styled-components": "^6.0.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@stylelint/postcss-css-in-js": "^0.38.0",
     "@tanstack/eslint-plugin-query": "^4.32.5",
     "@types/node": "^20.4.9",
     "@types/react": "^18.2.20",
@@ -35,6 +38,23 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^3.0.1"
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
+    "postcss": "^8.4.27",
+    "postcss-syntax": "^0.36.2",
+    "prettier": "^3.0.1",
+    "stylelint": "^15.10.2",
+    "stylelint-config-clean-order": "^5.2.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-prettier": "^4.0.2",
+    "typescript": "^5.1.6"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "lint:style"
+    ]
   }
 }
