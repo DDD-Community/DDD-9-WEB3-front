@@ -36,6 +36,7 @@ const PeriodicAnalysisTabsBlock = styled.div`
 const PeriodicAnalysisTabLink = styled(Link)<{ isFocused: boolean }>`
   padding: 13px 0;
   color: ${({ isFocused }) => (isFocused ? palette.black : palette.grey_40)};
+  font-weight: ${({ isFocused }) => (isFocused ? 'bold' : 'normal')};
   font-size: 14px;
   background-color: ${palette.white};
   text-decoration: none;
