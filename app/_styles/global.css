@@ -69,7 +69,3 @@ input:focus {
   outline: none;
   box-shadow: none;
 }
-
-button {
-  cursor: pointer;
-}
