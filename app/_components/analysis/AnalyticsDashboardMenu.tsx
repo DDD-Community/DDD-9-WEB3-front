@@ -11,7 +11,7 @@ const AnalyticsDashboardMenu: React.FC<AnalyticsDashboardMenuProps> = () => {
       <MenuTitle>
         <MenuTitlePoint>로또 분석 자료</MenuTitlePoint>를 조회해보세요!
       </MenuTitle>
-      <HorizontalMenuBox href="/analysis/peroid">
+      <HorizontalMenuBox href="/analysis/period?category=month">
         {/* <svg /> */}
         <Title>기간별</Title>
         <Description>많이 당첨된 번호를 기간별 조회하기</Description>
