@@ -1,26 +1,24 @@
 'use client';
 
-import Image from 'next/image';
-import Logo from 'public/assets/images/logo.png';
 import { styled } from 'styled-components';
 
 import KakaoButton from '@/_components/home/KakaoButton';
-import LottoSlider from '@/_components/home/LottoSlider';
+import LottoBallSlider from '@/_components/home/LottoBallSlider';
 import palette from '@/_styles/palette';
 
 export default function HomePage() {
   return (
     <Wrapper>
       <div>
-        <Title>이제 찾지말고 알림받자!</Title>
-        <Image width={218} src={Logo} alt="LottoFolio 로고" />
-        <Description>
-          <p>내 주변 명당 알림도 받고</p>
-          <p>나만의 로또 재테크도 관리해보세요</p>
-        </Description>
+        <Intro>안녕하세요 👋</Intro>
+        <div>
+          <p>내 주변 명당 알림도 제공 받고</p>
+          <p>나만의 로또 재테크도</p>
+          <p>관리해보세요!</p>
+        </div>
       </div>
       <div>
-        <LottoSlider />
+        <LottoBallSlider />
         <KakaoButton />
       </div>
     </Wrapper>
@@ -29,25 +27,18 @@ export default function HomePage() {
 
 const Wrapper = styled.main`
   display: flex;
-  min-height: calc(100vh - 188px);
+  min-height: calc(100vh - 22rem);
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  line-height: 150%;
+  line-height: 136.3%;
   letter-spacing: -0.01rem;
-  padding: 110px 0 78px;
+  padding: 11.4rem 1.8rem 10.6rem;
   overflow: hidden;
-  text-align: center;
-`;
-
-const Title = styled.h1`
+  font-size: 1.3rem;
+  color: ${palette.grey_0};
   font-weight: 700;
-  color: ${palette.black};
-  margin-bottom: 0.5rem;
 `;
 
-const Description = styled.div`
-  font-weight: 500;
-  color: ${palette.grey_40};
-  margin-top: 1.5rem;
+const Intro = styled.h1`
+  margin-bottom: 0.87rem;
 `;
