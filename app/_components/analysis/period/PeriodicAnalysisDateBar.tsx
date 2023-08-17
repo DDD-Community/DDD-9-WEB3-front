@@ -1,10 +1,12 @@
 import palette from '@/_styles/palette';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 import { endOfMonth, set } from 'date-fns';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import ArrowIcon from '@assets/svg/arrow.svg';
+import DateFilterIcon from '@assets/svg/dateFilter.svg';
 
 type PeriodicAnalysisDateBarProps = {
   type: 'month' | 'year';
@@ -19,16 +21,19 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = ({ type 
   return (
     <PeriodicAnalysisDateBarBlock>
       <AnalysisDateBarBox>
-        <button>이전</button>
+        <PrevButton>
+          <ArrowIcon />
+        </PrevButton>
         <p>
           {format(dateInSpecificMonth, 'yyyy.MM.01')} ~{' '}
           {format(endOfMonth(dateInSpecificMonth), 'yyyy.MM.dd')}
         </p>
-        <button>다음</button>
+        <NextButton>
+          <ArrowIcon />
+        </NextButton>
       </AnalysisDateBarBox>
-
       <AnalysisDatePickerBox href={`period/pick?category=${searchParams.get('category')}`}>
-        {/* svg */}선택
+        <DateFilterIcon />
       </AnalysisDatePickerBox>
     </PeriodicAnalysisDateBarBlock>
   );
@@ -39,6 +44,18 @@ const PeriodicAnalysisDateBarBlock = styled.div`
   justify-content: center;
   padding: 14px 0;
   background-color: ${palette.grey_70};
+  position: relative;
+`;
+
+const NextButton = styled.button`
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+`;
+
+const PrevButton = styled(NextButton)`
+  transform: rotate(-180deg);
 `;
 
 const AnalysisDateBarBox = styled.div`

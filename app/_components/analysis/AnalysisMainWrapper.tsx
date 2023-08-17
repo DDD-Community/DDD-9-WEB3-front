@@ -5,6 +5,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ResultAmountBannerList from './ResultAmountBannerList';
 import AnalyticsDashboardMenu from './AnalyticsDashboardMenu';
+import Image from 'next/image';
+import PolygonIcon from '@assets/svg/polygon.svg';
 
 type AnalysisMainWrapperProps = {};
 
@@ -22,9 +24,10 @@ const AnalysisMainWrapper: React.FC<AnalysisMainWrapperProps> = () => {
       <WeekWinningNumberBox>
         <WeekWinningNumber>3 5 7 9 1 13 4</WeekWinningNumber>{' '}
         <WeekWinningBonusNumber>34</WeekWinningBonusNumber>
+        <PolygonIconSVG />
       </WeekWinningNumberBox>
-      {/* svg */}
-      {/* svg */}
+
+      <Image src="/assets/images/analysisMain.png" alt="분석페이지" width="120" height="120" />
       <ResultAmountBannerList />
       <AnalyticsDashboardMenu />
     </AnalysisMainWrapperBlock>
@@ -47,12 +50,20 @@ const AnalysisMainTitle = styled.p`
   margin-bottom: 16px;
 `;
 
+const PolygonIconSVG = styled(PolygonIcon)`
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 const WeekWinningNumberBox = styled.div`
   padding: 14px 30px;
   background-color: ${palette.white};
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
   border-radius: 400px;
   margin-bottom: 21px;
+  position: relative;
 `;
 
 const WeekWinningNumber = styled.span`
