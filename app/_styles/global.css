@@ -69,3 +69,8 @@ input:focus {
   outline: none;
   box-shadow: none;
 }
+
+a {
+	text-decoration: none;
+  background-color: transparent;
+}

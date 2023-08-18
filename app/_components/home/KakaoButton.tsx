@@ -1,15 +1,19 @@
+import Link from 'next/link';
 import { styled } from 'styled-components';
 
+import { KAKAO_URL } from '@/_constants/auth';
 import palette from '@/_styles/palette';
 
 import IconKakao from '../icons/IconKakao';
 
 const KakaoButton = () => {
   return (
-    <Wrapper>
-      <IconKakao />
-      <Text>카카오로 로그인</Text>
-    </Wrapper>
+    <Link href={KAKAO_URL.LOGIN}>
+      <Wrapper>
+        <IconKakao />
+        <Text>카카오로 로그인</Text>
+      </Wrapper>
+    </Link>
   );
 };
 
