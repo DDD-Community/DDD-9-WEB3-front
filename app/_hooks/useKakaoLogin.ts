@@ -1,12 +1,11 @@
+import { authApi } from '@apis/auth';
+import { setAccessToken } from '@apis/core';
+import { AUTH_TOKEN } from '@constants/auth';
+import { ROUTES } from '@constants/routes';
+import { useAuthActions } from '@store/auth';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
-import { authApi } from '@/_apis/auth';
-import { setAccessToken } from '@/_apis/core';
-import { AUTH_TOKEN } from '@/_constants/auth';
-import { ROUTES } from '@/_constants/routes';
-import { useAuthActions } from '@/_store/auth';
 
 const useKakaoLogin = () => {
   const router = useRouter();

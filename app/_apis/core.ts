@@ -1,8 +1,7 @@
+import { AUTH_TOKEN } from '@constants/auth';
+import { HTTP_STATUS_CODE } from '@constants/http';
 import axios, { type AxiosResponse } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
-
-import { AUTH_TOKEN } from '@/_constants/auth';
-import { HTTP_STATUS_CODE } from '@/_constants/http';
 
 import { authApi } from './auth';
 

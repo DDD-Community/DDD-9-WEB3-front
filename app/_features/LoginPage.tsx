@@ -1,13 +1,12 @@
 'use client';
 
+import KakaoButton from '@components/home/KakaoButton';
+import LottoBallSlider from '@components/home/LottoBallSlider';
+import IconClose from '@components/icons/IconClose';
+import { ROUTES } from '@constants/routes';
+import palette from '@styles/palette';
 import Link from 'next/link';
 import { styled } from 'styled-components';
-
-import KakaoButton from '@/_components/home/KakaoButton';
-import LottoBallSlider from '@/_components/home/LottoBallSlider';
-import IconClose from '@/_components/icons/IconClose';
-import { ROUTES } from '@/_constants/routes';
-import palette from '@/_styles/palette';
 
 export default function LoginPage() {
   return (
