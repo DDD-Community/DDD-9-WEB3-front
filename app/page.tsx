@@ -1,3 +1,3 @@
-export default function Map() {
-  return <div>map page</div>;
+export default function Home() {
+  return <div>LottoFolio</div>;
 }
