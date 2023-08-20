@@ -16,19 +16,21 @@ const options = {
 
 const instance = axios.create({
   baseURL: HTTP_BASE_URL,
-  withCredentials: true,
   ...options,
 });
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response.data;
+    return response.data.data;
   },
   async error => {
-    const { status } = error.response;
+    const {
+      config: originalRequest,
+      response: { status },
+    } = error;
 
     /**
-     * @description [status/401] Access Token이 만료된 경우 Refresh Token으로 재발급 후, api 재요청
+     * [status:401] Access Token이 만료된 경우 Refresh Token으로 재발급 후, api 재요청
      */
     if (status === HTTP_STATUS_CODE.UNAUTHORIZED) {
       const refreshToken = getCookie(AUTH_TOKEN.REFRESH) as string;
@@ -42,7 +44,7 @@ instance.interceptors.response.use(
         setCookie(AUTH_TOKEN.REFRESH, refresh_token);
       }
 
-      return instance.request(error.config);
+      return axios(originalRequest);
     }
 
     return Promise.reject(error);
