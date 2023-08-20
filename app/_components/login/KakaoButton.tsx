@@ -1,4 +1,4 @@
-import { KAKAO_URL } from '@constants/auth';
+import { KAKAO_LOGIN_URL } from '@constants/auth';
 import palette from '@styles/palette';
 import Link from 'next/link';
 import { styled } from 'styled-components';
@@ -7,7 +7,7 @@ import IconKakao from '../icons/IconKakao';
 
 const KakaoButton = () => {
   return (
-    <Wrapper href={KAKAO_URL.LOGIN}>
+    <Wrapper href={KAKAO_LOGIN_URL}>
       <IconKakao />
       <Text>카카오로 로그인</Text>
     </Wrapper>

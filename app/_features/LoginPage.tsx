@@ -1,8 +1,8 @@
 'use client';
 
-import KakaoButton from '@components/home/KakaoButton';
-import LottoBallSlider from '@components/home/LottoBallSlider';
 import IconClose from '@components/icons/IconClose';
+import KakaoButton from '@components/login/KakaoButton';
+import LottoBallSlider from '@components/login/LottoBallSlider';
 import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
 import Link from 'next/link';
