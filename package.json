@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:style": "stylelint --ignore-path .gitignore \"./**/*.(css|tsx)\" --fix",
-    "prepare": "husky install"
+    "lint": "next lint"
   },
   "dependencies": {
     "@svgr/webpack": "^8.0.1",
@@ -16,6 +14,8 @@
     "@tanstack/react-query-devtools": "^4.32.6",
     "chart.js": "^4.3.3",
     "date-fns": "^2.30.0",
+    "axios": "^1.4.0",
+    "cookies-next": "^2.1.2",
     "next": "13.4.13",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -25,11 +25,9 @@
     "styled-components": "^6.0.7",
     "swiper": "^10.1.0",
     "typescript": "5.1.6"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.7.1",
-    "@commitlint/config-conventional": "^17.7.0",
-    "@stylelint/postcss-css-in-js": "^0.38.0",
     "@tanstack/eslint-plugin-query": "^4.32.5",
     "@types/node": "^20.4.9",
     "@types/react": "^18.2.20",
@@ -44,22 +42,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.0",
-    "postcss": "^8.4.27",
-    "postcss-syntax": "^0.36.2",
     "prettier": "^3.0.1",
-    "stylelint": "^15.10.2",
-    "stylelint-config-clean-order": "^5.2.0",
-    "stylelint-config-prettier": "^9.0.5",
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-prettier": "^4.0.2",
     "typescript": "^5.1.6"
-  },
-  "lint-staged": {
-    "**/*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
   }
 }

@@ -22,7 +22,11 @@
     "paths": {
       "@/*": ["./app/*"],
       "@components/*": ["./app/_components/*"],
+      "@features/*": ["./app/_features/*"],
+      "@hooks/*": ["./app/_hooks/*"],
+      "@apis/*": ["./app/_apis/*"],
       "@constants/*": ["./app/_constants/*"],
+      "@store/*": ["./app/_store/*"],
       "@styles/*": ["./app/_styles/*"],
       "@types/*": ["./app/_types/*"],
       "@assets/*": ["./public/assets/*"],

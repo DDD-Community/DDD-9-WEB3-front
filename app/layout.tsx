@@ -1,8 +1,10 @@
+import './_styles/global.css';
+
 import type { Metadata } from 'next';
+
+import ReactQueryProvider from './_components/providers/ReactQueryProvider';
 import StyledComponentsRegistry from './_lib/registry';
 import fonts from './_styles/fonts';
-import './_styles/global.css';
-import ReactQueryProvider from './_components/providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
   title: 'Lottofolio',
@@ -11,14 +13,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className={fonts.className}>
-      <body>
+    <html lang="ko">
+      <body className={fonts.className}>
         <ReactQueryProvider>
-          <StyledComponentsRegistry>
-            <p>header layout</p>
-            {children}
-            <p>footer layout</p>
-          </StyledComponentsRegistry>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         </ReactQueryProvider>
       </body>
     </html>
