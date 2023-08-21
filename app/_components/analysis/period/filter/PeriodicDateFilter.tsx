@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import CalendarFilterIcon from '@assets/svg/calendarFilter.svg';
 import DashIcon from '@assets/svg/dash.svg';
 
-type PeriodicDatePickerProps = {};
+type PeriodicDateFilterProps = {};
 
-const PeriodicDatePicker: React.FC<PeriodicDatePickerProps> = () => {
+const PeriodicDateFilter: React.FC<PeriodicDateFilterProps> = () => {
   return (
-    <PeriodicDatePickerBlock>
+    <PeriodicDateFilterBlock>
       <div>
         <LabelText>시작일</LabelText>
         <DateBox>
@@ -32,11 +32,11 @@ const PeriodicDatePicker: React.FC<PeriodicDatePickerProps> = () => {
           </button>
         </DateBox>
       </div>
-    </PeriodicDatePickerBlock>
+    </PeriodicDateFilterBlock>
   );
 };
 
-const PeriodicDatePickerBlock = styled.div`
+const PeriodicDateFilterBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -72,4 +72,4 @@ const DateBox = styled.div`
   border-radius: 5px;
 `;
 
-export default PeriodicDatePicker;
+export default PeriodicDateFilter;

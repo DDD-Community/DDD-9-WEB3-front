@@ -32,7 +32,7 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = ({ type 
           <ArrowIcon />
         </NextButton>
       </AnalysisDateBarBox>
-      <AnalysisDatePickerBox href={`period/pick?category=${searchParams.get('category')}`}>
+      <AnalysisDatePickerBox href={`period/filter?category=${searchParams.get('category')}`}>
         <DateFilterIcon />
       </AnalysisDatePickerBox>
     </PeriodicAnalysisDateBarBlock>
