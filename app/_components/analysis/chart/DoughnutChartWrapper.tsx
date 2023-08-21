@@ -1,21 +1,31 @@
-import palette from '@/_styles/palette';
+import palette from '@styles/palette';
 import React from 'react';
 import styled from 'styled-components';
 import { Doughnut } from 'react-chartjs-2';
-import { Chart, ArcElement } from 'chart.js';
-
-Chart.register(ArcElement);
-
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 type DoughnutChartWrapperProps = {};
 
 const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = () => {
+  // ChartJS.register(ArcElement, Tooltip, Legend);
+  // Chart.register(CategoryScale);
+
   const data = {
-    labels: ['Red', 'Blue', 'Yellow'],
+    labels: [10, 20, 30, 40, 50, 60],
     datasets: [
       {
-        data: [300, 100, 100, 100, 100, 100],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        label: 'My First Dataset',
+        data: [300, 50, 100, 100, 100, 100],
+        backgroundColor: [
+          palette.blue_15,
+          palette.green_30,
+          palette.green_40,
+          palette.green_20,
+          palette.yellow_10,
+          palette.blue_5,
+        ],
+        hoverOffset: 4,
         borderColor: 'transparent',
       },
     ],
@@ -36,7 +46,13 @@ const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = () => {
             plugins: {
               legend: {
                 display: true,
-                position: 'bottom', // You can adjust the position of the legend
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true,
+                  font: {
+                    weight: '700',
+                  },
+                },
               },
             },
           }}

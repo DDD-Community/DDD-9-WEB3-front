@@ -6,6 +6,7 @@ import PeriodicAnalysisTabs from './PeriodicAnalysisTabs';
 import PeriodicAnalysisDateBar from './PeriodicAnalysisDateBar';
 import { useSearchParams } from 'next/navigation';
 import DoughnutChartWrapper from '../chart/DoughnutChartWrapper';
+import BarChartWrapper from '../chart/BarChartWrapper';
 
 type PeriodicAnalysisHubProps = {};
 
@@ -20,6 +21,7 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
       />
       <ChartWrapper>
         <DoughnutChartWrapper />
+        <BarChartWrapper />
       </ChartWrapper>
     </PeriodicAnalysisHubBlock>
   );

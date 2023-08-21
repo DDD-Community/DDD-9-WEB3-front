@@ -3,6 +3,8 @@ import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import RoundsIcon from '@assets/svg/rounds.svg';
+import AmountIcon from '@assets/svg/amount.svg';
+import CalendarIcon from '@assets/svg/calendar.svg';
 type AnalyticsDashboardMenuProps = {};
 
 const AnalyticsDashboardMenu: React.FC<AnalyticsDashboardMenuProps> = () => {
@@ -20,12 +22,12 @@ const AnalyticsDashboardMenu: React.FC<AnalyticsDashboardMenuProps> = () => {
       </HorizontalMenuBox>
       <VerticalMenuWrapper>
         <VerticalMenuBox href="/analysis/amount">
-          <RoundsIcon />
+          <AmountIcon />
           <VerticalTitle>당첨금액별</VerticalTitle>
           <Description>금액이 높은 순으로 조회하기</Description>
         </VerticalMenuBox>
         <VerticalMenuBox href="/analysis/rounds">
-          <RoundsIcon />
+          <CalendarIcon />
           <VerticalTitle>당첨회차별</VerticalTitle>
           <Description>회차를 직접 선택하여 조회하기</Description>
         </VerticalMenuBox>
