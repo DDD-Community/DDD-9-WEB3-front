@@ -1,5 +1,6 @@
 'use client';
 
+import Spinner from '@components/common/Spinner';
 import useKakaoLogin from '@hooks/useKakaoLogin';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -15,5 +16,5 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{isLoading ? <div>로그인 중</div> : null}</>;
+  return <>{isLoading ? <Spinner /> : null}</>;
 }
