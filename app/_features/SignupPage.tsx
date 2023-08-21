@@ -5,10 +5,10 @@ import { styled } from 'styled-components';
 import palette from '@styles/palette';
 import CheckBox from '@components/common/CheckBox';
 import Button from '@components/common/Button';
+import Toast from '@components/common/Toast';
 import { ROUTES } from '@constants/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Snackbar from '@mui/material/Snackbar';
 
 type TermType = 'service' | 'data' | 'location';
 
@@ -88,21 +88,12 @@ export default function SignupPage() {
             ))}
           </Terms>
         </div>
-        <Button type="submit">회원가입</Button>
+        <Button type="submit">회원가입 완료</Button>
       </AgreeForm>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        autoHideDuration={3000}
-        open={isOpenToast}
+      <Toast
+        isOpen={isOpenToast}
+        message="모든 이용약관에 동의해주세요"
         onClose={() => setIsOpenToast(false)}
-        message="모든 이용약관에 동의해주세요."
-        sx={{
-          '& .MuiPaper-root': {
-            background: palette.white,
-            color: palette.black,
-            fontFamily: 'Pretendard',
-          },
-        }}
       />
     </>
   );
