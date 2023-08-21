@@ -25,7 +25,11 @@ const useKakaoLogin = () => {
       setIsLoggedIn(true);
       setIsLoading(false);
 
-      router.push(ROUTES.HOME);
+      /**
+       * 회원정보가 없는 경우, 회원가입 페이지로 리다이렉트
+       * 회원정보가 있는 경우, 홈으로 리다이렉트
+       * */
+      router.push(ROUTES.SIGNUP);
     } catch (e) {
       setIsLoading(false);
     }

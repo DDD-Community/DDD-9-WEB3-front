@@ -5,7 +5,10 @@ import { styled } from 'styled-components';
 import palette from '@styles/palette';
 import CheckBox from '@components/common/CheckBox';
 import Button from '@components/common/Button';
+import { ROUTES } from '@constants/routes';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Snackbar from '@mui/material/Snackbar';
 
 type TermType = 'service' | 'data' | 'location';
 
@@ -16,6 +19,8 @@ const TERM_LIST = [
 ];
 
 export default function SignupPage() {
+  const router = useRouter();
+  const [isOpenToast, setIsOpenToast] = useState(false);
   const [isAllAgreed, setIsAllAgreed] = useState(false);
   const [agreedTermList, setAgreedTermList] = useState({
     service: false,
@@ -49,37 +54,57 @@ export default function SignupPage() {
     e.preventDefault();
 
     if (!isAllAgreed) {
+      setIsOpenToast(true);
+
       return;
     }
+
+    router.push(ROUTES.HOME);
   };
 
   return (
-    <AgreeForm onSubmit={handleSubmitClick}>
-      <div>
-        <Title>
-          서비스 이용약관에
-          <br />
-          동의해주세요.
-        </Title>
-        <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={handleAllAgreeClick} />
-        <Terms>
-          {TERM_LIST.map(termItem => (
-            <CheckBoxList key={termItem.id}>
-              <CheckBox
-                id={termItem.id}
-                label={termItem.label}
-                isChecked={agreedTermList[termItem.id as TermType]}
-                onChange={handleTermClick}
-              />
-              <Link href={termItem.link}>
-                <TermInfo>[전문보기]</TermInfo>
-              </Link>
-            </CheckBoxList>
-          ))}
-        </Terms>
-      </div>
-      <Button type="submit">회원가입</Button>
-    </AgreeForm>
+    <>
+      <AgreeForm onSubmit={handleSubmitClick}>
+        <div>
+          <Title>
+            서비스 이용약관에
+            <br />
+            동의해주세요.
+          </Title>
+          <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={handleAllAgreeClick} />
+          <Terms>
+            {TERM_LIST.map(termItem => (
+              <CheckBoxList key={termItem.id}>
+                <CheckBox
+                  id={termItem.id}
+                  label={termItem.label}
+                  isChecked={agreedTermList[termItem.id as TermType]}
+                  onChange={handleTermClick}
+                />
+                <Link href={termItem.link}>
+                  <TermInfo>[전문보기]</TermInfo>
+                </Link>
+              </CheckBoxList>
+            ))}
+          </Terms>
+        </div>
+        <Button type="submit">회원가입</Button>
+      </AgreeForm>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={3000}
+        open={isOpenToast}
+        onClose={() => setIsOpenToast(false)}
+        message="모든 이용약관에 동의해주세요."
+        sx={{
+          '& .MuiPaper-root': {
+            background: palette.white,
+            color: palette.black,
+            fontFamily: 'Pretendard',
+          },
+        }}
+      />
+    </>
   );
 }
 
