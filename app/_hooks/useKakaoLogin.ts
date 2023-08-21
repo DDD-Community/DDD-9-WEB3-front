@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 const useKakaoLogin = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { setIsLoggedIn } = useAuthActions();
 
   const login = async (code: string) => {
