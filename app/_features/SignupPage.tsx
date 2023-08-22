@@ -11,9 +11,9 @@ import { styled } from 'styled-components';
 type TermType = 'service' | 'data' | 'location';
 
 const TERM_LIST = [
-  { id: 'service', label: '서비스 이용약관', link: '/' },
-  { id: 'data', label: '개인정보 수집 및 이용동의', link: '/' },
-  { id: 'location', label: '위치기반 서비스 이용약관', link: '/' },
+  { id: 'service', label: '서비스 이용약관', link: ROUTES.TERM },
+  { id: 'data', label: '개인정보 수집 및 이용동의', link: ROUTES.TERM },
+  { id: 'location', label: '위치기반 서비스 이용약관', link: ROUTES.TERM },
 ];
 
 const DEFAULT_AGREEDTERMS = {
