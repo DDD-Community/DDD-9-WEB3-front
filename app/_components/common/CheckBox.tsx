@@ -1,8 +1,8 @@
-import type { ChangeEvent, InputHTMLAttributes } from 'react';
+import type { ChangeEvent } from 'react';
 import { styled } from 'styled-components';
 
 import palette from '@styles/palette';
-import Checkbox, { CheckboxProps as MUICheckboxProps } from '@mui/material/Checkbox';
+import Checkbox, { type CheckboxProps as MUICheckboxProps } from '@mui/material/Checkbox';
 
 interface CheckBoxProps extends MUICheckboxProps {
   id?: string;
