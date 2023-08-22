@@ -3,9 +3,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { styled } from 'styled-components';
 import palette from '@styles/palette';
-import CheckBox from '@components/common/CheckBox';
-import Button from '@components/common/Button';
-import Toast from '@components/common/Toast';
+import { Button, CheckBox } from '@components/common';
 import { ROUTES } from '@constants/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -18,28 +16,30 @@ const TERM_LIST = [
   { id: 'location', label: '위치기반 서비스 이용약관', link: '/' },
 ];
 
+const DEFAULT_AGREEDTERMS = {
+  service: false,
+  data: false,
+  location: false,
+};
+
 export default function SignupPage() {
   const router = useRouter();
-  const [isOpenToast, setIsOpenToast] = useState(false);
   const [isAllAgreed, setIsAllAgreed] = useState(false);
-  const [agreedTermList, setAgreedTermList] = useState({
-    service: false,
-    data: false,
-    location: false,
-  });
+  const [agreedTerms, setAgreedTerms] = useState(DEFAULT_AGREEDTERMS);
 
   const handleAllAgreeClick = () => {
     setIsAllAgreed(prev => !prev);
-    setAgreedTermList({ service: !isAllAgreed, data: !isAllAgreed, location: !isAllAgreed });
+    setAgreedTerms({ service: !isAllAgreed, data: !isAllAgreed, location: !isAllAgreed });
   };
 
   const handleTermClick = (e: ChangeEvent<HTMLInputElement>) => {
-    const clickedTermId = e.target.id as TermType;
+    const checkedTermId = e.target.id as TermType;
+    const isCheckedTerm = e.target.checked;
 
     const isAllChecked =
-      Object.entries(agreedTermList)
-        .filter(agreeItem => agreeItem[0] !== clickedTermId)
-        .every(el => el[1]) && e.target.checked;
+      Object.entries(agreedTerms)
+        .filter(agreeItem => agreeItem[0] !== checkedTermId)
+        .every(el => el[1]) && isCheckedTerm;
 
     if (isAllChecked) {
       setIsAllAgreed(true);
@@ -47,15 +47,13 @@ export default function SignupPage() {
       setIsAllAgreed(false);
     }
 
-    setAgreedTermList(prev => ({ ...prev, [clickedTermId]: !prev[clickedTermId] }));
+    setAgreedTerms(prev => ({ ...prev, [checkedTermId]: !prev[checkedTermId] }));
   };
 
   const handleSubmitClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isAllAgreed) {
-      setIsOpenToast(true);
-
       return;
     }
 
@@ -78,7 +76,7 @@ export default function SignupPage() {
                 <CheckBox
                   id={termItem.id}
                   label={termItem.label}
-                  isChecked={agreedTermList[termItem.id as TermType]}
+                  isChecked={agreedTerms[termItem.id as TermType]}
                   onChange={handleTermClick}
                 />
                 <Link href={termItem.link}>
@@ -88,13 +86,10 @@ export default function SignupPage() {
             ))}
           </Terms>
         </div>
-        <Button type="submit">회원가입 완료</Button>
+        <Button type="submit" disabled={!isAllAgreed}>
+          회원가입 완료
+        </Button>
       </AgreeForm>
-      <Toast
-        isOpen={isOpenToast}
-        message="모든 이용약관에 동의해주세요"
-        onClose={() => setIsOpenToast(false)}
-      />
     </>
   );
 }

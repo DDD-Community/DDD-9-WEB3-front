@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const SIZE_STYLE = {
   medium: '9.6rem',
   full: '100%',
-};
+} as const;
 
 type Size = keyof typeof SIZE_STYLE;
 
@@ -31,7 +31,9 @@ const Button = ({
 
 export default Button;
 
-const Wrapper = styled.button<Omit<ButtonProps, 'size'> & { size: string }>`
+const Wrapper = styled.button<
+  Omit<ButtonProps, 'size'> & { size: (typeof SIZE_STYLE)[keyof typeof SIZE_STYLE] }
+>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,5 +46,11 @@ const Wrapper = styled.button<Omit<ButtonProps, 'size'> & { size: string }>`
   font-weight: 700;
   line-height: 150%;
   letter-spacing: -0.008rem;
+  transition: all 100ms ease-in-out;
   cursor: pointer;
+
+  &:disabled {
+    background: ${palette.grey_60};
+    cursor: not-allowed;
+  }
 `;
