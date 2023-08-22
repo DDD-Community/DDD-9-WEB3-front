@@ -2,16 +2,16 @@ import type { ChangeEvent, InputHTMLAttributes } from 'react';
 import { styled } from 'styled-components';
 
 import palette from '@styles/palette';
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox, { CheckboxProps as MUICheckboxProps } from '@mui/material/Checkbox';
 
-interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
+interface CheckBoxProps extends MUICheckboxProps {
   id?: string;
   label: string;
   isChecked: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const CheckBox = ({ id, label, isChecked, onChange }: CheckBoxProps) => {
+const CheckBox = ({ id, label, isChecked, onChange, ...props }: CheckBoxProps) => {
   return (
     <Label>
       <Checkbox
@@ -26,6 +26,7 @@ const CheckBox = ({ id, label, isChecked, onChange }: CheckBoxProps) => {
           '& .MuiSvgIcon-root': { fontSize: 32 },
           '&.MuiButtonBase-root': { padding: 0, marginRight: '4px' },
         }}
+        {...props}
       />
       {label}
     </Label>
