@@ -1,20 +1,23 @@
 'use client';
 
+import TopNavigation from '@components/common/TopNavigation';
+import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
 import { styled } from 'styled-components';
 
 export default function TermPage() {
   return (
     <Wrapper>
+      <TopNavigation version="BOTH" path={ROUTES.HOME} />
       <Title>서비스 이용약관</Title>
       <Content>
-        <p>
+        <div>
           제1조(목적)
           <br />이 약관은 기획재정부 복권위원회 지정 복권수탁사업자인 ㈜로또폴리오(이하 “회사”라
           합니다)이 운영하는 사이트(이하 “사이트”)를 통해 제공하는 서비스와 이용자(이하 “회원”이라
           합니다)의 권리, 의무 및 책임 사항을 규정하는 것을 목적으로 합니다.
-        </p>
-        <p>
+        </div>
+        <div>
           제2조(용어의 정의)
           <Description>
             ① 본 약관에서 사용하는 용어의 정의는 다음과 같습니다. “사이트”라 함은 회사가 서비스를
@@ -31,8 +34,8 @@ export default function TermPage() {
             환불금액을 포함합니다. “복권”이라 함은 「복권 및 복권기금법」 제2조(정의)에 의거한
             표권을 말합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제3조(약관의 명시와 설명 및 개정)
           <Description>
             ① 회사는 이 약관의 내용과 상호 및 대표자 성명, 영업소 소재지 주소, 전화번호(전화, 팩스),
@@ -51,8 +54,8 @@ export default function TermPage() {
             회원 탈퇴를 요청할 수 있습니다. 제3항의 조치에도 불구하고 약관의 개정 사실을 알지
             못함으로써 발생하는 회원의 피해에 대하여 회사는 책임을 지지 않습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제4조(약관 외 준칙)
           <Description>
             ① 이 약관에 명시되지 않은 사항이 관계 법령에 규정되어 있을 경우에는 그 규정에 따릅니다.
@@ -62,8 +65,8 @@ export default function TermPage() {
             <br />③ 회원은 항상 개별약관이나 이용정책의 내용에 변경이 있는지 여부를 예의주시하여야
             하며, 변경사항의 공지가 있을 때에는 이를 확인하여야 합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제5조(서비스의 제공 등)
           <Description>
             ① 회사는 사이트를 통해 다음 각 호와 같은 서비스를 제공합니다. 인터넷을 통한 복권의 판매
@@ -78,8 +81,8 @@ export default function TermPage() {
             <br />④ 회사는 서비스의 제공에 필요한 경우, 정기점검을 실시할 수 있으며, 정기점검시간은
             사이트에 공지한 바에 따릅니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제6조(서비스의 변경)
           <Description>
             ① 회사는 기술 및 운영상 상당한 이유가 있는 경우, 서비스의 전부 또는 일부를 변경할 수
@@ -87,8 +90,8 @@ export default function TermPage() {
             <br />② 서비스의 내용, 이용방법, 이용시간에 대해 변경이 있는 경우에는 해당 서비스
             초기화면에 변경사유, 변경될 서비스의 내용 및 제공일자 등을 게시합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제7조(서비스 이용계약 체결)
           <Description>
             ① 회사 사이트 서비스 이용계약은 회원이 되고자 하는 자(이하 “가입신청자”)가 회사가
@@ -111,8 +114,8 @@ export default function TermPage() {
             <br />⑤ 제7조 제1항에 따른 신청에 있어 회사는 전문기관을 통한 실명확인 및 본인인증을
             요청할 수 있습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제8조(이용계약의 해제, 해지 등)
           <Description>
             ① 회원은 언제든지 이용계약 해지를 위해 회원 탈퇴를 할 수 있으며, 회사는 관련법 등이
@@ -138,8 +141,8 @@ export default function TermPage() {
             종료사유에 대해 귀책사유가 있는 회원이 책임을 부담하여야 하고, 회사는 관련 법령에 규정이
             없는 한 책임을 지지 않습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제9조 (회사의 의무)
           <Description>
             ① 회사는 관련법과 이 약관이 금지하거나 미풍양속에 반하는 행위를 하지 않으며, 계속적이고
@@ -150,8 +153,8 @@ export default function TermPage() {
             인정할 경우에는 이를 처리하여야 합니다. 회원이 제기한 의견이나 불만사항에 대해서는
             게시판을 활용하거나 전자우편 등을 통하여 회원에게 처리과정 및 결과를 전달합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제10조(당첨자의 보호)
           <br />
           회사는 「복권 및 복권기금법」제10조(당첨자의 보호)에 의거 당첨자 본인의 동의를 받지
@@ -165,8 +168,8 @@ export default function TermPage() {
           조약, 그 밖의 국제협정의 이행을 위하여 외국정부 또는 국제기구에 제공하기 위하여 필요한
           경우 범죄의 수사와 공소의 제기 및 유지를 위하여 필요한 경우 법원의 재판업무 수행을 위하여
           필요한 경우 형(形)의 감호, 보호처분의 집행을 위하여 필요한 경우
-        </p>
-        <p>
+        </div>
+        <div>
           제11조(회원의 의무)
           <Description>
             ① 회원 아이디와 비밀번호 등 회원 정보에 관한 관리의 책임은 회원에게 있습니다.
@@ -193,8 +196,8 @@ export default function TermPage() {
             있습니다. 200만원 초과 당첨금: 이름, 주민등록번호 경품배송: 이름, 전화번호, 배송주소지
             추첨방송 참관신청: 이름, 전화번호
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제12조 (회원의 금지행위)
           <Description>
             ① 회사는 사이트 서비스의 신뢰성을 제고하고 안전한 거래가 이뤄질 수 있도록 아래와 같은
@@ -210,8 +213,8 @@ export default function TermPage() {
             경우 발생하는 모든 책임은 회원이 부담합니다. 회사는 필요한 경우 회원의 금지행위 사실을
             관련 정부기관 또는 사법기관에 통지할 수 있습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제13조(서비스 이용제한 등)
           <Description>
             ① 회사는 서비스의 안정성과 신뢰성을 위하여 아래 각 호의 사유가 발생하는 경우 회원의
@@ -230,8 +233,8 @@ export default function TermPage() {
             원인으로 운영체제, 인터넷 브라우저 등이 손상된 경우 회사가 제공하는 인터넷
             보안프로그램이 설치되지 않거나 정상적으로 작동되지 않는 경우
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제14조(예치금계좌의 운영)
           <Description>
             ① 복권을 구매하기 위해서 회원은 예치금계좌를 이용하여야 합니다.
@@ -249,14 +252,14 @@ export default function TermPage() {
             고지하고, 6개월 이상의 기간 동안 회원이 예치금 잔액을 출금할 수 있도록 서비스를 유지하며
             그 이후 예치금은 별도로 정한 방법에 따라 처리합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제15조(복권의 안내)
           <br />
           사이트에서 판매되는 복권의 가격, 복권의 종류, 판매기간, 당첨구조, 당첨금 지급기한, 당첨자
           결정방식은 상품별 개별약관에 따르고, 회원이 확인할 수 있도록 사이트에 게시합니다.
-        </p>
-        <p>
+        </div>
+        <div>
           제16조(복권의 구매, 구입취소, 교환 및 환불)
           <Description>
             ① 회원이 사이트에서 정상적으로 구입한 복권은 복권의 특성상 구매신청 취소, 교환 및 환불이
@@ -275,15 +278,15 @@ export default function TermPage() {
             복권으로 교환하거나, 환불을 통해 보상합니다.
             <br />⑥ 회원의 요청으로 복권의 데이터가 형성되면 구입한 것으로 간주합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제17조(구입한 복권의 처리)
           <Description>
             ① 회원이 구입한 복권의 데이터는 회사에서 보관, 관리합니다.
             <br />② 회원은 어떠한 경우라도 구입한 복권의 실물을 요구할 수 없습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제18조(당·낙첨 처리 및 당첨내역의 확인 등)
           <Description>
             ① 회원의 복권구입내역, 배정복권내역, 당·낙첨 여부 등에 관한 사항은 사이트를 통해 상시로
@@ -293,8 +296,8 @@ export default function TermPage() {
             인정하지 않습니다.
             <br />④ 테스트용 샘플복권이나 홍보복권은 당첨금 지급대상이 되지 않습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제19조(당첨금의 지급방법)
           <Description>
             ① 「소득세법」 및 「조세특례제한법」상 과세 대상의 당첨금은 제세금을 원천징수하고 본인의
@@ -308,8 +311,8 @@ export default function TermPage() {
             <br />④ 복권 당첨 시 관련 법률에서 규정한 제세금과 계좌이체 수수료 등 제경비는 당첨자가
             부담합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제20조 (정보의 제공)
           <Description>
             ① 회사는 서비스 이용과 관련하여 이메일, 휴대폰 문자전송 등의 통신수단에 의한 유상 또는
@@ -325,8 +328,8 @@ export default function TermPage() {
             <br />⑤ 정보전달 수단별 다양한 이용환경으로 인하여, 회사는 회사가 발송하는 정보에 대한
             회원의 정보수신을 보장하지 않습니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제21조 (사행성 및 중독성 예방)
           <Description>
             ① 반복 구입에 의한 몰입 및 과다 구입 예방을 위하여 1회 판매한도는 「복권 및
@@ -340,8 +343,8 @@ export default function TermPage() {
             <br />③ 회사는 필요하다고 판단하는 경우 사전 고지를 통해 과도한 이용자의 복권 몰입을
             예방할 수 있도록 경고 메시지 및 건전화 교육을 시행합니다.
           </Description>
-        </p>
-        <p>
+        </div>
+        <div>
           제22조(분쟁조정)
           <Description>
             ① 사이트 이용 중 발생한 회원의 불만사항은 사이트 내 1:1상담게시판, 고객센터 등을 통해
@@ -354,13 +357,14 @@ export default function TermPage() {
             <br />④ 회사와 회원간 발생한 분쟁에 대해서는 회사 본점을 관할하는 법원을 관할법원으로
             합니다. 이 약관은 2023년 1월 1일부터 적용됩니다.
           </Description>
-        </p>
+        </div>
       </Content>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.form`
+const Wrapper = styled.div`
+  position: relative;
   height: calc(100vh - 10.8rem);
   padding: 8.1rem 1.2rem 2.7rem;
   display: flex;
@@ -378,7 +382,7 @@ const Title = styled.h1`
   border-bottom: 1px solid ${palette.grey_60};
 `;
 
-const Content = styled.p`
+const Content = styled.div`
   overflow-y: scroll;
 `;
 

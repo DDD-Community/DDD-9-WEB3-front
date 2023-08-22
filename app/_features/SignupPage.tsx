@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, CheckBox } from '@components/common';
+import TopNavigation from '@components/common/TopNavigation';
 import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
 import Link from 'next/link';
@@ -61,40 +62,40 @@ export default function SignupPage() {
   };
 
   return (
-    <>
-      <AgreeForm onSubmit={handleSubmitClick}>
-        <div>
-          <Title>
-            서비스 이용약관에
-            <br />
-            동의해주세요.
-          </Title>
-          <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={handleAllAgreeClick} />
-          <Terms>
-            {TERM_LIST.map(termItem => (
-              <CheckBoxList key={termItem.id}>
-                <CheckBox
-                  id={termItem.id}
-                  label={termItem.label}
-                  isChecked={agreedTerms[termItem.id as TermType]}
-                  onChange={handleTermClick}
-                />
-                <Link href={termItem.link}>
-                  <TermInfo>[전문보기]</TermInfo>
-                </Link>
-              </CheckBoxList>
-            ))}
-          </Terms>
-        </div>
-        <Button type="submit" disabled={!isAllAgreed}>
-          회원가입 완료
-        </Button>
-      </AgreeForm>
-    </>
+    <AgreeForm onSubmit={handleSubmitClick}>
+      <TopNavigation version="CLOSE" path={ROUTES.HOME} />
+      <div>
+        <Title>
+          서비스 이용약관에
+          <br />
+          동의해주세요.
+        </Title>
+        <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={handleAllAgreeClick} />
+        <Terms>
+          {TERM_LIST.map(termItem => (
+            <CheckBoxList key={termItem.id}>
+              <CheckBox
+                id={termItem.id}
+                label={termItem.label}
+                isChecked={agreedTerms[termItem.id as TermType]}
+                onChange={handleTermClick}
+              />
+              <Link href={termItem.link}>
+                <TermInfo>[전문보기]</TermInfo>
+              </Link>
+            </CheckBoxList>
+          ))}
+        </Terms>
+      </div>
+      <Button type="submit" disabled={!isAllAgreed}>
+        회원가입 완료
+      </Button>
+    </AgreeForm>
   );
 }
 
 const AgreeForm = styled.form`
+  position: relative;
   min-height: calc(100vh - 10.8rem);
   padding: 8.1rem 1.2rem 2.7rem;
   display: flex;

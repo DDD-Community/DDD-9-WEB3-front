@@ -1,19 +1,16 @@
 'use client';
 
-import IconClose from '@components/icons/IconClose';
+import TopNavigation from '@components/common/TopNavigation';
 import KakaoButton from '@components/login/KakaoButton';
 import LottoBallSlider from '@components/login/LottoBallSlider';
 import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
-import Link from 'next/link';
 import { styled } from 'styled-components';
 
 export default function LoginPage() {
   return (
     <Wrapper>
-      <CloseButton href={ROUTES.HOME}>
-        <IconClose />
-      </CloseButton>
+      <TopNavigation version="CLOSE" path={ROUTES.HOME} />
       <div>
         <Intro>안녕하세요 👋</Intro>
         <div>
@@ -43,12 +40,6 @@ const Wrapper = styled.main`
   font-size: 1.3rem;
   color: ${palette.grey_0};
   font-weight: 700;
-`;
-
-const CloseButton = styled(Link)`
-  position: absolute;
-  top: 4.2rem;
-  right: 1.3rem;
 `;
 
 const Intro = styled.h1`
