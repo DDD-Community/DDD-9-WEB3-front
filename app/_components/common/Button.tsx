@@ -1,6 +1,6 @@
 import palette from '@styles/palette';
-import type { CSSProperties, PropsWithChildren, ComponentPropsWithoutRef } from 'react';
-import styled from 'styled-components';
+import type { ComponentPropsWithoutRef, CSSProperties, PropsWithChildren } from 'react';
+import { styled } from 'styled-components';
 
 const SIZE_STYLE = {
   medium: '9.6rem',

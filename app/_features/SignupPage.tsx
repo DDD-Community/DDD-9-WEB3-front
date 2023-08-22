@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, type ChangeEvent, type FormEvent } from 'react';
-import { styled } from 'styled-components';
-import palette from '@styles/palette';
 import { Button, CheckBox } from '@components/common';
 import { ROUTES } from '@constants/routes';
+import palette from '@styles/palette';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { styled } from 'styled-components';
 
 type TermType = 'service' | 'data' | 'location';
 

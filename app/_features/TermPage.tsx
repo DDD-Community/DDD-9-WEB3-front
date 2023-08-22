@@ -1,7 +1,7 @@
 'use client';
 
 import palette from '@styles/palette';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export default function TermPage() {
   return (

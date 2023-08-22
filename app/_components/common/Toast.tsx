@@ -1,5 +1,5 @@
-import palette from '@styles/palette';
 import { Snackbar } from '@mui/material';
+import palette from '@styles/palette';
 
 interface ToastProps {
   isOpen: boolean;
