@@ -23,7 +23,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     const accessToken = getCookie(AUTH_TOKEN.ACCESS) as string;
 
     if (accessToken) {
-      console.log('토큰 ');
       setAccessToken(accessToken);
       setIsLoggedIn(true);
 
