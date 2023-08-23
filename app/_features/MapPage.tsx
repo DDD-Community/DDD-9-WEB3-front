@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { styled } from 'styled-components';
-// import MapTypeButton from '@components/map/MapTypeButton';
+// import ControlButton from "@components/map/ControlButton";
+// import PlaceChips from "@components/map/PlaceChips";
 // import { PLACE_TYPE } from '@constants/map';
 
 declare global {
@@ -11,6 +12,9 @@ declare global {
     kakao: never;
   }
 }
+
+const LAT_INIT = 33.450701;
+const LNG_INIT = 126.570667;
 
 const sampleData = [
   {
@@ -32,8 +36,8 @@ const sampleData = [
 
 export default function MapPage() {
   // const [level, setLevel] = useState(3); //지도레벨
-  const [latitude, setLatitude] = useState(33.450701); //현재 위치 (위도)
-  const [longitude, setLongitude] = useState(126.570667); //현재 위치 (경도)
+  const [latitude, setLatitude] = useState(LAT_INIT); //현재 위치 (위도)
+  const [longitude, setLongitude] = useState(LNG_INIT); //현재 위치 (경도)
 
   /* 현재위치 세부 조정 옵션 */
   const geoOptions = {
@@ -55,8 +59,8 @@ export default function MapPage() {
     }
 
     function error() {
-      setLatitude(33.450701);
-      setLongitude(126.570667);
+      setLatitude(LAT_INIT);
+      setLongitude(LNG_INIT);
     }
   }, [latitude, longitude]);
 
