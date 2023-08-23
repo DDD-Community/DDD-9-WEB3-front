@@ -1,19 +1,21 @@
 'use client';
 
-import IconClose from '@components/icons/IconClose';
-import KakaoButton from '@components/login/KakaoButton';
+import IconKakao from '@assets/svg/kakao.svg';
+import { Button } from '@components/common';
+import TopNavigation from '@components/common/TopNavigation';
 import LottoBallSlider from '@components/login/LottoBallSlider';
+import { KAKAO_LOGIN_URL } from '@constants/auth';
 import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 
 export default function LoginPage() {
+  const router = useRouter();
+
   return (
     <Wrapper>
-      <CloseButton href={ROUTES.HOME}>
-        <IconClose />
-      </CloseButton>
+      <TopNavigation version="CLOSE" path={ROUTES.HOME} />
       <div>
         <Intro>안녕하세요 👋</Intro>
         <div>
@@ -24,7 +26,14 @@ export default function LoginPage() {
       </div>
       <div>
         <LottoBallSlider />
-        <KakaoButton />
+        <Button
+          color={palette.black}
+          $backgroundColor={palette.yellow}
+          onClick={() => router.push(KAKAO_LOGIN_URL)}
+        >
+          <IconKakao />
+          <Text>카카오로 로그인</Text>
+        </Button>
       </div>
     </Wrapper>
   );
@@ -45,12 +54,12 @@ const Wrapper = styled.main`
   font-weight: 700;
 `;
 
-const CloseButton = styled(Link)`
-  position: absolute;
-  top: 4.2rem;
-  right: 1.3rem;
-`;
-
 const Intro = styled.h1`
   margin-bottom: 0.87rem;
+`;
+
+const Text = styled.p`
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.87rem;
 `;
