@@ -1,3 +1,6 @@
+import { getCookie } from 'cookies-next';
+
+import { AUTH_TOKEN } from '@/_constants/auth';
 import { AuthResponse } from '@/_types/auth';
 
 import instance from './core';
@@ -15,13 +18,12 @@ export const authApi = {
       },
     }),
   /**
-   * @param refreshToken 쿠키에 담긴 refreshToken
    * @description refreshToken로 accessToken 재발급
    */
-  getRefresh: (refreshToken: string) =>
-    instance.get<string, AuthResponse>(`/auth/refresh`, {
+  silentRefresh: () =>
+    instance.get<unknown, AuthResponse>(`/auth/refresh`, {
       params: {
-        refresh_token: refreshToken,
+        refresh_token: getCookie(AUTH_TOKEN.REFRESH),
       },
     }),
 };

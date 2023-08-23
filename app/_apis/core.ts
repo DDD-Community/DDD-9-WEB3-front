@@ -1,7 +1,7 @@
-import { AUTH_TOKEN } from '@constants/auth';
+import { AUTH_TOKEN, COOKIE_CONFIG } from '@constants/auth';
 import { HTTP_STATUS_CODE } from '@constants/http';
 import axios, { type AxiosResponse } from 'axios';
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 
 import { authApi } from './auth';
 
@@ -33,15 +33,13 @@ instance.interceptors.response.use(
      * [status:401] Access Token이 만료된 경우 Refresh Token으로 재발급 후, api 재요청
      */
     if (status === HTTP_STATUS_CODE.UNAUTHORIZED) {
-      const refreshToken = getCookie(AUTH_TOKEN.REFRESH) as string;
-
-      const { id_token, refresh_token } = await authApi.getRefresh(refreshToken);
+      const { id_token, refresh_token } = await authApi.silentRefresh();
 
       setAccessToken(id_token);
-      setCookie(AUTH_TOKEN.ACCESS, id_token);
+      setCookie(AUTH_TOKEN.ACCESS, id_token, COOKIE_CONFIG.ACCESS);
 
       if (refresh_token) {
-        setCookie(AUTH_TOKEN.REFRESH, refresh_token);
+        setCookie(AUTH_TOKEN.REFRESH, refresh_token, COOKIE_CONFIG.REFRESH);
       }
 
       return axios(originalRequest);
