@@ -1,6 +1,5 @@
-import { getCookie } from 'cookies-next';
+import { storage } from '@lib/util/storage';
 
-import { AUTH_TOKEN } from '@/_constants/auth';
 import { AuthResponse } from '@/_types/auth';
 
 import instance from './core';
@@ -23,7 +22,7 @@ export const authApi = {
   silentRefresh: () =>
     instance.get<unknown, AuthResponse>(`/auth/refresh`, {
       params: {
-        refresh_token: getCookie(AUTH_TOKEN.REFRESH),
+        refresh_token: storage.getRefreshToken(),
       },
     }),
 };

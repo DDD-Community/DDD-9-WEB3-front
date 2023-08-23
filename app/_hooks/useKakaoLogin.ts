@@ -1,9 +1,8 @@
 import { authApi } from '@apis/auth';
 import { setAccessToken } from '@apis/core';
-import { AUTH_TOKEN, COOKIE_CONFIG } from '@constants/auth';
 import { ROUTES } from '@constants/routes';
+import { storage } from '@lib/util/storage';
 import { useAuthActions } from '@store/auth';
-import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -19,8 +18,9 @@ const useKakaoLogin = () => {
       const { id_token, refresh_token } = await authApi.getToken(code);
 
       setAccessToken(id_token);
-      setCookie(AUTH_TOKEN.ACCESS, id_token, COOKIE_CONFIG.ACCESS);
-      setCookie(AUTH_TOKEN.REFRESH, refresh_token, COOKIE_CONFIG.REFRESH);
+
+      storage.setAccessToken(id_token);
+      storage.setRefreshToken(refresh_token);
 
       setIsLoggedIn(true);
       setIsLoading(false);

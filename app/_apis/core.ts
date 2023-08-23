@@ -1,7 +1,6 @@
-import { AUTH_TOKEN, COOKIE_CONFIG } from '@constants/auth';
 import { HTTP_STATUS_CODE } from '@constants/http';
+import { isExpiredAccessToken, storage } from '@lib/util/storage';
 import axios, { type AxiosResponse } from 'axios';
-import { setCookie } from 'cookies-next';
 
 import { authApi } from './auth';
 
@@ -36,10 +35,10 @@ instance.interceptors.response.use(
       const { id_token, refresh_token } = await authApi.silentRefresh();
 
       setAccessToken(id_token);
-      setCookie(AUTH_TOKEN.ACCESS, id_token, COOKIE_CONFIG.ACCESS);
+      storage.setAccessToken(id_token);
 
-      if (refresh_token) {
-        setCookie(AUTH_TOKEN.REFRESH, refresh_token, COOKIE_CONFIG.REFRESH);
+      if (isExpiredAccessToken(refresh_token)) {
+        storage.setRefreshToken(refresh_token);
       }
 
       return axios(originalRequest);
