@@ -3,3 +3,9 @@ export interface AuthResponse {
   refresh_token: string;
   nickname: string;
 }
+
+export interface MemberResponse {
+  userId: string;
+  email: string;
+  nickname: string;
+}

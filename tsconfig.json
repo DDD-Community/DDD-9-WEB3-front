@@ -29,6 +29,7 @@
       "@store/*": ["./app/_store/*"],
       "@styles/*": ["./app/_styles/*"],
       "@types/*": ["./app/_types/*"],
+      "@lib/*": ["./app/_lib/*"],
       "@assets/*": ["./public/assets/*"],
     }
   },
