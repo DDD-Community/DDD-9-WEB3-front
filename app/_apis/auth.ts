@@ -1,6 +1,6 @@
 import { storage } from '@lib/util/storage';
 
-import { AuthResponse } from '@/_types/auth';
+import { AuthResponse } from '@/_types/response';
 
 import instance from './core';
 

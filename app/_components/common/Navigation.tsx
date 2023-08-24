@@ -1,9 +1,8 @@
 'use client';
 
+import { ROUTES } from '@constants/routes';
 import { useIsLoggedIn } from '@store/auth';
 import Link from 'next/link';
-
-import { ROUTES } from '@/_constants/routes';
 
 const Navigation = () => {
   const isLoggedIn = useIsLoggedIn();
