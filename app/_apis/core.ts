@@ -4,8 +4,7 @@ import axios, { type AxiosResponse } from 'axios';
 
 import { authApi } from './auth';
 
-export const HTTP_BASE_URL =
-  process.env.NODE_ENV === 'production' ? '' : process.env.NEXT_PUBLIC_LOCAL_BASE_URL;
+export const HTTP_BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
 
 const options = {
   headers: {
@@ -49,11 +48,11 @@ instance.interceptors.response.use(
 );
 
 export const setAccessToken = (token: string) => {
-  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 export const removeAccessToken = () => {
-  instance.defaults.headers.common['Authorization'] = '';
+  instance.defaults.headers.common.Authorization = '';
 };
 
 export default instance;
