@@ -19,6 +19,12 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
+    const token = storage.getAccessToken();
+
+    if (token) {
+      setAccessToken(token);
+    }
+
     return response.data.data;
   },
   async error => {
@@ -30,7 +36,7 @@ instance.interceptors.response.use(
     /**
      * [status:401] Access Token이 만료된 경우 Refresh Token으로 재발급 후, api 재요청
      */
-    if (status === HTTP_STATUS_CODE.UNAUTHORIZED) {
+    if (originalRequest && status === HTTP_STATUS_CODE.UNAUTHORIZED) {
       const { id_token, refresh_token } = await authApi.silentRefresh();
 
       setAccessToken(id_token);
@@ -40,7 +46,7 @@ instance.interceptors.response.use(
         storage.setRefreshToken(refresh_token);
       }
 
-      return axios(originalRequest);
+      return instance(originalRequest);
     }
 
     return Promise.reject(error);
