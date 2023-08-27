@@ -6,23 +6,23 @@ import styled from 'styled-components';
 import CalendarFilterIcon from '@assets/svg/calendarFilter.svg';
 import DashIcon from '@assets/svg/dash.svg';
 
-type PeriodicDateFilterProps = {};
+type DatePickFilterBarProps = {
+  setIsVisiblePickerFilter: any;
+};
 
-const PeriodicDateFilter: React.FC<PeriodicDateFilterProps> = () => {
+const DatePickFilterBar: React.FC<DatePickFilterBarProps> = ({ setIsVisiblePickerFilter }) => {
   return (
-    <PeriodicDateFilterBlock>
+    <DatePickFilterBarBlock>
       <div>
         <LabelText>시작일</LabelText>
         <DateBox>
           <PickedDate>2022.05</PickedDate>
-          <button>
+          <button onClick={() => setIsVisiblePickerFilter(true)}>
             <CalendarFilterIcon />
           </button>
         </DateBox>
       </div>
-
       <DashIconSVG />
-
       <div>
         <LabelText>종료일</LabelText>
         <DateBox>
@@ -32,11 +32,11 @@ const PeriodicDateFilter: React.FC<PeriodicDateFilterProps> = () => {
           </button>
         </DateBox>
       </div>
-    </PeriodicDateFilterBlock>
+    </DatePickFilterBarBlock>
   );
 };
 
-const PeriodicDateFilterBlock = styled.div`
+const DatePickFilterBarBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -72,4 +72,4 @@ const DateBox = styled.div`
   border-radius: 5px;
 `;
 
-export default PeriodicDateFilter;
+export default DatePickFilterBar;

@@ -1,9 +1,9 @@
 'use client';
 
-import PeriodicDateFilter from '@/_components/analysis/period/filter/PeriodicDateFilter';
+import PeriodicDateFilterWrapper from '@/_components/analysis/period/filter/PeriodicDateFilterWrapper';
 
 const PeriodAnalysis = () => {
-  return <PeriodicDateFilter />;
+  return <PeriodicDateFilterWrapper />;
 };
 
 export default PeriodAnalysis;
