@@ -9,13 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.5",
     "@svgr/webpack": "^8.0.1",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
-    "chart.js": "^4.3.3",
-    "date-fns": "^2.30.0",
     "axios": "^1.4.0",
+    "chart.js": "^4.3.3",
     "cookies-next": "^2.1.2",
+    "date-fns": "^2.30.0",
     "next": "13.4.13",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -24,7 +27,10 @@
     "react-query": "^3.39.3",
     "styled-components": "^6.0.7",
     "swiper": "^10.1.0",
+<<<<<<< HEAD
     "typescript": "5.1.6",
+=======
+>>>>>>> fd19ce61c3c66581c34fb6c1c1f1028f949e331b
     "zustand": "^4.4.1"
   },
   "devDependencies": {

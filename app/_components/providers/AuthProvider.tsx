@@ -1,10 +1,10 @@
 'use client';
 
+import { authApi } from '@apis/auth';
 import { setAccessToken } from '@apis/core';
-import { AUTH_TOKEN } from '@constants/auth';
 import { ROUTES } from '@constants/routes';
+import { isExpiredAccessToken, storage } from '@lib/util/storage';
 import { useAuthActions, useIsLoggedIn } from '@store/auth';
-import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { PropsWithChildren, useEffect } from 'react';
 
@@ -20,12 +20,33 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     }
 
     /** 로그인 상태는 아니지만 쿠키에 토큰이 남아있는 경우 */
-    const accessToken = getCookie(AUTH_TOKEN.ACCESS) as string;
+    const accessToken = storage.getAccessToken();
 
     if (accessToken) {
-      console.log('토큰 ');
       setAccessToken(accessToken);
       setIsLoggedIn(true);
+
+      return;
+    }
+
+    /** 로그인 상태는 아니지만 쿠키에 리프레시 토큰이 남아있는 경우, 토큰 재발급 */
+    const refreshToken = storage.getRefreshToken();
+
+    if (refreshToken) {
+      (async () => {
+        const { id_token, refresh_token } = await authApi.silentRefresh();
+
+        if (id_token) {
+          setIsLoggedIn(true);
+          setAccessToken(id_token);
+
+          storage.setAccessToken(id_token);
+        }
+
+        if (isExpiredAccessToken(refresh_token)) {
+          storage.setRefreshToken(refreshToken);
+        }
+      })();
 
       return;
     }
