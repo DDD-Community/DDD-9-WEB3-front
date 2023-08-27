@@ -2,42 +2,29 @@
 
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import useGetMapList from '@hooks/useGetMapList';
 import { styled } from 'styled-components';
-// import ControlButton from "@components/map/ControlButton";
+import ZoomControl from '@components/map/ZoomControl';
+import NowLocation from "@components/map/NowLocation";
 // import PlaceChips from "@components/map/PlaceChips";
-// import { PLACE_TYPE } from '@constants/map';
 
 declare global {
   interface Window {
-    kakao: never;
+    kakao: unknown;
   }
 }
 
 const LAT_INIT = 33.450701;
 const LNG_INIT = 126.570667;
 
-const sampleData = [
-  {
-    title: '국회의사당',
-    lat: 37.5318,
-    lng: 126.9142,
-  },
-  {
-    title: '영등포구청역',
-    lat: 37.52497,
-    lng: 126.895951,
-  },
-  {
-    title: '영등포시장역',
-    lat: 37.522669,
-    lng: 126.905139,
-  },
-];
-
 export default function MapPage() {
-  // const [level, setLevel] = useState(3); //지도레벨
+  const [level, setLevel] = useState(3); //지도레벨
   const [latitude, setLatitude] = useState(LAT_INIT); //현재 위치 (위도)
   const [longitude, setLongitude] = useState(LNG_INIT); //현재 위치 (경도)
+  // const [location, setLocation] = useState(""); //현재 위치의 법정동
+
+  const fnZoomIn = () => { setLevel(level+1) };
+  const fnZoomOut = () => { setLevel(level-1) };
 
   /* 현재위치 세부 조정 옵션 */
   const geoOptions = {
@@ -48,6 +35,14 @@ export default function MapPage() {
 
   /* 최초 && 현 위치 바뀔 때마다 지도 렌더링 */
   useEffect(() => {
+    // 주소-좌표 변환 객체 생성
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    /* 좌표로 법정동 상세 주소 정보 요청 */
+    function searchDetailAddrFromCoords(lat, lng, callback) {
+      geocoder.coord2Address(lat, lng, callback);
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error, geoOptions); //현재 위치 가져오기
     }
@@ -62,7 +57,17 @@ export default function MapPage() {
       setLatitude(LAT_INIT);
       setLongitude(LNG_INIT);
     }
+
+    searchDetailAddrFromCoords(latitude, longitude, (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        console.log(result[0]);
+        // setLocation(result[0].address.address_name);
+      }
+    });
   }, [latitude, longitude]);
+
+  const { data } = useGetMapList({ location: "서울", subLocation: "마포구", option: "0", sort: "0" });
+  console.log(data);
 
   return (
     <Wrapper>
@@ -73,10 +78,12 @@ export default function MapPage() {
         level={3}
       >
         <MapMarker position={{ lat: latitude, lng: longitude }} />
-        {sampleData.map(el => {
-          return <MapMarker key={el.title} position={{ lat: el.lat, lng: el.lng }} />;
+        {Array.isArray(data) && data.map(el => {
+          return <MapMarker key={el.store_id} position={{ lat: el.latitude, lng: el.longitude }} />;
         })}
       </Map>
+      <ZoomControl id="zoomControl" zoomIn={fnZoomIn} zoomOut={fnZoomOut} />
+      <NowLocation address1={"서울"} address2={"마포구"} />
     </Wrapper>
   );
 }

@@ -6,6 +6,7 @@ declare module '*.svg' {
 }
 
 export interface Response {
-  data: never; //any
+  data: unknown;
   message: string;
+  status: string;
 }
