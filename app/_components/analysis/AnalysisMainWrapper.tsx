@@ -7,30 +7,43 @@ import ResultAmountBannerList from './ResultAmountBannerList';
 import AnalyticsDashboardMenu from './AnalyticsDashboardMenu';
 import Image from 'next/image';
 import PolygonIcon from '@assets/svg/polygon.svg';
+import AuthProvider from '../providers/AuthProvider';
+import useLatestNumber from '@/_hooks/useLatestNumber';
+import { parse } from 'date-fns';
 
 type AnalysisMainWrapperProps = {};
 
 const AnalysisMainWrapper: React.FC<AnalysisMainWrapperProps> = () => {
-  // const test = [3, 5, 7, 9, 1, 13, 4]; //? res값 정제
+  const { latestNumbers, isLoading } = useLatestNumber();
+
+  const parsedDate = parse(latestNumbers?.drwt_date, 'yyyy-MM-dd', new Date());
+  const monthNumber = parsedDate.getMonth() + 1;
+  const weekNumber = Math.ceil(parsedDate.getDate() / 7);
+
+  if (isLoading) return <p>loading</p>;
 
   return (
-    <AnalysisMainWrapperBlock>
-      <AnalysisMainTitle>
-        7월 2주차 1078회
-        <br />
-        당첨번호를 확인하세요.
-      </AnalysisMainTitle>
+    <AuthProvider>
+      <AnalysisMainWrapperBlock>
+        <AnalysisMainTitle>
+          {monthNumber}월 {weekNumber}주차 {latestNumbers?.drwt_no}회
+          <br />
+          당첨번호를 확인하세요.
+        </AnalysisMainTitle>
 
-      <WeekWinningNumberBox>
-        <WeekWinningNumber>3 5 7 9 1 13 4</WeekWinningNumber>{' '}
-        <WeekWinningBonusNumber>34</WeekWinningBonusNumber>
-        <PolygonIconSVG />
-      </WeekWinningNumberBox>
+        <WeekWinningNumberBox>
+          {new Array(6).fill('').map((_, i) => (
+            <WeekWinningNumber key={i}>{latestNumbers[`drwt_no${i + 1}`]}</WeekWinningNumber>
+          ))}
+          <WeekWinningBonusNumber>{latestNumbers?.bnus_no}</WeekWinningBonusNumber>
+          <PolygonIconSVG />
+        </WeekWinningNumberBox>
 
-      <Image src="/assets/images/analysisMain.png" alt="분석페이지" width="120" height="120" />
-      <ResultAmountBannerList />
-      <AnalyticsDashboardMenu />
-    </AnalysisMainWrapperBlock>
+        <Image src="/assets/images/analysisMain.png" alt="분석페이지" width="120" height="120" />
+        <ResultAmountBannerList />
+        <AnalyticsDashboardMenu />
+      </AnalysisMainWrapperBlock>
+    </AuthProvider>
   );
 };
 
@@ -64,12 +77,13 @@ const WeekWinningNumberBox = styled.div`
   border-radius: 400px;
   margin-bottom: 21px;
   position: relative;
+  display: flex;
+  gap: 10px;
 `;
 
 const WeekWinningNumber = styled.span`
   color: ${palette.grey_20};
   font-size: 20px;
-  letter-spacing: 6px;
   font-weight: bold;
 `;
 const WeekWinningBonusNumber = styled.span`

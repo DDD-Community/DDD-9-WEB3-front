@@ -22,7 +22,7 @@ export const authApi = {
   silentRefresh: () =>
     instance.get<unknown, AuthResponse>(`/auth/refresh`, {
       params: {
-        refresh_token: storage.getRefreshToken(),
+        refreshToken: storage.getRefreshToken(),
       },
     }),
 };
