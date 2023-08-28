@@ -3,72 +3,90 @@ import styled from 'styled-components';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import { Button } from '@/_components/common';
 import palette from '@/_styles/palette';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import format from 'date-fns/format';
 import { useSearchParams } from 'next/navigation';
-import { subMonths } from 'date-fns';
 
 type MonthPickerFilterProps = {};
 
 const MonthPickerFilter: React.FC<MonthPickerFilterProps> = () => {
   const router = useRouter();
   const monthList = Array.from({ length: 12 }, (_, index) => index + 1);
-
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const newParams = new URLSearchParams(searchParams.toString());
   const currentDate = new Date();
+  const formattedDate = format(currentDate, 'yyyy.MM');
 
   const categoryMode = searchParams.get('category');
   const startDt = searchParams.get('startDt');
   const endDt = searchParams.get('endDt');
+  const type = searchParams.get('type');
 
-  // useEffect(() => {
-  //   if (!endDt) {
-  //     // 주어진 연월 문자열을 기반으로 3개월 전 날짜를 계산하는 함수
-  //     const calculateThreeMonthsAgo = yearMonth => {
-  //       const currentDate = new Date(yearMonth.slice(0, 4), parseInt(yearMonth.slice(4)) - 1, 1);
-  //       const threeMonthsAgoDate = subMonths(currentDate, 3);
-  //       return threeMonthsAgoDate;
-  //     };
+  const [selectedYear, setSelectedYear] = useState<string>(formattedDate.split('.')[0]);
 
-  //     // 연월 문자열을 'yyyyMM' 형식으로 표시하는 함수
-  //     const displayYearMonth = date => {
-  //       return format(date, 'yyyyMM');
-  //     };
+  useEffect(() => {
+    if (type === 'start' && startDt) {
+      setSelectedYear(startDt.split('.')[0]);
+      return;
+    }
+    if (type === 'end' && endDt) {
+      setSelectedYear(endDt.split('.')[0]);
+      return;
+    }
+  }, [type, endDt, startDt]);
 
-  //     const threeMonthsAgo = calculateThreeMonthsAgo(selectedEndDt);
-
-  //     setSelectedStartDt(displayYearMonth(threeMonthsAgo));
-  //   }
-  // }, []);
-
-  const [selectedStartDt, setSelectedStartDt] = useState(endDt); //?현재 월의 3개월전))
-  const [selectedEndDt, setSelectedEndDt] = useState(startDt || format(currentDate, 'yyyyMM'));
-
-  const onApplyDate = () => {
-    router.push(`/analysis/period?startDt=${selectedStartDt}&endDt=${selectedEndDt}`);
+  const onClickMonth = (month: number) => {
+    const formatMonth = format(new Date(Number(selectedYear), month - 1, 1), 'yyyy.MM');
+    newParams.set(type === 'start' ? 'startDt' : 'endDt', formatMonth);
+    router.push(`${pathname}?${newParams.toString()}`);
   };
 
   return (
     <MonthPickerFilterBlock>
-      <CurrentYear>
-        <PrevButton>
-          <ArrowIcon />
-        </PrevButton>
-        <p>2023</p>
-        <NextButton>
-          <ArrowIcon />
-        </NextButton>
-      </CurrentYear>
+      <Box>
+        <CurrentYear>
+          <PrevButton
+            onClick={() => {
+              setSelectedYear(`${Number(selectedYear) - 1}`);
+            }}
+          >
+            <ArrowIcon />
+          </PrevButton>
+          <p>{selectedYear}</p>
+          <NextButton
+            onClick={() => {
+              setSelectedYear(`${Number(selectedYear) + 1}`);
+            }}
+          >
+            <ArrowIcon />
+          </NextButton>
+        </CurrentYear>
+        <MonthWrapper>
+          {monthList.map((month, i) => (
+            <Button
+              key={i}
+              size="small"
+              $backgroundColor={palette.grey_70}
+              color={palette.grey_20}
+              onClick={() => onClickMonth(month)}
+            >
+              {month}월
+            </Button>
+          ))}
+        </MonthWrapper>
+      </Box>
 
-      <MonthWrapper>
-        {monthList.map((month, i) => (
-          <Button key={i} size="small" $backgroundColor={palette.grey_70} color={palette.grey_20}>
-            {month}월
-          </Button>
-        ))}
-      </MonthWrapper>
-
-      <Button $backgroundColor={palette.blue_15} onClick={onApplyDate}>
+      <Button
+        $backgroundColor={palette.blue_15}
+        onClick={() =>
+          router.push(
+            `/analysis/period?category=${categoryMode}&startDt=${
+              startDt || formattedDate
+            }&endDt=${endDt}`,
+          )
+        }
+      >
         적용하기
       </Button>
     </MonthPickerFilterBlock>
@@ -79,8 +97,14 @@ const MonthPickerFilterBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 32px 20px;
+`;
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const CurrentYear = styled.div`

@@ -27,10 +27,7 @@
     "react-query": "^3.39.3",
     "styled-components": "^6.0.7",
     "swiper": "^10.1.0",
-<<<<<<< HEAD
     "typescript": "5.1.6",
-=======
->>>>>>> fd19ce61c3c66581c34fb6c1c1f1028f949e331b
     "zustand": "^4.4.1"
   },
   "devDependencies": {
