@@ -3,7 +3,8 @@
 import { authApi } from '@apis/auth';
 import { setAccessToken } from '@apis/core';
 import { ROUTES } from '@constants/routes';
-import { isExpiredAccessToken, storage } from '@lib/util/storage';
+import { isExpiredAccessToken } from '@lib/util/http';
+import { storage } from '@lib/util/storage';
 import { useAuthActions, useIsLoggedIn } from '@store/auth';
 import { useRouter } from 'next/navigation';
 import { PropsWithChildren, useEffect } from 'react';

@@ -1,8 +1,12 @@
 'use client';
 
+import { memberApi } from '@apis/member';
 import { Button, CheckBox } from '@components/common';
 import TopNavigation from '@components/common/TopNavigation';
 import { ROUTES } from '@constants/routes';
+import { storage } from '@lib/util/storage';
+import { useAuthActions } from '@store/auth';
+import { useMemeberInfo } from '@store/member';
 import palette from '@styles/palette';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -27,6 +31,8 @@ export default function SignupPage() {
   const router = useRouter();
   const [isAllAgreed, setIsAllAgreed] = useState(false);
   const [agreedTerms, setAgreedTerms] = useState(DEFAULT_AGREEDTERMS);
+  const memberInfo = useMemeberInfo();
+  const { setIsLoggedIn } = useAuthActions();
 
   const handleAllAgreeClick = () => {
     setIsAllAgreed(prev => !prev);
@@ -51,12 +57,17 @@ export default function SignupPage() {
     setAgreedTerms(prev => ({ ...prev, [checkedTermId]: !prev[checkedTermId] }));
   };
 
-  const handleSubmitClick = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitClick = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isAllAgreed) {
       return;
     }
+
+    const { user_id } = await memberApi.registerMember(memberInfo);
+
+    storage.setUserId(user_id);
+    setIsLoggedIn(true);
 
     router.push(ROUTES.HOME);
   };
