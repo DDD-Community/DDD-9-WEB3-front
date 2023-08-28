@@ -6,7 +6,7 @@ import MinusIcon from '@assets/svg/minusIcon.svg';
 import PlusIcon from '@assets/svg/plusIcon.svg';
 import palette from '@styles/palette';
 
-interface ControlBtnProps {
+interface ControlProps {
   id?: string;
   zoomIn?: (e: MouseEventHandler<HTMLButtonElement>) => void;
   zoomOut?: (e: MouseEventHandler<HTMLButtonElement>) => void;
@@ -21,7 +21,7 @@ const customStyles = {
   },
 };
 
-const ZoomControl = ({ zoomIn, zoomOut, ...props }: ControlBtnProps) => {
+const ZoomControl = ({ zoomIn, zoomOut, ...props }: ControlProps) => {
   return (
     <Box
       sx={{

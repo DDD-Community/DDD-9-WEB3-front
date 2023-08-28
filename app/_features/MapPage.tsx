@@ -5,7 +5,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useGetMapList from '@hooks/useGetMapList';
 import { styled } from 'styled-components';
 import ZoomControl from '@components/map/ZoomControl';
-import NowLocation from "@components/map/NowLocation";
+import LocationInfo from "@components/map/LocationInfo";
 // import PlaceChips from "@components/map/PlaceChips";
 
 declare global {
@@ -83,7 +83,7 @@ export default function MapPage() {
         })}
       </Map>
       <ZoomControl id="zoomControl" zoomIn={fnZoomIn} zoomOut={fnZoomOut} />
-      <NowLocation address1={"서울"} address2={"마포구"} />
+      <LocationInfo address1={"서울"} address2={"마포구"} />
     </Wrapper>
   );
 }

@@ -4,8 +4,9 @@ import BookmarkIcon from '@assets/svg/bookmarkIcon.svg';
 import LottoIcon from '@assets/svg/lottoIcon.svg';
 import ShopIcon from '@assets/svg/shopIcon.svg';
 import { PLACE_TYPE } from '@constants/map';
+import { generateUUID } from '@lib/util';
 
-interface ChipType {
+interface ChipProps {
   placeType: keyof typeof PLACE_TYPE;
   isSelected: boolean;
 }
@@ -13,7 +14,10 @@ interface ChipType {
 let onStyles = {};
 const offStyles = { borderColor: palette.grey_70 };
 
-const PlaceTypeChip = ({placeType, isSelected}: ChipType) => {
+const PlaceTypeChip = ({placeType, isSelected}: ChipProps) => {
+  const uniqueId = generateUUID();
+  const getClassFactory = () => `button_${placeType}--${uniqueId}`;
+
   let placeIcon: JSX.Element;
   let placeLabel: string;
 
@@ -34,7 +38,7 @@ const PlaceTypeChip = ({placeType, isSelected}: ChipType) => {
   const customStyles = isSelected ? onStyles : offStyles;
 
   return (
-    <Chip icon={placeIcon} label={placeLabel} variant="outlined" sx={{ ...customStyles, boxShadow: 3 }} />
+    <Chip icon={placeIcon} label={placeLabel} variant="outlined" sx={{ ...customStyles, boxShadow: 3 }} className={getClassFactory()} />
   );
 };
 

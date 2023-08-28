@@ -3,7 +3,7 @@ import palette from '@styles/palette';
 import NearMe from '@assets/svg/nearMe.svg';
 import {LocationType} from "@types/map/index.d.ts";
 
-const NowLocation = ({ address1, address2 }: LocationType) => {
+const LocationInfo = ({ address1, address2 }: LocationType) => {
   return (
     <Wrap>
       <NearMe />
@@ -12,7 +12,7 @@ const NowLocation = ({ address1, address2 }: LocationType) => {
   );
 };
 
-export default NowLocation;
+export default LocationInfo;
 
 const Wrap = styled.div`
   width: fit-content;
