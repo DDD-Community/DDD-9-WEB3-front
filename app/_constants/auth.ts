@@ -6,6 +6,6 @@ export const AUTH_TOKEN = {
 };
 
 export const COOKIE_CONFIG = {
-  ACCESS: { maxAge: 60 * 60 * 24 },
-  REFRESH: { maxAge: 60 * 60 * 24 * 30 },
+  ACCESS: { maxAge: 60 * 60 * 6 },
+  REFRESH: { maxAge: 60 * 60 * 24 * 60 },
 };
