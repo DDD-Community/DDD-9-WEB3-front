@@ -1,6 +1,7 @@
+// import IconScrap from '@assets/svg/scrap.svg';
+import IconBookmark from '@assets/svg/bookmarkOff.svg';
 import IconLogout from '@assets/svg/logout.svg';
 import IconRightArrow from '@assets/svg/rightArrow.svg';
-import IconScrap from '@assets/svg/scrap.svg';
 import IconWithdraw from '@assets/svg/withdraw.svg';
 import { styled } from 'styled-components';
 
@@ -11,7 +12,7 @@ const MENU = {
 } as const;
 
 const MENU_ICON = {
-  SCRAP: <IconScrap />,
+  SCRAP: <IconBookmark />,
   LOGOUT: <IconLogout />,
   WITHDRAW: <IconWithdraw />,
 };
@@ -25,8 +26,8 @@ const MenuButton = ({ menuType, onClickMenuButton }: MenuButtonType) => {
   return (
     <Button onClick={onClickMenuButton}>
       <LeftItem>
-        <Icon>{MENU_ICON[menuType]}</Icon>
-        {MENU[menuType]}
+        {MENU_ICON[menuType]}
+        <Text>{MENU[menuType]}</Text>
       </LeftItem>
       <IconRightArrow />
     </Button>
@@ -52,9 +53,6 @@ const LeftItem = styled.div`
   letter-spacing: -0.04rem;
 `;
 
-const Icon = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 0.62rem;
-  margin-bottom: 0.12rem;
+const Text = styled.span`
+  margin-left: 0.62rem;
 `;
