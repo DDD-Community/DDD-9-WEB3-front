@@ -2,7 +2,7 @@ import { MemberResponse } from '@/_types/response';
 
 import instance from './core';
 
-export interface MemberInfo {
+export interface MemberInfoParams {
   email: string;
   nickname: string;
 }
@@ -15,8 +15,8 @@ export const memberApi = {
   /**
    * @description 회원정보 등록
    */
-  registerMember: (info: MemberInfo) =>
-    instance.post<MemberInfo, MemberResponse>(`/api/member`, info),
+  registerMember: (info: MemberInfoParams) =>
+    instance.post<MemberInfoParams, MemberResponse>(`/api/member`, info),
 
   /**
    * @description 회원정보 삭제
@@ -25,6 +25,6 @@ export const memberApi = {
   /**
    * @description 회원정보 수정
    */
-  updateMember: (info: MemberInfo) =>
-    instance.patch<MemberInfo, MemberResponse>(`/api/member`, info),
+  updateMember: (info: MemberInfoParams) =>
+    instance.patch<MemberInfoParams, MemberResponse>(`/api/member`, info),
 };

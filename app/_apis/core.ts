@@ -49,13 +49,19 @@ instance.interceptors.response.use(
         /**
          * [status:401] 헤더에 token이 없는 경우
          */
-        const { id_token, refresh_token } = await authApi.silentRefresh();
+        const accessToken = storage.getAccessToken();
 
-        setAccessToken(id_token);
-        storage.setAccessToken(id_token);
+        if (accessToken) {
+          setAccessToken(accessToken);
+        } else {
+          const { id_token, refresh_token } = await authApi.silentRefresh();
 
-        if (isExpiredAccessToken(refresh_token)) {
-          storage.setRefreshToken(refresh_token);
+          setAccessToken(id_token);
+          storage.setAccessToken(id_token);
+
+          if (isExpiredAccessToken(refresh_token)) {
+            storage.setRefreshToken(refresh_token);
+          }
         }
 
         return instance(originalRequest);
