@@ -7,10 +7,12 @@ import { styled } from 'styled-components';
 import ZoomControl from '@components/map/ZoomControl';
 import LocationInfo from "@components/map/LocationInfo";
 // import PlaceChips from "@components/map/PlaceChips";
+import GPSButton from '@components/map/GPSButton';
+import MyLocation from '@assets/svg/myLocation.svg';
 
 declare global {
   interface Window {
-    kakao: unknown;
+    kakao: any;
   }
 }
 
@@ -22,6 +24,7 @@ export default function MapPage() {
   const [latitude, setLatitude] = useState(LAT_INIT); //현재 위치 (위도)
   const [longitude, setLongitude] = useState(LNG_INIT); //현재 위치 (경도)
   // const [location, setLocation] = useState(""); //현재 위치의 법정동
+  const [isCurrent, setIsCurrent] = useState(false); //현위치 새로고침
 
   const fnZoomIn = () => { setLevel(level+1) };
   const fnZoomOut = () => { setLevel(level-1) };
@@ -39,7 +42,7 @@ export default function MapPage() {
     const geocoder = new kakao.maps.services.Geocoder();
 
     /* 좌표로 법정동 상세 주소 정보 요청 */
-    function searchDetailAddrFromCoords(lat, lng, callback) {
+    function searchDetailAddrFromCoords(lat: number, lng:number, callback: (result: Array<object>, status: string) => void) {
       geocoder.coord2Address(lat, lng, callback);
     }
 
@@ -78,11 +81,13 @@ export default function MapPage() {
         level={3}
       >
         <MapMarker position={{ lat: latitude, lng: longitude }} />
+        <MyLocation />
         {Array.isArray(data) && data.map(el => {
           return <MapMarker key={el.store_id} position={{ lat: el.latitude, lng: el.longitude }} />;
         })}
       </Map>
       <ZoomControl id="zoomControl" zoomIn={fnZoomIn} zoomOut={fnZoomOut} />
+      <GPSButton isActivated={isCurrent} />
       <LocationInfo address1={"서울"} address2={"마포구"} />
     </Wrapper>
   );

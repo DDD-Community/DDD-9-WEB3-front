@@ -1,4 +1,4 @@
-import Position from '@assets/svg/position.svg';
+import GPSIcon from '@assets/svg/gpsIcon.svg';
 import styled from '@emotion/styled';
 import palette from '@styles/palette';
 
@@ -6,15 +6,15 @@ interface PositionProps {
   isActivated: boolean;
 }
 
-const PositionBtn = ({ isActivated }: PositionProps) => {
+const GPSButton = ({ isActivated }: PositionProps) => {
   return (
     <Wrapper state={isActivated}>
-      <Position color={isActivated ? palette.blue_30 : palette.grey_20} />
+      <GPSIcon color={isActivated ? palette.blue_30 : palette.grey_20} />
     </Wrapper>
   );
 };
 
-export default PositionBtn;
+export default GPSButton;
 
 const Wrapper = styled.button<{ state: boolean }>`
   width: 40px;

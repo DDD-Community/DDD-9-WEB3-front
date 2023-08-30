@@ -26,7 +26,7 @@ const PlaceTypeChip = ({placeType, isSelected}: ChipProps) => {
     placeLabel = PLACE_TYPE.LOTTO;
     onStyles = { color: palette.orange_30, borderColor: palette.orange_30, backgroundColor: palette.orange_light };
   } else if (placeType === PLACE_TYPE.BOOKMARK) {
-    placeIcon = <BookmarkIcon />;
+    placeIcon = <BookmarkIcon width="24" height="24" color={palette.green} />;
     placeLabel = PLACE_TYPE.BOOKMARK;
     onStyles = { color: palette.green_30, borderColor: palette.green_30, backgroundColor: palette.green_light };
   } else {
