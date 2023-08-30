@@ -1,18 +1,17 @@
 import palette from '@/_styles/palette';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import format from 'date-fns/format';
-import { addMonths, subMonths, parse } from 'date-fns';
+import { addMonths, subMonths, parse, addYears } from 'date-fns';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import RefreshIcon from '@assets/svg/refresh.svg';
 import DateFilterIcon from '@assets/svg/dateFilter.svg';
 import { useRouter } from 'next/navigation';
+import { subYears } from 'date-fns/esm';
 
-type PeriodicAnalysisDateBarProps = {
-  type: 'month' | 'year';
-};
+type PeriodicAnalysisDateBarProps = {};
 
 const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = () => {
   const router = useRouter();
@@ -23,18 +22,23 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = () => {
   const categoryMode = searchParams.get('category');
   const startDt = searchParams.get('startDt');
   const endDt = searchParams.get('endDt');
+  const isMonthMode = categoryMode === 'month' ? 'yyyy.MM' : 'yyyy';
+  const targetFormatDate = format(new Date(), isMonthMode);
+  const [currenEndDt, setCurrenEndDt] = useState<string | null>(endDt);
 
-  const targetFormatDate = format(new Date(), 'yyyy.MM');
-  const [currenEndDt, setCurrenEndDt] = useState<string>(
-    searchParams.get('endDt') || targetFormatDate,
-  );
+  useEffect(() => {
+    setCurrenEndDt(endDt || targetFormatDate);
+  }, [categoryMode, targetFormatDate, endDt]);
 
-  const handleMonth = ({ type }: { type: 'prev' | 'next' }) => {
-    const targetDate = parse(currenEndDt, 'yyyy.MM', new Date());
-    const controlDt = type === 'prev' ? subMonths(targetDate, 1) : addMonths(targetDate, 1);
-    setCurrenEndDt(format(controlDt, 'yyyy.MM'));
+  const handleDateNavigation = ({ type }: { type: 'prev' | 'next' }) => {
+    const targetDate = parse(currenEndDt || targetFormatDate, isMonthMode, new Date());
 
-    newParams.set('endDt', format(controlDt, 'yyyy.MM'));
+    const isPrev = categoryMode === 'month' ? subMonths(targetDate, 1) : subYears(targetDate, 1);
+    const isNext = categoryMode === 'month' ? addMonths(targetDate, 1) : addYears(targetDate, 1);
+
+    const controlDt = type === 'prev' ? isPrev : isNext;
+    setCurrenEndDt(format(controlDt, isMonthMode));
+    newParams.set('endDt', format(controlDt, isMonthMode));
     router.push(`${pathname}?${newParams.toString()}`);
   };
 
@@ -51,7 +55,7 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = () => {
       </AnalysisDateRefreshBox>
       <AnalysisDateBarBox>
         {!startDt && (
-          <PrevButton onClick={() => handleMonth({ type: 'prev' })}>
+          <PrevButton onClick={() => handleDateNavigation({ type: 'prev' })}>
             <ArrowIcon />
           </PrevButton>
         )}
@@ -64,7 +68,7 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = () => {
         )}
         {!startDt && (
           <NextButton
-            onClick={() => handleMonth({ type: 'next' })}
+            onClick={() => handleDateNavigation({ type: 'next' })}
             disabled={currenEndDt === targetFormatDate}
           >
             <ArrowIcon />

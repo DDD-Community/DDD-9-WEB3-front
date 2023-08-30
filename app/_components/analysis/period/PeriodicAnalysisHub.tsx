@@ -3,22 +3,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import PeriodicAnalysisTabs from './PeriodicAnalysisTabs';
-import PeriodicAnalysisDateBar from './PeriodicAnalysisDateBar';
-import { useSearchParams } from 'next/navigation';
 import DoughnutChartWrapper from '../chart/DoughnutChartWrapper';
 import BarChartWrapper from '../chart/BarChartWrapper';
+import PeriodicAnalysisDateBar from './PeriodicAnalysisDateBar';
 
 type PeriodicAnalysisHubProps = {};
 
 const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
-  const searchParams = useSearchParams();
-
   return (
     <PeriodicAnalysisHubBlock>
       <PeriodicAnalysisTabs />
-      <PeriodicAnalysisDateBar
-        type={(searchParams.get('category') as 'month' | 'year') || 'month'}
-      />
+      <PeriodicAnalysisDateBar />
       <ChartWrapper>
         <DoughnutChartWrapper />
         <BarChartWrapper />

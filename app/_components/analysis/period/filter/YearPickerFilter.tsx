@@ -9,9 +9,9 @@ import ArrowIcon from '@assets/svg/arrow.svg';
 import { Button } from '@/_components/common';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-type MonthPickerFilterTestProps = {};
+type YearPickerFilterProps = {};
 
-const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
+const YearPickerFilter: React.FC<YearPickerFilterProps> = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const startDt = searchParams.get('startDt');
@@ -20,7 +20,7 @@ const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
   const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(`${startDt}`));
   const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(`${endDt}`));
 
-  const rangeMonthPicker = [
+  const rangeYearPicker = [
     {
       title: '시작일',
       value: selectedStartDate,
@@ -31,43 +31,47 @@ const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
     },
   ];
 
+  //! 타이틀수정
   return (
-    <MonthPickerFilterTestBlock>
-      {rangeMonthPicker.map((monthPicker, i) => (
+    <YearPickerFilterBlock>
+      {rangeYearPicker.map((yearPicker, i) => (
         <MonthBox key={i}>
-          <Title>{monthPicker.title}</Title>
+          <Title>{yearPicker.title}</Title>
           <DatePicker
             locale={ko}
-            selected={monthPicker.value}
+            selected={yearPicker.value}
             onChange={date => {
               if (!date) return;
-              monthPicker.title === '종료일'
-                ? setSelectedEndDate(date)
-                : setSelectedStartDate(date);
+              yearPicker.title === '종료일' ? setSelectedEndDate(date) : setSelectedStartDate(date);
             }}
-            selectsStart={!(monthPicker.title === '종료일')}
-            selectsEnd={monthPicker.title === '종료일'}
+            selectsStart={!(yearPicker.title === '종료일')}
+            selectsEnd={yearPicker.title === '종료일'}
             startDate={selectedStartDate}
             endDate={selectedEndDate}
-            dateFormat="yyyy.MM"
-            showMonthYearPicker
+            dateFormat="yyyy"
+            showYearPicker
             inline
-            minDate={monthPicker.title === '종료일' ? selectedStartDate : null}
+            minDate={yearPicker.title === '종료일' ? selectedStartDate : null}
             maxDate={new Date()}
             showFourColumnMonthYearPicker
             renderCustomHeader={({
               date,
               decreaseYear,
               increaseYear,
-              prevMonthButtonDisabled,
-              nextMonthButtonDisabled,
+              prevYearButtonDisabled,
+              nextYearButtonDisabled,
+              customHeaderCount,
             }) => (
               <MonthHeader>
-                <ArrowPrevButton onClick={decreaseYear} disabled={prevMonthButtonDisabled}>
+                <ArrowPrevButton onClick={decreaseYear} disabled={prevYearButtonDisabled}>
                   <ArrowIcon />
                 </ArrowPrevButton>
-                <YearText>{date.getFullYear()}</YearText>
-                <ArrowNextButton onClick={increaseYear} disabled={nextMonthButtonDisabled}>
+                <YearText>
+                  {yearPicker.title === '종료일'
+                    ? format(selectedEndDate, 'yyyy')
+                    : format(selectedStartDate, 'yyyy')}
+                </YearText>
+                <ArrowNextButton onClick={increaseYear} disabled={nextYearButtonDisabled}>
                   <ArrowIcon />
                 </ArrowNextButton>
               </MonthHeader>
@@ -79,20 +83,20 @@ const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
         $backgroundColor={palette.blue_15}
         onClick={() =>
           router.push(
-            `/analysis/period?category=month&startDt=${format(
+            `/analysis/period?category=year&startDt=${format(
               selectedStartDate,
-              'yyyy.MM',
-            )}&endDt=${format(selectedEndDate, 'yyyy.MM')}`,
+              'yyyy',
+            )}&endDt=${format(selectedEndDate, 'yyyy')}`,
           )
         }
       >
         적용하기
       </Button>
-    </MonthPickerFilterTestBlock>
+    </YearPickerFilterBlock>
   );
 };
 
-const MonthPickerFilterTestBlock = styled.div`
+const YearPickerFilterBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -108,47 +112,46 @@ const MonthPickerFilterTestBlock = styled.div`
       padding: 0;
     }
 
-    .react-datepicker__month-container {
+    .react-datepicker__year--container {
       width: inherit;
 
-      .react-datepicker__monthPicker {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+      .react-datepicker__year {
         margin: 0;
+      }
 
-        .react-datepicker__month-wrapper {
-          display: flex;
-          gap: 8px;
-          width: max-content;
-        }
+      .react-datepicker__year-wrapper {
+        display: flex;
+        gap: 7px;
+        width: max-content;
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
 
-        //? default month
-        .react-datepicker__month-text {
-          padding: 14px 7px;
-          border-radius: 8px;
-          background-color: ${palette.grey_70};
-          color: ${palette.grey_20};
-          margin: 0;
-        }
+      //? default year
+      .react-datepicker__year-text {
+        padding: 14px 7px;
+        border-radius: 8px;
+        background-color: ${palette.grey_70};
+        color: ${palette.grey_20};
+        margin: 0;
+      }
 
-        //? selected range month
-        .react-datepicker__month-text--in-range {
-          background-color: #c9dbfa; //? test color
-          color: ${palette.white};
-        }
+      //? selected range year
+      .react-datepicker__year-text--in-range {
+        background-color: #c9dbfa; //? test color
+        color: ${palette.white};
+      }
 
-        //? selected month
-        .react-datepicker__month-text--selected {
-          background-color: ${palette.blue_30};
-          color: ${palette.white};
-        }
+      //? selected year
+      .react-datepicker__year-text--selected {
+        background-color: ${palette.blue_30};
+        color: ${palette.white};
+      }
 
-        //? disabled month
-        .react-datepicker__month-text--disabled {
-          background-color: transparent;
-          color: ${palette.grey_50};
-        }
+      //? disabled year
+      .react-datepicker__year-text--disabled {
+        background-color: transparent;
+        color: ${palette.grey_50};
       }
     }
   }
@@ -187,4 +190,4 @@ const Title = styled.p`
   margin-bottom: 8px;
 `;
 
-export default MonthPickerFilterTest;
+export default YearPickerFilter;

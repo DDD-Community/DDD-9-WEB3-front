@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import MonthPickerFilter from './MonthPickerFilter';
 import { useSearchParams } from 'next/navigation';
+import YearPickerFilter from './YearPickerFilter';
 
 type PeriodicDateFilterProps = {};
 
@@ -13,7 +14,7 @@ const PeriodicDateFilter: React.FC<PeriodicDateFilterProps> = () => {
 
   return (
     <PeriodicDateFilterBlock>
-      {categoryMode === 'month' ? <MonthPickerFilter /> : <MonthPickerFilter />}
+      {categoryMode === 'month' ? <MonthPickerFilter /> : <YearPickerFilter />}
     </PeriodicDateFilterBlock>
   );
 };
