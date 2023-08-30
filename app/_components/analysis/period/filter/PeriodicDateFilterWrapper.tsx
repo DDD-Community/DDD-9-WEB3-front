@@ -1,19 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import DatePickFilterBar from './DatePickFilterBar';
 import MonthPickerFilter from './MonthPickerFilter';
+import { useSearchParams } from 'next/navigation';
 
 type PeriodicDateFilterProps = {};
 
 const PeriodicDateFilter: React.FC<PeriodicDateFilterProps> = () => {
-  const [isVisiblePickerFilter, setIsVisiblePickerFilter] = useState(false);
+  const searchParams = useSearchParams();
+  const categoryMode = searchParams.get('category');
 
   return (
     <PeriodicDateFilterBlock>
-      <DatePickFilterBar setIsVisiblePickerFilter={setIsVisiblePickerFilter} />
-      {isVisiblePickerFilter && <MonthPickerFilter />}
+      {categoryMode === 'month' ? <MonthPickerFilter /> : <MonthPickerFilter />}
     </PeriodicDateFilterBlock>
   );
 };

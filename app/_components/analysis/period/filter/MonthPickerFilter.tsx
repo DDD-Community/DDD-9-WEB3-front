@@ -1,144 +1,191 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import palette from '@/_styles/palette';
+import { ko } from 'date-fns/locale';
+import { format } from 'date-fns';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import { Button } from '@/_components/common';
-import palette from '@/_styles/palette';
-import { usePathname, useRouter } from 'next/navigation';
-import format from 'date-fns/format';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-type MonthPickerFilterProps = {};
+type MonthPickerFilterTestProps = {};
 
-const MonthPickerFilter: React.FC<MonthPickerFilterProps> = () => {
+const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
   const router = useRouter();
-  const monthList = Array.from({ length: 12 }, (_, index) => index + 1);
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const newParams = new URLSearchParams(searchParams.toString());
-  const currentDate = new Date();
-  const formattedDate = format(currentDate, 'yyyy.MM');
-
   const categoryMode = searchParams.get('category');
   const startDt = searchParams.get('startDt');
   const endDt = searchParams.get('endDt');
-  const type = searchParams.get('type');
 
-  const [selectedYear, setSelectedYear] = useState<string>(formattedDate.split('.')[0]);
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(`${startDt}`));
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(`${endDt}`));
 
-  useEffect(() => {
-    if (type === 'start' && startDt) {
-      setSelectedYear(startDt.split('.')[0]);
-      return;
-    }
-    if (type === 'end' && endDt) {
-      setSelectedYear(endDt.split('.')[0]);
-      return;
-    }
-  }, [type, endDt, startDt]);
-
-  const onClickMonth = (month: number) => {
-    const formatMonth = format(new Date(Number(selectedYear), month - 1, 1), 'yyyy.MM');
-    newParams.set(type === 'start' ? 'startDt' : 'endDt', formatMonth);
-    router.push(`${pathname}?${newParams.toString()}`);
-  };
+  const rangeMonthPicker = [
+    {
+      title: '시작일',
+      value: selectedStartDate,
+    },
+    {
+      title: '종료일',
+      value: selectedEndDate,
+    },
+  ];
 
   return (
-    <MonthPickerFilterBlock>
-      <Box>
-        <CurrentYear>
-          <PrevButton
-            onClick={() => {
-              setSelectedYear(`${Number(selectedYear) - 1}`);
+    <MonthPickerFilterTestBlock>
+      {rangeMonthPicker.map((monthPicker, i) => (
+        <MonthBox key={i}>
+          <Title>{monthPicker.title}</Title>
+          <DatePicker
+            locale={ko}
+            selected={monthPicker.value}
+            onChange={date => {
+              if (!date) return;
+              monthPicker.title === '종료일'
+                ? setSelectedEndDate(date)
+                : setSelectedStartDate(date);
             }}
-          >
-            <ArrowIcon />
-          </PrevButton>
-          <p>{selectedYear}</p>
-          <NextButton
-            onClick={() => {
-              setSelectedYear(`${Number(selectedYear) + 1}`);
-            }}
-          >
-            <ArrowIcon />
-          </NextButton>
-        </CurrentYear>
-        <MonthWrapper>
-          {monthList.map((month, i) => (
-            <Button
-              key={i}
-              size="small"
-              $backgroundColor={palette.grey_70}
-              color={palette.grey_20}
-              onClick={() => onClickMonth(month)}
-            >
-              {month}월
-            </Button>
-          ))}
-        </MonthWrapper>
-      </Box>
-
+            selectsStart={!(monthPicker.title === '종료일')}
+            selectsEnd={monthPicker.title === '종료일'}
+            startDate={selectedStartDate}
+            endDate={selectedEndDate}
+            dateFormat="yyyy.MM"
+            showMonthYearPicker
+            inline
+            minDate={monthPicker.title === '종료일' ? selectedStartDate : null}
+            maxDate={new Date()}
+            showFourColumnMonthYearPicker
+            renderCustomHeader={({
+              date,
+              decreaseYear,
+              increaseYear,
+              prevMonthButtonDisabled,
+              nextMonthButtonDisabled,
+            }) => (
+              <MonthHeader>
+                <ArrowPrevButton onClick={decreaseYear} disabled={prevMonthButtonDisabled}>
+                  <ArrowIcon />
+                </ArrowPrevButton>
+                <YearText>{date.getFullYear()}</YearText>
+                <ArrowNextButton onClick={increaseYear} disabled={nextMonthButtonDisabled}>
+                  <ArrowIcon />
+                </ArrowNextButton>
+              </MonthHeader>
+            )}
+          />
+        </MonthBox>
+      ))}
       <Button
         $backgroundColor={palette.blue_15}
         onClick={() =>
           router.push(
-            `/analysis/period?category=${categoryMode}&startDt=${
-              startDt || formattedDate
-            }&endDt=${endDt}`,
+            `/analysis/period?category=${categoryMode}&startDt=${format(
+              selectedStartDate,
+              'yyyy.MM',
+            )}&endDt=${format(selectedEndDate, 'yyyy.MM')}`,
           )
         }
       >
         적용하기
       </Button>
-    </MonthPickerFilterBlock>
+    </MonthPickerFilterTestBlock>
   );
 };
 
-const MonthPickerFilterBlock = styled.div`
+const MonthPickerFilterTestBlock = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  gap: 64px;
   padding: 32px 20px;
-`;
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+  .react-datepicker {
+    border: none;
+    width: 100%;
 
-const CurrentYear = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 28px;
+    .react-datepicker__header {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
 
-  p {
-    font-size: 18px;
-    font-weight: 700;
+    .react-datepicker__month-container {
+      width: inherit;
+
+      .react-datepicker__monthPicker {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0;
+
+        .react-datepicker__month-wrapper {
+          display: flex;
+          gap: 8px;
+          width: max-content;
+        }
+
+        //? default month
+        .react-datepicker__month-text {
+          padding: 14px 7px;
+          border-radius: 8px;
+          background-color: ${palette.grey_70};
+          color: ${palette.grey_20};
+          margin: 0;
+        }
+
+        //? selected range month
+        .react-datepicker__month-text--in-range {
+          background-color: #c9dbfa; //? test color
+          color: ${palette.white};
+        }
+
+        //? selected month
+        .react-datepicker__month-text--selected {
+          background-color: ${palette.blue_30};
+          color: ${palette.white};
+        }
+
+        //? disabled month
+        .react-datepicker__month-text--disabled {
+          background-color: transparent;
+          color: ${palette.grey_50};
+        }
+      }
+    }
   }
 `;
 
-const MonthWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px;
-
-  button {
-    font-weight: 500;
-  }
-`;
-
-const NextButton = styled.button`
+const MonthHeader = styled.div`
   display: flex;
   align-items: center;
-  border: none;
-  background-color: transparent;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
 `;
 
-const PrevButton = styled(NextButton)`
+const ArrowNextButton = styled.button`
+  display: flex;
+  align-items: center;
+`;
+
+const ArrowPrevButton = styled(ArrowNextButton)`
   transform: rotate(-180deg);
 `;
 
-export default MonthPickerFilter;
+const YearText = styled.span`
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const MonthBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+export default MonthPickerFilterTest;

@@ -14,10 +14,9 @@ type PeriodicAnalysisDateBarProps = {
   type: 'month' | 'year';
 };
 
-const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = ({ type }) => {
+const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentDate = new Date();
   const pathname = usePathname();
   const newParams = new URLSearchParams(searchParams.toString());
 
@@ -57,14 +56,17 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = ({ type 
           </PrevButton>
         )}
         {startDt ? (
-          <p>
+          <CurrentDate>
             {startDt} ~ {currenEndDt}
-          </p>
+          </CurrentDate>
         ) : (
-          <p>{currenEndDt}</p>
+          <CurrentDate>{currenEndDt}</CurrentDate>
         )}
         {!startDt && (
-          <NextButton onClick={() => handleMonth({ type: 'next' })}>
+          <NextButton
+            onClick={() => handleMonth({ type: 'next' })}
+            disabled={currenEndDt === targetFormatDate}
+          >
             <ArrowIcon />
           </NextButton>
         )}
@@ -91,10 +93,22 @@ const PeriodicAnalysisDateBarBlock = styled.div`
 const NextButton = styled.button`
   display: flex;
   align-items: center;
+
+  &:disabled {
+    svg {
+      path {
+        fill: ${palette.grey_50};
+      }
+    }
+  }
 `;
 
 const PrevButton = styled(NextButton)`
   transform: rotate(-180deg);
+`;
+
+const CurrentDate = styled.p`
+  font-weight: bold;
 `;
 
 const AnalysisDateBarBox = styled.div`
