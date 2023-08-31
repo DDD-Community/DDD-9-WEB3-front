@@ -8,6 +8,7 @@ interface AgreeFormProps {
   isAllAgreed: boolean;
   title: string;
   buttonContent: string;
+  navigationPath?: (typeof ROUTES)[keyof typeof ROUTES];
   onClickAllAgree: () => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
@@ -17,12 +18,13 @@ const AgreeForm = ({
   isAllAgreed,
   title,
   buttonContent,
+  navigationPath = ROUTES.HOME,
   onClickAllAgree,
   onSubmit,
 }: PropsWithChildren<AgreeFormProps>) => {
   return (
     <Form onSubmit={onSubmit}>
-      <TopNavigation version="CLOSE" path={ROUTES.HOME} />
+      <TopNavigation version="CLOSE" path={navigationPath} />
       <div>
         <Title>{title}</Title>
         <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={onClickAllAgree} />
