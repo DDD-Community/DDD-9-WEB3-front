@@ -1,6 +1,6 @@
 'use client';
 
-import Modal from '@components/common/Modal';
+import { Modal } from '@components/common';
 import MenuButton from '@components/mypage/MenuButton';
 import Profile from '@components/mypage/Profile';
 import AuthProvider from '@components/providers/AuthProvider';
