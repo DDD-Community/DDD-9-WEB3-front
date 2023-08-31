@@ -23,12 +23,12 @@ const TopNavigation = ({ version, path }: TopNavigationProps) => {
   return (
     <NavigationBar>
       {(version === NAVIGATION_VERSION.BACK || version === NAVIGATION_VERSION.BOTH) && (
-        <NavigateButton version={version} onClick={() => router.back()}>
+        <NavigateButton type="button" version={version} onClick={() => router.back()}>
           <IconBack />
         </NavigateButton>
       )}
       {(version === NAVIGATION_VERSION.CLOSE || version === NAVIGATION_VERSION.BOTH) && (
-        <NavigateButton version={version} onClick={() => router.push(path as Route)}>
+        <NavigateButton type="button" version={version} onClick={() => router.push(path as Route)}>
           <IconClose />
         </NavigateButton>
       )}

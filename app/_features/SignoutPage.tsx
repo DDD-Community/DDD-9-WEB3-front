@@ -5,37 +5,33 @@ import { AgreeForm, CheckBox } from '@components/common';
 import { ROUTES } from '@constants/routes';
 import { storage } from '@lib/util/storage';
 import { useAuthActions } from '@store/auth';
-import { useMemeberInfo } from '@store/member';
-import palette from '@styles/palette';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { styled } from 'styled-components';
 
-type AgreeType = 'service' | 'data' | 'location';
+type AgreeType = 'warn' | 'data' | 'location';
 
 const AGREE_LIST = [
-  { id: 'service', label: '서비스 이용약관', link: ROUTES.TERM },
-  { id: 'data', label: '개인정보 수집 및 이용동의', link: ROUTES.TERM },
-  { id: 'location', label: '위치기반 서비스 이용약관', link: ROUTES.TERM },
+  { id: 'warn', label: '스크랩한 내용 복구가 어려워요.' },
+  { id: 'data', label: '개인정보 수집 및 이용동의' },
+  { id: 'location', label: '위치기반 서비스 이용약관' },
 ];
 
 const INITIAL_AGREELIST = {
-  service: false,
+  warn: false,
   data: false,
   location: false,
 };
 
-export default function SignupPage() {
+const SignoutPage = () => {
   const router = useRouter();
   const [isAllAgreed, setIsAllAgreed] = useState(false);
   const [isAgreedList, setIsAgreedList] = useState(INITIAL_AGREELIST);
-  const memberInfo = useMemeberInfo();
   const { setIsLoggedIn } = useAuthActions();
 
   const handleAllAgreeClick = () => {
     setIsAllAgreed(prev => !prev);
-    setIsAgreedList({ service: !isAllAgreed, data: !isAllAgreed, location: !isAllAgreed });
+    setIsAgreedList({ warn: !isAllAgreed, data: !isAllAgreed, location: !isAllAgreed });
   };
 
   const handleTermClick = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,10 +59,13 @@ export default function SignupPage() {
       return;
     }
 
-    const { user_id } = await memberApi.registerMember(memberInfo);
+    await memberApi.deleteMember();
 
-    storage.setUserId(user_id);
-    setIsLoggedIn(true);
+    storage.deleteAccessToken();
+    storage.deleteRefreshToken();
+    storage.deleteUserId();
+
+    setIsLoggedIn(false);
 
     router.push(ROUTES.HOME);
   };
@@ -74,35 +73,29 @@ export default function SignupPage() {
   return (
     <AgreeForm
       isAllAgreed={isAllAgreed}
-      title={'서비스 이용약관에\n동의해주세요.'}
-      buttonContent="회원가입 완료"
+      title={'회원탈퇴 신청 전\n아래의 안내사항을 확인해주세요.'}
+      buttonContent="회원탈퇴"
+      navigationPath={ROUTES.MYPAGE}
       onClickAllAgree={handleAllAgreeClick}
       onSubmit={handleSubmitClick}
     >
-      {AGREE_LIST.map(termItem => (
-        <CheckBoxList key={termItem.id}>
+      {AGREE_LIST.map(agreeItem => (
+        <CheckBoxList key={agreeItem.id}>
           <CheckBox
-            id={termItem.id}
-            label={termItem.label}
-            isChecked={isAgreedList[termItem.id as AgreeType]}
+            id={agreeItem.id}
+            label={agreeItem.label}
+            isChecked={isAgreedList[agreeItem.id as AgreeType]}
             onChange={handleTermClick}
           />
-          <Link href={termItem.link}>
-            <TermInfo>[전문보기]</TermInfo>
-          </Link>
         </CheckBoxList>
       ))}
     </AgreeForm>
   );
-}
+};
+
+export default SignoutPage;
 
 const CheckBoxList = styled.li`
   display: flex;
   justify-content: space-between;
-`;
-
-const TermInfo = styled.span`
-  font-weight: 700;
-  font-size: 14px;
-  color: ${palette.grey_50};
 `;
