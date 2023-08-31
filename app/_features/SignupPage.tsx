@@ -1,8 +1,7 @@
 'use client';
 
 import { memberApi } from '@apis/member';
-import { Button, CheckBox } from '@components/common';
-import TopNavigation from '@components/common/TopNavigation';
+import { AgreeForm, CheckBox } from '@components/common';
 import { ROUTES } from '@constants/routes';
 import { storage } from '@lib/util/storage';
 import { useAuthActions } from '@store/auth';
@@ -73,63 +72,29 @@ export default function SignupPage() {
   };
 
   return (
-    <AgreeForm onSubmit={handleSubmitClick}>
-      <TopNavigation version="CLOSE" path={ROUTES.HOME} />
-      <div>
-        <Title>
-          서비스 이용약관에
-          <br />
-          동의해주세요.
-        </Title>
-        <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={handleAllAgreeClick} />
-        <Terms>
-          {TERM_LIST.map(termItem => (
-            <CheckBoxList key={termItem.id}>
-              <CheckBox
-                id={termItem.id}
-                label={termItem.label}
-                isChecked={agreedTerms[termItem.id as TermType]}
-                onChange={handleTermClick}
-              />
-              <Link href={termItem.link}>
-                <TermInfo>[전문보기]</TermInfo>
-              </Link>
-            </CheckBoxList>
-          ))}
-        </Terms>
-      </div>
-      <Button type="submit" disabled={!isAllAgreed}>
-        회원가입 완료
-      </Button>
+    <AgreeForm
+      isAllAgreed={isAllAgreed}
+      title={'서비스 이용약관에\n동의해주세요.'}
+      buttonContent="회원가입 완료"
+      onClickAllAgree={handleAllAgreeClick}
+      onSubmit={handleSubmitClick}
+    >
+      {TERM_LIST.map(termItem => (
+        <CheckBoxList key={termItem.id}>
+          <CheckBox
+            id={termItem.id}
+            label={termItem.label}
+            isChecked={agreedTerms[termItem.id as TermType]}
+            onChange={handleTermClick}
+          />
+          <Link href={termItem.link}>
+            <TermInfo>[전문보기]</TermInfo>
+          </Link>
+        </CheckBoxList>
+      ))}
     </AgreeForm>
   );
 }
-
-const AgreeForm = styled.form`
-  position: relative;
-  min-height: calc(100vh - 10.8rem);
-  padding: 8.1rem 1.2rem 2.7rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const Title = styled.h1`
-  margin-bottom: 2.5rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 150%;
-  letter-spacing: -0.01rem;
-`;
-
-const Terms = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 16px;
-  margin-top: 16px;
-  border-top: 1px solid ${palette.grey_60};
-`;
 
 const CheckBoxList = styled.li`
   display: flex;
