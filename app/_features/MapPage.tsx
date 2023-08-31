@@ -10,6 +10,7 @@ import LocationInfo from "@components/map/LocationInfo";
 import GPSButton from '@components/map/GPSButton';
 import MyLocation from '@assets/svg/myLocation.svg';
 
+// 네이버 맵 api로 변경하기
 declare global {
   interface Window {
     kakao: any;
@@ -23,11 +24,15 @@ export default function MapPage() {
   const [level, setLevel] = useState(3); //지도레벨
   const [latitude, setLatitude] = useState(LAT_INIT); //현재 위치 (위도)
   const [longitude, setLongitude] = useState(LNG_INIT); //현재 위치 (경도)
-  // const [location, setLocation] = useState(""); //현재 위치의 법정동
-  const [isCurrent, setIsCurrent] = useState(false); //현위치 새로고침
+  // const [myAddr, setMyAddr] = useState(""); //현재 위치의 법정동
+  const [myLocation, setMyLocation] = useState(false); //현위치 새로고침 여부
 
   const fnZoomIn = () => { setLevel(level+1) };
   const fnZoomOut = () => { setLevel(level-1) };
+  const fnGPSRefresh = () => {
+    //현위치 렌더링을 커스텀훅으로 분리한 다음 여기서 재렌더링 시키기
+    setMyLocation(true);
+  };
 
   /* 현재위치 세부 조정 옵션 */
   const geoOptions = {
@@ -42,7 +47,7 @@ export default function MapPage() {
     const geocoder = new kakao.maps.services.Geocoder();
 
     /* 좌표로 법정동 상세 주소 정보 요청 */
-    function searchDetailAddrFromCoords(lat: number, lng:number, callback: (result: Array<object>, status: string) => void) {
+    function fnCoord2Addr(lat: number, lng:number, callback: (result: Array<object>, status: string) => void) {
       geocoder.coord2Address(lat, lng, callback);
     }
 
@@ -50,7 +55,7 @@ export default function MapPage() {
       navigator.geolocation.getCurrentPosition(success, error, geoOptions); //현재 위치 가져오기
     }
 
-    function success(position) {
+    function success(position: any) {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
       console.log(latitude, longitude);
@@ -61,10 +66,10 @@ export default function MapPage() {
       setLongitude(LNG_INIT);
     }
 
-    searchDetailAddrFromCoords(latitude, longitude, (result, status) => {
+    fnCoord2Addr(latitude, longitude, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
         console.log(result[0]);
-        // setLocation(result[0].address.address_name);
+        // setMyAddr(result[0].address.address_name);
       }
     });
   }, [latitude, longitude]);
@@ -87,7 +92,7 @@ export default function MapPage() {
         })}
       </Map>
       <ZoomControl id="zoomControl" zoomIn={fnZoomIn} zoomOut={fnZoomOut} />
-      <GPSButton isActivated={isCurrent} />
+      <GPSButton isActivated={myLocation} onClick={fnGPSRefresh} />
       <LocationInfo address1={"서울"} address2={"마포구"} />
     </Wrapper>
   );
