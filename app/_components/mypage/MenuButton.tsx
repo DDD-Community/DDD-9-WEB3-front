@@ -2,19 +2,19 @@
 import IconBookmark from '@assets/svg/bookmarkOff.svg';
 import IconLogout from '@assets/svg/logout.svg';
 import IconRightArrow from '@assets/svg/rightArrow.svg';
-import IconWithdraw from '@assets/svg/withdraw.svg';
+import IconSignout from '@assets/svg/signout.svg';
 import { styled } from 'styled-components';
 
 const MENU = {
   SCRAP: '스크랩북',
   LOGOUT: '로그아웃',
-  WITHDRAW: '회원탈퇴',
+  SIGNOUT: '회원탈퇴',
 } as const;
 
 const MENU_ICON = {
   SCRAP: <IconBookmark />,
   LOGOUT: <IconLogout />,
-  WITHDRAW: <IconWithdraw />,
+  SIGNOUT: <IconSignout />,
 };
 
 interface MenuButtonType {

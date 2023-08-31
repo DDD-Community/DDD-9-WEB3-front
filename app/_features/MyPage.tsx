@@ -34,7 +34,7 @@ const MyPage = () => {
         <MenuList>
           <MenuButton menuType="SCRAP" onClickMenuButton={() => console.log('스크랩')} />
           <MenuButton menuType="LOGOUT" onClickMenuButton={() => setIsOpenLogoutModal(true)} />
-          <MenuButton menuType="WITHDRAW" onClickMenuButton={() => console.log('회원탈퇴')} />
+          <MenuButton menuType="SIGNOUT" onClickMenuButton={() => router.push(ROUTES.SIGNOUT)} />
         </MenuList>
       </Wrapper>
       <Modal
