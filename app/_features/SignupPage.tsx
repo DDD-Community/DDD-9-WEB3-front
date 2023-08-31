@@ -12,15 +12,15 @@ import { useRouter } from 'next/navigation';
 import { type ChangeEvent, type FormEvent, useState } from 'react';
 import { styled } from 'styled-components';
 
-type TermType = 'service' | 'data' | 'location';
+type AgreeType = 'service' | 'data' | 'location';
 
-const TERM_LIST = [
+const AGREE_LIST = [
   { id: 'service', label: '서비스 이용약관', link: ROUTES.TERM },
   { id: 'data', label: '개인정보 수집 및 이용동의', link: ROUTES.TERM },
   { id: 'location', label: '위치기반 서비스 이용약관', link: ROUTES.TERM },
 ];
 
-const DEFAULT_AGREEDTERMS = {
+const INITIAL_AGREELIST = {
   service: false,
   data: false,
   location: false,
@@ -29,21 +29,21 @@ const DEFAULT_AGREEDTERMS = {
 export default function SignupPage() {
   const router = useRouter();
   const [isAllAgreed, setIsAllAgreed] = useState(false);
-  const [agreedTerms, setAgreedTerms] = useState(DEFAULT_AGREEDTERMS);
+  const [isAgreedList, setIsAgreedList] = useState(INITIAL_AGREELIST);
   const memberInfo = useMemeberInfo();
   const { setIsLoggedIn } = useAuthActions();
 
   const handleAllAgreeClick = () => {
     setIsAllAgreed(prev => !prev);
-    setAgreedTerms({ service: !isAllAgreed, data: !isAllAgreed, location: !isAllAgreed });
+    setIsAgreedList({ service: !isAllAgreed, data: !isAllAgreed, location: !isAllAgreed });
   };
 
   const handleTermClick = (e: ChangeEvent<HTMLInputElement>) => {
-    const checkedTermId = e.target.id as TermType;
+    const checkedTermId = e.target.id as AgreeType;
     const isCheckedTerm = e.target.checked;
 
     const isAllChecked =
-      Object.entries(agreedTerms)
+      Object.entries(isAgreedList)
         .filter(agreeItem => agreeItem[0] !== checkedTermId)
         .every(el => el[1]) && isCheckedTerm;
 
@@ -53,7 +53,7 @@ export default function SignupPage() {
       setIsAllAgreed(false);
     }
 
-    setAgreedTerms(prev => ({ ...prev, [checkedTermId]: !prev[checkedTermId] }));
+    setIsAgreedList(prev => ({ ...prev, [checkedTermId]: !prev[checkedTermId] }));
   };
 
   const handleSubmitClick = async (e: FormEvent<HTMLFormElement>) => {
@@ -79,12 +79,12 @@ export default function SignupPage() {
       onClickAllAgree={handleAllAgreeClick}
       onSubmit={handleSubmitClick}
     >
-      {TERM_LIST.map(termItem => (
+      {AGREE_LIST.map(termItem => (
         <CheckBoxList key={termItem.id}>
           <CheckBox
             id={termItem.id}
             label={termItem.label}
-            isChecked={agreedTerms[termItem.id as TermType]}
+            isChecked={isAgreedList[termItem.id as AgreeType]}
             onChange={handleTermClick}
           />
           <Link href={termItem.link}>
