@@ -1,7 +1,5 @@
-import { AUTH_TOKEN, COOKIE_CONFIG } from '@constants/auth';
+import { AUTH_TOKEN, COOKIE_CONFIG, LOTTOFOLIO_USER } from '@constants/auth';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
-
-export const LOTTOFOLIO_USER = 'LOTTOFOLIO_USER';
 
 export const storage = {
   getAccessToken: () => getCookie(AUTH_TOKEN.ACCESS) as string,

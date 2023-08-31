@@ -1,6 +1,6 @@
+import { LOTTOFOLIO_USER } from '@constants/auth';
 import { ROUTES } from '@constants/routes';
 import SignupPage from '@features/SignupPage';
-import { LOTTOFOLIO_USER } from '@lib/util/storage';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
