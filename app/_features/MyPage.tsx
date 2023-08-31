@@ -1,11 +1,31 @@
 'use client';
 
+import Modal from '@components/common/Modal';
 import MenuButton from '@components/mypage/MenuButton';
 import Profile from '@components/mypage/Profile';
 import AuthProvider from '@components/providers/AuthProvider';
+import { ROUTES } from '@constants/routes';
+import { storage } from '@lib/util/storage';
+import { useAuthActions } from '@store/auth';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
 const MyPage = () => {
+  const router = useRouter();
+  const { setIsLoggedIn } = useAuthActions();
+  const [isOpenLogoutModal, setIsOpenLogoutModal] = useState(false);
+
+  const handleLogoutClick = () => {
+    router.push(ROUTES.HOME);
+
+    storage.deleteAccessToken();
+    storage.deleteRefreshToken();
+    storage.deleteUserId();
+
+    setIsLoggedIn(false);
+  };
+
   return (
     <AuthProvider>
       <Wrapper>
@@ -13,10 +33,17 @@ const MyPage = () => {
         <Profile />
         <MenuList>
           <MenuButton menuType="SCRAP" onClickMenuButton={() => console.log('스크랩')} />
-          <MenuButton menuType="LOGOUT" onClickMenuButton={() => console.log('로그아웃')} />
+          <MenuButton menuType="LOGOUT" onClickMenuButton={() => setIsOpenLogoutModal(true)} />
           <MenuButton menuType="WITHDRAW" onClickMenuButton={() => console.log('회원탈퇴')} />
         </MenuList>
       </Wrapper>
+      <Modal
+        isOpen={isOpenLogoutModal}
+        content="로그아웃 하시겠어요?"
+        buttonContent="로그아웃"
+        onClose={() => setIsOpenLogoutModal(false)}
+        onClick={handleLogoutClick}
+      />
     </AuthProvider>
   );
 };
