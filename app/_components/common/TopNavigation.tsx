@@ -2,7 +2,7 @@ import IconBack from '@assets/svg/back.svg';
 import IconClose from '@assets/svg/close.svg';
 import { Route } from 'next';
 import { useRouter } from 'next/navigation';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ROUTES } from '@/_constants/routes';
 
@@ -14,23 +14,25 @@ const NAVIGATION_VERSION = {
 
 interface TopNavigationProps {
   version: keyof typeof NAVIGATION_VERSION;
+  title?: string;
   path?: (typeof ROUTES)[keyof typeof ROUTES];
 }
 
-const TopNavigation = ({ version, path }: TopNavigationProps) => {
+const TopNavigation = ({ version, title, path }: TopNavigationProps) => {
   const router = useRouter();
 
   return (
     <NavigationBar>
       {(version === NAVIGATION_VERSION.BACK || version === NAVIGATION_VERSION.BOTH) && (
-        <NavigateButton type="button" version={version} onClick={() => router.back()}>
+        <BackButton type="button" onClick={() => router.back()}>
           <IconBack />
-        </NavigateButton>
+        </BackButton>
       )}
+      {title && <Title>{title}</Title>}
       {(version === NAVIGATION_VERSION.CLOSE || version === NAVIGATION_VERSION.BOTH) && (
-        <NavigateButton type="button" version={version} onClick={() => router.push(path as Route)}>
+        <CloseButton type="button" onClick={() => router.push(path as Route)}>
           <IconClose />
-        </NavigateButton>
+        </CloseButton>
       )}
     </NavigationBar>
   );
@@ -39,25 +41,34 @@ const TopNavigation = ({ version, path }: TopNavigationProps) => {
 export default TopNavigation;
 
 const NavigationBar = styled.div`
-  position: absolute;
-  top: 2.8rem;
-  left: 0;
-  width: calc(100% - 2.5rem);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   margin: 1.25rem;
-`;
-
-const NavigateButton = styled.button<Pick<TopNavigationProps, 'version'>>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
+`;
+
+const NavigateButton = styled.button`
+  position: absolute;
+  display: flex;
+  top: 0;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  ${({ version }) =>
-    version === NAVIGATION_VERSION.CLOSE &&
-    css`
-      margin-left: auto;
-    `}
+`;
+
+const BackButton = styled(NavigateButton)`
+  left: 0;
+`;
+
+const CloseButton = styled(NavigateButton)`
+  right: 0;
+`;
+
+const Title = styled.div`
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 133%;
+  letter-spacing: -0.18px;
 `;
