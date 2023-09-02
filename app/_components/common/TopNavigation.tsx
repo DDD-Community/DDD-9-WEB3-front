@@ -1,15 +1,15 @@
 import IconBack from '@assets/svg/back.svg';
 import IconClose from '@assets/svg/close.svg';
+import { ROUTES } from '@constants/routes';
 import { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
-
-import { ROUTES } from '@/_constants/routes';
 
 const NAVIGATION_VERSION = {
   CLOSE: 'CLOSE',
   BACK: 'BACK',
   BOTH: 'BOTH',
+  NONE: 'NONE',
 } as const;
 
 interface TopNavigationProps {
@@ -42,7 +42,8 @@ export default TopNavigation;
 
 const NavigationBar = styled.div`
   position: relative;
-  margin: 1.25rem;
+  margin: 1.25rem 0;
+  height: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,5 +71,5 @@ const Title = styled.div`
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 133%;
-  letter-spacing: -0.18px;
+  letter-spacing: -0.01rem;
 `;

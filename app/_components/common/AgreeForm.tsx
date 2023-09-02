@@ -25,14 +25,16 @@ const AgreeForm = ({
   return (
     <Form onSubmit={onSubmit}>
       <TopNavigation version="CLOSE" path={navigationPath} />
-      <div>
-        <Title>{title}</Title>
-        <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={onClickAllAgree} />
-        <Terms>{children}</Terms>
-      </div>
-      <Button type="submit" disabled={!isAllAgreed}>
-        {buttonContent}
-      </Button>
+      <FormBody>
+        <div>
+          <Title>{title}</Title>
+          <CheckBox label="모두동의" isChecked={isAllAgreed} onChange={onClickAllAgree} />
+          <Terms>{children}</Terms>
+        </div>
+        <Button type="submit" disabled={!isAllAgreed}>
+          {buttonContent}
+        </Button>
+      </FormBody>
     </Form>
   );
 };
@@ -40,15 +42,18 @@ const AgreeForm = ({
 export default AgreeForm;
 
 const Form = styled.form`
-  position: relative;
-  min-height: calc(100vh - 10.8rem);
-  padding: 8.1rem 1.2rem 2.7rem;
+  padding: 2.8rem 1.25rem 2.7rem;
+`;
+
+const FormBody = styled.div`
+  min-height: calc(100vh - 9.5rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
 const Title = styled.h1`
+  margin-top: 1.25rem;
   margin-bottom: 2.5rem;
   font-size: 1.2rem;
   font-weight: 700;
@@ -60,8 +65,8 @@ const Title = styled.h1`
 const Terms = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 16px;
-  margin-top: 16px;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  margin-top: 1rem;
   border-top: 1px solid ${palette.grey_60};
 `;

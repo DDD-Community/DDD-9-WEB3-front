@@ -36,7 +36,7 @@ const Profile = () => {
 export default Profile;
 
 const Wrapper = styled.header`
-  padding: 1.5rem 1.25rem;
+  padding: 1.5rem 0;
   border-bottom: 0.6rem solid ${palette.grey_80};
   font-weight: 500;
   line-height: 150%;
