@@ -2,29 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import palette from '@/_styles/palette';
+import { useSearchParams } from 'next/navigation';
 
-type BarChartWrapperProps = {};
+type BarChartWrapperProps = {
+  numbers: { no: number; count: number }[];
+};
 
-const BarChartWrapper: React.FC<BarChartWrapperProps> = () => {
-  const numbers = Array.from({ length: 45 }, (_, index) => index + 1);
+const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers }) => {
+  const searchParams = useSearchParams();
 
+  /* 당첨횟수순 > 1~10 필터 미완 */
   return (
     <BarChartWrapperBlock>
-      <NumberBar>
-        <PrevButton>
-          <ArrowIcon />
-        </PrevButton>
-        <Text>1 ~ 10</Text>
-        <NextButton>
-          <ArrowIcon />
-        </NextButton>
-      </NumberBar>
+      {/* {searchParams.get('sortOption') === 'desc' && (
+        <NumberBar>
+          <PrevButton>
+            <ArrowIcon />
+          </PrevButton>
+          <Text>1 ~ 10</Text>
+          <NextButton>
+            <ArrowIcon />
+          </NextButton>
+        </NumberBar>
+      )} */}
 
       <BarList>
         {numbers.map(num => (
-          <BarItem key={num}>
-            <Num>{num}</Num>
-            <StatisticalBar test={50} />
+          <BarItem key={num.no}>
+            <Num>{num.no}</Num>
+            <StatisticalBar count={num.count} />
           </BarItem>
         ))}
       </BarList>
@@ -72,15 +78,18 @@ const Num = styled.span`
   color: #979da6;
   font-size: 14px;
   font-weight: 600;
+  min-width: 19px;
 `;
 
-const StatisticalBar = styled.div<{ test: number }>`
+const StatisticalBar = styled.div<{ count: number }>`
   @keyframes barAni {
     from {
       width: 0;
     }
     to {
-      width: ${props => props.test && props.test * 3.38}px;
+      /* width: ${props => props.count && props.count}%; */
+      /* width: ${({ count }) => count}%; */
+      width: 3%;
     }
   }
 
@@ -100,7 +109,7 @@ const StatisticalBar = styled.div<{ test: number }>`
     width: 0;
     border-radius: 6px;
     background-color: ${palette.blue_15};
-    animation: ${({ test }) => test && `barAni 0.8s forwards`};
+    animation: ${({ count }) => count && `barAni 0.8s forwards`};
   }
 `;
 

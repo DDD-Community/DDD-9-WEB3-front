@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import palette from '@/_styles/palette';
 import { ko } from 'date-fns/locale';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import { Button } from '@/_components/common';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -14,11 +14,13 @@ type MonthPickerFilterTestProps = {};
 const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const startDt = searchParams.get('startDt');
-  const endDt = searchParams.get('endDt');
+  const startDt = searchParams.get('startDt') || format(new Date(), 'yyyyMM');
+  const endDt = searchParams.get('endDt') || format(new Date(), 'yyyyMM');
 
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(`${startDt}`));
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(`${endDt}`));
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(
+    parse(startDt, 'yyyyMM', new Date()),
+  );
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(parse(endDt, 'yyyyMM', new Date()));
 
   const rangeMonthPicker = [
     {
@@ -49,7 +51,7 @@ const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
             selectsEnd={monthPicker.title === '종료일'}
             startDate={selectedStartDate}
             endDate={selectedEndDate}
-            dateFormat="yyyy.MM"
+            dateFormat="yyyyMM"
             showMonthYearPicker
             inline
             minDate={monthPicker.title === '종료일' ? selectedStartDate : null}
@@ -66,7 +68,7 @@ const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
                 <ArrowPrevButton onClick={decreaseYear} disabled={prevMonthButtonDisabled}>
                   <ArrowIcon />
                 </ArrowPrevButton>
-                <YearText>{date.getFullYear()}</YearText>
+                <YearText>{format(new Date(date), 'yyyy')}</YearText>
                 <ArrowNextButton onClick={increaseYear} disabled={nextMonthButtonDisabled}>
                   <ArrowIcon />
                 </ArrowNextButton>
@@ -81,8 +83,8 @@ const MonthPickerFilterTest: React.FC<MonthPickerFilterTestProps> = () => {
           router.push(
             `/analysis/period?category=month&startDt=${format(
               selectedStartDate,
-              'yyyy.MM',
-            )}&endDt=${format(selectedEndDate, 'yyyy.MM')}`,
+              'yyyyMM',
+            )}&endDt=${format(selectedEndDate, 'yyyyMM')}`,
           )
         }
       >

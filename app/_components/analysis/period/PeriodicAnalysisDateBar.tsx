@@ -22,7 +22,7 @@ const PeriodicAnalysisDateBar: React.FC<PeriodicAnalysisDateBarProps> = () => {
   const categoryMode = searchParams.get('category');
   const startDt = searchParams.get('startDt');
   const endDt = searchParams.get('endDt');
-  const isMonthMode = categoryMode === 'month' ? 'yyyy.MM' : 'yyyy';
+  const isMonthMode = categoryMode === 'month' ? 'yyyyMM' : 'yyyy';
   const targetFormatDate = format(new Date(), isMonthMode);
   const [currenEndDt, setCurrenEndDt] = useState<string | null>(endDt);
 

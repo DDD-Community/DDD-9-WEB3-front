@@ -20,7 +20,9 @@ const useLatestNumber = () => {
     retry: 0,
   });
 
-  return { latestNumbers: data, isLoading, error, isFetching };
+  const latestRoundsNumber = data && data.drwt_no;
+
+  return { latestNumbers: data, latestRoundsNumber, isLoading, error, isFetching };
 };
 
 export default useLatestNumber;

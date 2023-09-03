@@ -13,3 +13,8 @@ export interface LatestNumberResponseType {
   first_win_count: number;
   first_tot_amount: number;
 }
+
+export interface PeriodNumberResponseType {
+  no: number;
+  count: number;
+}

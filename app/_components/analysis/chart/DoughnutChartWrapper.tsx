@@ -2,21 +2,23 @@ import palette from '@styles/palette';
 import React from 'react';
 import styled from 'styled-components';
 import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
-type DoughnutChartWrapperProps = {};
 
-const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = () => {
-  // ChartJS.register(ArcElement, Tooltip, Legend);
-  // Chart.register(CategoryScale);
+Chart.register(...registerables);
+
+type DoughnutChartWrapperProps = {
+  numbers: { no: number; count: number }[];
+};
+
+const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = ({ numbers }) => {
+  const mostNumbersList = numbers.slice(0, 6);
 
   const data = {
-    labels: [10, 20, 30, 40, 50, 60],
+    labels: mostNumbersList.map(num => num.no),
     datasets: [
       {
         label: 'My First Dataset',
-        data: [300, 50, 100, 100, 100, 100],
+        data: mostNumbersList.map(num => num.count),
         backgroundColor: [
           palette.blue_15,
           palette.green_30,
@@ -38,7 +40,6 @@ const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = () => {
         <br />
         6개의 번호를 확인해보세요.
       </PieChartTitle>
-
       <DoughnutBox>
         <Doughnut
           data={data}
@@ -48,9 +49,35 @@ const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = () => {
                 display: true,
                 position: 'bottom',
                 labels: {
+                  boxHeight: 5,
+                  boxWidth: 2,
                   usePointStyle: true,
                   font: {
                     weight: '700',
+                  },
+                },
+              },
+              tooltip: {
+                xAlign: 'center',
+                yAlign: 'bottom',
+                cornerRadius: 13,
+                padding: {
+                  top: 6,
+                  bottom: 5,
+                  right: 15,
+                  left: 15,
+                },
+                backgroundColor: palette.grey_20,
+                displayColors: false,
+                usePointStyle: true,
+                callbacks: {
+                  title: () => {
+                    let title = ``;
+                    return title;
+                  },
+                  label: function (context) {
+                    let label = `${context.raw}회 출현`;
+                    return label;
                   },
                 },
               },
