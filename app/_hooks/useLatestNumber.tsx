@@ -1,12 +1,15 @@
 import instance from '@/_apis/core';
 import { LatestNumberResponseType } from '@/_types/analysis';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 
 const useLatestNumber = () => {
   const fetcher = async () => {
     try {
-      const res = await instance.get<LatestNumberResponseType>(`/api/number/latest`);
-      return res;
+      const data = await instance.get<AxiosResponse, LatestNumberResponseType>(
+        `/api/number/latest`,
+      );
+      return data;
     } catch (err) {
       console.log('err', err);
       return null;

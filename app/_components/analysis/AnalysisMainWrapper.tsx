@@ -16,11 +16,11 @@ type AnalysisMainWrapperProps = {};
 const AnalysisMainWrapper: React.FC<AnalysisMainWrapperProps> = () => {
   const { latestNumbers, isLoading } = useLatestNumber();
 
-  const parsedDate = parse(latestNumbers?.drwt_date, 'yyyy-MM-dd', new Date());
+  const parsedDate = parse(`${latestNumbers?.drwt_date}`, 'yyyy-MM-dd', new Date());
   const monthNumber = parsedDate.getMonth() + 1;
   const weekNumber = Math.ceil(parsedDate.getDate() / 7);
 
-  if (isLoading) return <p>loading</p>;
+  if (isLoading) return <p>loading</p>; //로딩 UI 필요
 
   return (
     <AuthProvider>
@@ -30,15 +30,16 @@ const AnalysisMainWrapper: React.FC<AnalysisMainWrapperProps> = () => {
           <br />
           당첨번호를 확인하세요.
         </AnalysisMainTitle>
-
         <WeekWinningNumberBox>
-          {new Array(6).fill('').map((_, i) => (
-            <WeekWinningNumber key={i}>{latestNumbers[`drwt_no${i + 1}`]}</WeekWinningNumber>
-          ))}
+          {latestNumbers &&
+            new Array(6)
+              .fill('')
+              .map((_, i) => (
+                <WeekWinningNumber key={i}>{latestNumbers[`drwt_no${i + 1}`]}</WeekWinningNumber>
+              ))}
           <WeekWinningBonusNumber>{latestNumbers?.bnus_no}</WeekWinningBonusNumber>
           <PolygonIconSVG />
         </WeekWinningNumberBox>
-
         <Image src="/assets/images/analysisMain.png" alt="분석페이지" width="120" height="120" />
         <ResultAmountBannerList />
         <AnalyticsDashboardMenu />
