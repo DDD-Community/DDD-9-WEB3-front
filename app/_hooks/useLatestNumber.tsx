@@ -12,7 +12,6 @@ const useLatestNumber = () => {
       return data;
     } catch (err) {
       console.log('err', err);
-      return null;
     }
   };
 
@@ -20,9 +19,13 @@ const useLatestNumber = () => {
     retry: 0,
   });
 
-  const latestRoundsNumber = data && data.drwt_no;
-
-  return { latestNumbers: data, latestRoundsNumber, isLoading, error, isFetching };
+  return {
+    latestNumbers: data,
+    latestRoundsNumber: data?.drwt_no!!,
+    isLoading,
+    error,
+    isFetching,
+  };
 };
 
 export default useLatestNumber;

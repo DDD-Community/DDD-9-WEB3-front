@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import palette from '@/_styles/palette';
 import { useSearchParams } from 'next/navigation';
@@ -30,7 +30,7 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers }) => {
         {numbers.map(num => (
           <BarItem key={num.no}>
             <Num>{num.no}</Num>
-            <StatisticalBar count={num.count} />
+            <StatisticalBar $count={num.count} />
           </BarItem>
         ))}
       </BarList>
@@ -81,18 +81,16 @@ const Num = styled.span`
   min-width: 19px;
 `;
 
-const StatisticalBar = styled.div<{ count: number }>`
-  @keyframes barAni {
+const barAni = (count: number) => keyframes`
     from {
       width: 0;
     }
     to {
-      /* width: ${props => props.count && props.count}%; */
-      /* width: ${({ count }) => count}%; */
-      width: 3%;
+      width: ${count}%;
     }
-  }
+`;
 
+const StatisticalBar = styled.div<{ $count: number }>`
   width: 100%;
   height: 12px;
   background-color: #eff3f8;
@@ -109,7 +107,7 @@ const StatisticalBar = styled.div<{ count: number }>`
     width: 0;
     border-radius: 6px;
     background-color: ${palette.blue_15};
-    animation: ${({ count }) => count && `barAni 0.8s forwards`};
+    animation: ${props => barAni(props.$count)} 0.8s forwards;
   }
 `;
 

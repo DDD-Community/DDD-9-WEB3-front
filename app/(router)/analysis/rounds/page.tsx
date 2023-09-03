@@ -1,5 +1,9 @@
+'use client';
+
+import RoundsAnalysisWrapper from '@/_components/analysis/rounds/RoundsAnalysisWrapper';
+
 const RoundsAnalysis = () => {
-  return <p>회차별</p>;
+  return <RoundsAnalysisWrapper />;
 };
 
 export default RoundsAnalysis;
