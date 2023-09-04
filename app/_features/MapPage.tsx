@@ -1,107 +1,90 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import useGetMapList from '@hooks/useGetMapList';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { styled } from 'styled-components';
-import ZoomControl from '@components/map/ZoomControl';
-import LocationInfo from "@components/map/LocationInfo";
-// import PlaceChips from "@components/map/PlaceChips";
-import GPSButton from '@components/map/GPSButton';
-import MyLocation from '@assets/svg/myLocation.svg';
-
-// 네이버 맵 api로 변경하기
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
+import { Latitude, Longitude, NaverMap } from "@types/map/index.d.ts";
+import { getMyLocation } from '@lib/util/map';
+import LocationInfo from '@components/map/LocationInfo';
 
 const LAT_INIT = 33.450701;
 const LNG_INIT = 126.570667;
 
 export default function MapPage() {
-  const [level, setLevel] = useState(3); //지도레벨
-  const [latitude, setLatitude] = useState(LAT_INIT); //현재 위치 (위도)
-  const [longitude, setLongitude] = useState(LNG_INIT); //현재 위치 (경도)
-  // const [myAddr, setMyAddr] = useState(""); //현재 위치의 법정동
-  const [myLocation, setMyLocation] = useState(false); //현위치 새로고침 여부
+  const [latitude, setLatitude] = useState<Latitude>(LAT_INIT); //현재 위치 (위도)
+  const [longitude, setLongitude] = useState<Longitude>(LNG_INIT); //현재 위치 (경도)
+  const [level, setLevel] = useState<number>(10); //zoom
+  const [myAddress, setMyAddress] = useState<string>("");
 
-  const fnZoomIn = () => { setLevel(level+1) };
-  const fnZoomOut = () => { setLevel(level-1) };
-  const fnGPSRefresh = () => {
-    //현위치 렌더링을 커스텀훅으로 분리한 다음 여기서 재렌더링 시키기
-    setMyLocation(true);
+  const mapRef = useRef<NaverMap | null | naver.maps.Marker>(null);
+
+  // 현재 위치 가져오기
+  const goToMyLocation = async () => {
+    const { coords } = await getMyLocation();
+    return coords;
   };
 
-  /* 현재위치 세부 조정 옵션 */
-  const geoOptions = {
-    enableHighAccuracy: true,
-    timeout: 1000 * 60, //1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
-    maximumAge: 1000 * 3600 * 24, //24 hour
-  };
-
-  /* 최초 && 현 위치 바뀔 때마다 지도 렌더링 */
-  useEffect(() => {
-    // 주소-좌표 변환 객체 생성
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    /* 좌표로 법정동 상세 주소 정보 요청 */
-    function fnCoord2Addr(lat: number, lng:number, callback: (result: Array<object>, status: string) => void) {
-      geocoder.coord2Address(lat, lng, callback);
-    }
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error, geoOptions); //현재 위치 가져오기
-    }
-
-    function success(position: any) {
-      setLatitude(position.coords.latitude);
-      setLongitude(position.coords.longitude);
-      console.log(latitude, longitude);
-    }
-
-    function error() {
-      setLatitude(LAT_INIT);
-      setLongitude(LNG_INIT);
-    }
-
-    fnCoord2Addr(latitude, longitude, (result, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        console.log(result[0]);
-        // setMyAddr(result[0].address.address_name);
+  // 좌표 -> 주소 변환
+  const searchCoord2Addr = (lat: Latitude, lng: Longitude) => {
+    naver.maps.Service.reverseGeocode({
+      coords: new naver.maps.LatLng(lat, lng),
+    }, function(status, response) {
+      if (status !== naver.maps.Service.Status.OK) {
+        return;
       }
-    });
-  }, [latitude, longitude]);
 
-  const { data } = useGetMapList({ location: "서울", subLocation: "마포구", option: "0", sort: "0" });
-  console.log(data);
+      const result = response.v2; // 검색 결과의 컨테이너
+      // const items = result.results; // 검색 결과의 배열
+
+      setMyAddress(result.address.jibunAddress); // 검색 결과로 만든 지번 주소
+    });
+  };
+
+  // 지도 렌더링 & 현위치 표시
+  useEffect(() => {
+    const location = new naver.maps.LatLng(latitude, longitude);
+
+    //지도 그리기
+    const map = (mapRef.current = new naver.maps.Map('map', {
+      center: location,
+      zoomControl: true,
+      zoom: level,
+      zoomControlOptions: {
+        style: naver.maps.ZoomControlStyle.SMALL,
+        position: naver.maps.Position.TOP_RIGHT,
+      },
+    }));
+
+    searchCoord2Addr(latitude, longitude);
+
+    goToMyLocation().then(
+      (coords) => {
+        setLatitude(coords.latitude);
+        setLongitude(coords.longitude);}
+    );
+
+    setLevel(16);
+    map.setCenter(location);
+    map.setZoom(level, true);
+
+    //마커 설정
+    mapRef.current = new naver.maps.Marker({
+      map,
+      position: location, //마커 좌표
+    });
+  }, [latitude, longitude, level]);
 
   return (
-    <Wrapper>
-      <Map
-        id="map"
-        center={{ lat: latitude, lng: longitude }}
-        style={{ width: '100%', height: '100%' }}
-        level={3}
-      >
-        <MapMarker position={{ lat: latitude, lng: longitude }} />
-        <MyLocation />
-        {Array.isArray(data) && data.map(el => {
-          return <MapMarker key={el.store_id} position={{ lat: el.latitude, lng: el.longitude }} />;
-        })}
-      </Map>
-      <ZoomControl id="zoomControl" zoomIn={fnZoomIn} zoomOut={fnZoomOut} />
-      <GPSButton isActivated={myLocation} onClick={fnGPSRefresh} />
-      <LocationInfo address1={"서울"} address2={"마포구"} />
-    </Wrapper>
+    <MapContainer id="map">
+      <LocationInfo address={myAddress} />
+    </MapContainer>
   );
 }
 
-const Wrapper = styled.main`
+const MapContainer = styled.main`
   position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
   min-height: calc(100vh - 22rem);
+  z-index: 0;
 `;

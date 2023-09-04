@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import palette from '@styles/palette';
 import NearMe from '@assets/svg/nearMe.svg';
-import {LocationType} from "@types/map/index.d.ts";
+// import {LocationType} from "@types/map/index.d.ts";
 
-const LocationInfo = ({ address1, address2 }: LocationType) => {
+type Address = string;
+
+const LocationInfo = ({ address }: Address) => {
   return (
     <Wrap>
       <NearMe />
-      <Text>{address1} {address2}</Text>
+      <Text>{address}</Text>
     </Wrap>
   );
 };
@@ -15,6 +17,9 @@ const LocationInfo = ({ address1, address2 }: LocationType) => {
 export default LocationInfo;
 
 const Wrap = styled.div`
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
   width: fit-content;
   height: 36px;
   background-color: ${palette.grey_20};

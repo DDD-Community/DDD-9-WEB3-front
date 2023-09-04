@@ -1,7 +1,7 @@
 import instance from '@apis/core';
-import {useQuery} from "@tanstack/react-query";
-import {Response} from "@types/common";
-import {MapListParamType, StoreListType} from "@types/map/index.d.ts";
+import { useQuery } from '@tanstack/react-query';
+import { Response } from '@types/common';
+import { MapListParamType, StoreListType } from '@types/map/index.d.ts';
 
 export const MAP_LIST_QUERY_KEY = 'mapList';
 

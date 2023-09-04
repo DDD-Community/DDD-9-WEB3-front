@@ -1,3 +1,9 @@
+export type NaverMap = naver.maps.Map;
+
+export type Latitude = number;
+export type Longitude = number;
+// export type Coordinates = { latitude: Latitude, longitude: Longitude };
+
 export interface LocationType {
   address1: string;
   address2: string;

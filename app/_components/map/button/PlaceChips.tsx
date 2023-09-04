@@ -1,5 +1,5 @@
 import Stack from '@mui/material/Stack';
-import PlaceTypeChip from '@components/map/PlaceTypeChip';
+import PlaceTypeChip from '@components/map/button/PlaceTypeChip';
 import palette from '@styles/palette';
 import { styled } from 'styled-components';
 import { PLACE_TYPE } from '@constants/map';

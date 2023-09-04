@@ -4,7 +4,7 @@ import BookmarkIcon from '@assets/svg/bookmarkIcon.svg';
 import LottoIcon from '@assets/svg/lottoIcon.svg';
 import ShopIcon from '@assets/svg/shopIcon.svg';
 import { PLACE_TYPE } from '@constants/map';
-import { generateUUID } from '@lib/util';
+import generateUUID from '@lib/util/generateUUID';
 
 interface ChipProps {
   placeType: keyof typeof PLACE_TYPE;
