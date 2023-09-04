@@ -5,4 +5,5 @@ export const ROUTES = {
   TERM: '/signup/term',
   MYPAGE: '/mypage',
   SIGNOUT: '/mypage/signout',
+  SCRAPBOOK: '/mypage/scrapbook',
 } as const;

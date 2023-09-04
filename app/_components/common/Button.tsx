@@ -47,7 +47,6 @@ const Wrapper = styled.button<
   line-height: 150%;
   letter-spacing: -0.008rem;
   transition: all 100ms ease-in-out;
-  cursor: pointer;
 
   &:disabled {
     background: ${palette.grey_60};

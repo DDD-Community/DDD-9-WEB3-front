@@ -1,6 +1,6 @@
 'use client';
 
-import { Modal } from '@components/common';
+import { Modal, TopNavigation } from '@components/common';
 import MenuButton from '@components/mypage/MenuButton';
 import Profile from '@components/mypage/Profile';
 import AuthProvider from '@components/providers/AuthProvider';
@@ -29,10 +29,10 @@ const MyPage = () => {
   return (
     <AuthProvider>
       <Wrapper>
-        <Section>마이페이지</Section>
+        <TopNavigation version="NONE" title="마이페이지" />
         <Profile />
         <MenuList>
-          <MenuButton menuType="SCRAP" onClickMenuButton={() => console.log('스크랩')} />
+          <MenuButton menuType="SCRAP" onClickMenuButton={() => router.push(ROUTES.SCRAPBOOK)} />
           <MenuButton menuType="LOGOUT" onClickMenuButton={() => setIsOpenLogoutModal(true)} />
           <MenuButton menuType="SIGNOUT" onClickMenuButton={() => router.push(ROUTES.SIGNOUT)} />
         </MenuList>
@@ -53,15 +53,6 @@ export default MyPage;
 const Wrapper = styled.div`
   height: calc(100vh - 2.9rem);
   padding-top: 2.9rem;
-`;
-
-const Section = styled.div`
-  padding: 0.87rem 0;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 133%;
-  letter-spacing: -0.18px;
 `;
 
 const MenuList = styled.div`
