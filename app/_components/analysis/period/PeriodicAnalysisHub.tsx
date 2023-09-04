@@ -2,12 +2,12 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import PeriodicAnalysisTabs from './PeriodicAnalysisTabs';
 import DoughnutChartWrapper from '../chart/DoughnutChartWrapper';
 import BarChartWrapper from '../chart/BarChartWrapper';
 import PeriodicAnalysisDateBar from './PeriodicAnalysisDateBar';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import usePeriodNumber from '@/_hooks/usePeriodNumber';
+import NavTabs from '@/_components/common/NavTabs';
 
 type PeriodicAnalysisHubProps = {};
 
@@ -19,9 +19,20 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
   const { periodNumbers: periodNumbersByDesc } = usePeriodNumber('desc');
   const { periodNumbers: periodNumbersByAsc } = usePeriodNumber('asc');
 
+  const tabOptions = [
+    {
+      label: '월별',
+      value: '/analysis/period?category=month',
+    },
+    {
+      label: '연도별',
+      value: '/analysis/period?category=year',
+    },
+  ];
+
   return (
     <PeriodicAnalysisHubBlock>
-      <PeriodicAnalysisTabs />
+      <NavTabs tabOptions={tabOptions} />
       <PeriodicAnalysisDateBar />
       <ChartWrapper>
         <DoughnutChartWrapper numbers={periodNumbersByDesc} />
