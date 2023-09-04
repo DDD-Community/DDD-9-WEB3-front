@@ -1,5 +1,9 @@
+'use client';
+
+import AmountAnalysisWrapper from '@/_components/analysis/amount/AmountAnalysisWrapper';
+
 const AmountAnalysis = () => {
-  return <p>금액별</p>;
+  return <AmountAnalysisWrapper />;
 };
 
 export default AmountAnalysis;
