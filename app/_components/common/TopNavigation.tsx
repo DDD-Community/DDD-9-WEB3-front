@@ -55,7 +55,6 @@ const NavigateButton = styled.button`
   top: 0;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 
 const BackButton = styled(NavigateButton)`
