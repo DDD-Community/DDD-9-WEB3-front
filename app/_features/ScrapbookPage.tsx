@@ -20,7 +20,7 @@ export default ScrapbookPage;
 
 const Wrapper = styled.div`
   height: calc(100vh - 2.9rem);
-  padding-top: 2.9rem;
+  padding: 2.9rem 1.25rem 0 1.25rem;
   display: flex;
   flex-direction: column;
 `;
