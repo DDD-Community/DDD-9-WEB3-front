@@ -1,9 +1,7 @@
 import instance from '@/_apis/core';
-import { PeriodNumberResponseType } from '@/_types/analysis';
+import { NumberResponseType, SortOption } from '@/_types/analysis';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-
-type SortOption = 'asc' | 'desc';
 
 type ParamsType = {
   startNo: number;
@@ -20,12 +18,9 @@ const useRoundsNumber = ({ startNo, endNo, sortOption = 'asc' }: ParamsType) => 
 
   const fetcher = async () => {
     try {
-      const data = await instance.get<AxiosResponse, PeriodNumberResponseType[]>(
-        `/api/statics/number`,
-        {
-          params,
-        },
-      );
+      const data = await instance.get<AxiosResponse, NumberResponseType[]>(`/api/statics/number`, {
+        params,
+      });
       return data;
     } catch (err) {
       console.log('err', err);

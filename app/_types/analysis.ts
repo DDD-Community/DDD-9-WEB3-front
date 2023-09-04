@@ -14,7 +14,9 @@ export interface LatestNumberResponseType {
   first_tot_amount: number;
 }
 
-export interface PeriodNumberResponseType {
+export interface NumberResponseType {
   no: number;
   count: number;
 }
+
+export type SortOption = 'asc' | 'desc';

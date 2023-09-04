@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import PrizeAmountList from './PrizeAmountList';
 import { useSearchParams } from 'next/navigation';
 import PrizeRankAnalysisWrapper from './PrizeRankAnalysisWrapper';
+import { SortOption } from '@/_types/analysis';
 
 type AmountAnalysisWrapperProps = {};
 
 const AmountAnalysisWrapper: React.FC<AmountAnalysisWrapperProps> = () => {
   const searchParams = useSearchParams();
-  const type = searchParams.get('type');
+  const type = searchParams.get('type') as SortOption;
 
   const tabOptions = [
     {

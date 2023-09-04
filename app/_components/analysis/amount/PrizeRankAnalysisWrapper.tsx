@@ -3,6 +3,7 @@ import useLatestNumber from '@/_hooks/useLatestNumber';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import BarChartWrapper from '../chart/BarChartWrapper';
+import useRankNumber from '@/_hooks/useRankNumber';
 
 type PrizeRankAnalysisWrapperProps = {};
 
@@ -22,6 +23,12 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
     label: `${index + 1}등`,
     value: index + 1,
   }));
+
+  const { rankNumbersData } = useRankNumber({
+    startRank: selectedStartRank.value,
+    size: selectedEndRank.value - selectedStartRank.value + 1,
+    sortOption: 'desc', //? params 수정필요
+  });
 
   return (
     <PrizeRankAnalysisWrapperBlock>
@@ -58,8 +65,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
           options={selectOptions}
         />
       </RoundsAnalysisSelectorBlock>
-
-      <BarChartWrapper numbers={[{ no: 1, count: 78 }]} />
+      <BarChartWrapper numbers={rankNumbersData} />
     </PrizeRankAnalysisWrapperBlock>
   );
 };

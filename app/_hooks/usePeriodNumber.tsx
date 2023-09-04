@@ -1,11 +1,9 @@
 import instance from '@/_apis/core';
-import { PeriodNumberResponseType } from '@/_types/analysis';
+import { NumberResponseType, SortOption } from '@/_types/analysis';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
-
-type SortOption = 'asc' | 'desc';
 
 type ParamType = {
   startDt: string;
@@ -39,12 +37,9 @@ const usePeriodNumber = (type?: SortOption) => {
 
   const fetcher = async () => {
     try {
-      const data = await instance.get<AxiosResponse, PeriodNumberResponseType[]>(
-        `/api/statics/period`,
-        {
-          params: params[category],
-        },
-      );
+      const data = await instance.get<AxiosResponse, NumberResponseType[]>(`/api/statics/period`, {
+        params: params[category],
+      });
       return data;
     } catch (err) {
       console.log('err', err);
