@@ -1,5 +1,4 @@
-// import IconScrap from '@assets/svg/scrap.svg';
-import IconBookmark from '@assets/svg/bookmarkOff.svg';
+import IconScrap from '@assets/svg/bookmarkOff.svg';
 import IconLogout from '@assets/svg/logout.svg';
 import IconRightArrow from '@assets/svg/rightArrow.svg';
 import IconSignout from '@assets/svg/signout.svg';
@@ -12,7 +11,7 @@ const MENU = {
 } as const;
 
 const MENU_ICON = {
-  SCRAP: <IconBookmark />,
+  SCRAP: <IconScrap />,
   LOGOUT: <IconLogout />,
   SIGNOUT: <IconSignout />,
 };
@@ -41,7 +40,6 @@ const Button = styled.button`
   display: flex;
   justify-content: space-between;
   padding: 0.62rem 0.8rem 0.62rem 1.25rem;
-  cursor: pointer;
 `;
 
 const LeftItem = styled.div`
