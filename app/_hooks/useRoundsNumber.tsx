@@ -1,19 +1,19 @@
 import instance from '@/_apis/core';
-import { NumberResponseType, SortOption } from '@/_types/analysis';
+import { NumberResponseType, RoundNumbersParamsType } from '@/_types/analysis';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
-type ParamsType = {
-  startNo: number;
-  endNo: number;
-  sortOption?: SortOption;
-};
-
-const useRoundsNumber = ({ startNo, endNo, sortOption = 'asc' }: ParamsType) => {
+const useRoundsNumber = ({
+  startNo,
+  endNo,
+  sortOption = 'asc',
+  sortType = 'NO',
+}: RoundNumbersParamsType) => {
   const params = {
     startNo,
     endNo,
     sortOption,
+    sortType,
   };
 
   const fetcher = async () => {

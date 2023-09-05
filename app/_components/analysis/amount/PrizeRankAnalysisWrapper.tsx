@@ -27,7 +27,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
   const { rankNumbersData } = useRankNumber({
     startRank: selectedStartRank.value,
     size: selectedEndRank.value - selectedStartRank.value + 1,
-    sortOption: 'desc', //? params 수정필요
+    sortOption: 'asc',
   });
 
   return (

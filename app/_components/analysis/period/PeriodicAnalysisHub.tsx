@@ -8,6 +8,7 @@ import PeriodicAnalysisDateBar from './PeriodicAnalysisDateBar';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import usePeriodNumber from '@/_hooks/usePeriodNumber';
 import NavTabs from '@/_components/common/NavTabs';
+import { SortType } from '@/_types/analysis';
 
 type PeriodicAnalysisHubProps = {};
 
@@ -16,8 +17,14 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const newParams = new URLSearchParams(searchParams.toString());
-  const { periodNumbers: periodNumbersByDesc } = usePeriodNumber('desc');
-  const { periodNumbers: periodNumbersByAsc } = usePeriodNumber('asc');
+  const { periodNumbers: periodNumbersByDesc } = usePeriodNumber({
+    sortOption: 'desc',
+    sortType: 'COUNT',
+  });
+  const { periodNumbers: periodNumbersByAsc } = usePeriodNumber({
+    sortOption: searchParams.get('sortType') === 'COUNT' ? 'desc' : 'asc',
+    sortType: searchParams.get('sortType') as SortType,
+  });
 
   const tabOptions = [
     {
@@ -38,7 +45,7 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
         <DoughnutChartWrapper numbers={periodNumbersByDesc} />
         <button
           onClick={() => {
-            newParams.set('sortOption', 'asc');
+            newParams.set('sortType', 'NO');
             router.push(`${pathname}?${newParams.toString()}`);
           }}
         >
@@ -46,7 +53,7 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
         </button>
         <button
           onClick={() => {
-            newParams.set('sortOption', 'desc');
+            newParams.set('sortType', 'COUNT');
             router.push(`${pathname}?${newParams.toString()}`);
           }}
         >

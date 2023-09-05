@@ -31,12 +31,14 @@ const RoundsAnalysisWrapper: React.FC<RoundsAnalysisWrapperProps> = () => {
   const { roundNumbersData } = useRoundsNumber({
     startNo: selectedStartRound.value,
     endNo: selectedEndRound.value,
+    sortType: 'COUNT',
+    sortOption: 'desc',
   });
 
   const { roundNumbersData: descRoundNumbersData } = useRoundsNumber({
     startNo: selectedStartRound.value,
     endNo: selectedEndRound.value,
-    sortOption: 'desc',
+    sortOption: 'asc',
   });
 
   return (

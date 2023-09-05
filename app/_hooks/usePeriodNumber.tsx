@@ -1,44 +1,38 @@
 import instance from '@/_apis/core';
-import { NumberResponseType, SortOption } from '@/_types/analysis';
+import { NumberResponseType, SortOption, SortType, PeriodParamType } from '@/_types/analysis';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
 
-type ParamType = {
-  startDt: string;
-  endDt: string;
-  sortOption: SortOption;
-};
-
-type ParamsType = {
-  month: ParamType;
-  year: ParamType;
-};
-
-const usePeriodNumber = (type?: SortOption) => {
+const usePeriodNumber = ({
+  sortOption,
+  sortType,
+}: Pick<PeriodParamType, 'sortOption' | 'sortType'>) => {
   const searchParams = useSearchParams();
   const monthFormatDate = format(new Date(), 'yyyyMM');
   const yearFormatDate = format(new Date(), 'yyyy');
   const category = (searchParams.get('category') || 'month') as 'year' | 'month';
 
-  const params: ParamsType = {
+  const params = {
     month: {
       startDt: searchParams.get('startDt') || searchParams.get('endDt') || monthFormatDate,
       endDt: searchParams.get('endDt') || monthFormatDate,
-      sortOption: type || (searchParams.get('sortOption') as SortOption) || 'asc',
     },
     year: {
       startDt: `${searchParams.get('startDt') || searchParams.get('endDt') || yearFormatDate}01`,
       endDt: `${searchParams.get('endDt') || yearFormatDate}12`,
-      sortOption: type || (searchParams.get('sortOption') as SortOption) || 'asc',
     },
   };
 
   const fetcher = async () => {
     try {
       const data = await instance.get<AxiosResponse, NumberResponseType[]>(`/api/statics/period`, {
-        params: params[category],
+        params: {
+          ...params[category],
+          sortOption: sortOption || (searchParams.get('sortOption') as SortOption) || 'asc',
+          sortType: sortType || (searchParams.get('sortType') as SortType) || 'NO',
+        },
       });
       return data;
     } catch (err) {
@@ -47,7 +41,7 @@ const usePeriodNumber = (type?: SortOption) => {
   };
 
   const { data, error, isFetching, isLoading } = useQuery(
-    ['PeriodNumberData', params[category]],
+    ['PeriodNumberData', { params, sortType }],
     fetcher,
     {
       retry: 0,

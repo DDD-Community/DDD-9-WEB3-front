@@ -1,21 +1,21 @@
 import instance from '@/_apis/core';
-import { NumberResponseType, SortOption } from '@/_types/analysis';
+import { NumberResponseType, RankNumbersParamsType } from '@/_types/analysis';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
-type ParamsType = {
-  startRank: number;
-  size: number;
-  isDesc?: SortOption;
-  sortOption?: SortOption;
-};
-
-const useRankNumber = ({ startRank, size, isDesc = 'asc', sortOption = 'asc' }: ParamsType) => {
+const useRankNumber = ({
+  startRank,
+  size,
+  rankSortOption = 'asc',
+  sortOption = 'asc',
+  sortType = 'NO',
+}: RankNumbersParamsType) => {
   const params = {
     startRank,
     size,
-    isDesc,
+    rankSortOption,
     sortOption,
+    sortType,
   };
 
   const fetcher = async () => {
