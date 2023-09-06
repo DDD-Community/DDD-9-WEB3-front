@@ -3,12 +3,13 @@
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import palette from '@styles/palette';
-import { PropsWithChildren, useState } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
+import ScrapStore from '../scrap/ScrapStore';
 import Button from './Button';
 
-const BottomSheet = ({ children }: PropsWithChildren) => {
+const BottomSheet = () => {
   const [isShow, setIsShow] = useState(false);
 
   return (
@@ -22,16 +23,18 @@ const BottomSheet = ({ children }: PropsWithChildren) => {
         sx={{
           '.MuiPaper-root': {
             margin: '0 auto',
-            paddingTop: '30px',
-            paddingX: '20px',
+            paddingTop: '1.8rem',
+            paddingX: '1.25rem',
             maxWidth: '23.4rem',
-            borderTopLeftRadius: '16px',
-            borderTopRightRadius: '16px',
+            borderTopLeftRadius: '1rem',
+            borderTopRightRadius: '1rem',
           },
         }}
       >
         <HandleBar />
-        {children}
+        <ScrapStore />
+        <ScrapStore />
+        <ScrapStore />
       </SwipeableDrawer>
     </>
   );
@@ -40,12 +43,12 @@ const BottomSheet = ({ children }: PropsWithChildren) => {
 export default BottomSheet;
 
 const HandleBar = styled(Box)`
-  width: 80px;
-  height: 6px;
-  background-color: ${palette.grey_60};
-  border-radius: 3px;
   position: absolute;
-  top: 12px;
+  top: 0.75rem;
   left: 50%;
+  width: 5rem;
+  height: 0.3rem;
   transform: translateX(-50%);
+  border-radius: 0.18rem;
+  background-color: ${palette.grey_60};
 `;
