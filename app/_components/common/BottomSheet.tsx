@@ -1,39 +1,41 @@
-'use client';
-
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import palette from '@styles/palette';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
-import Button from './Button';
+interface BottomSheetProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
 
-const BottomSheet = ({ children }: PropsWithChildren) => {
-  const [isShow, setIsShow] = useState(false);
-
+const BottomSheet = ({
+  children,
+  isOpen,
+  onOpen,
+  onClose,
+}: PropsWithChildren<BottomSheetProps>) => {
   return (
-    <>
-      <Button onClick={() => setIsShow(true)}>Bottom Sheet</Button>
-      <SwipeableDrawer
-        anchor="bottom"
-        open={isShow}
-        onClose={() => setIsShow(false)}
-        onOpen={() => setIsShow(true)}
-        sx={{
-          '.MuiPaper-root': {
-            margin: '0 auto',
-            paddingTop: '1.8rem',
-            paddingX: '1.25rem',
-            maxWidth: '23.4rem',
-            borderTopLeftRadius: '1rem',
-            borderTopRightRadius: '1rem',
-          },
-        }}
-      >
-        <HandleBar />
-        {children}
-      </SwipeableDrawer>
-    </>
+    <SwipeableDrawer
+      anchor="bottom"
+      open={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+      sx={{
+        '.MuiPaper-root': {
+          margin: '0 auto',
+          paddingTop: '1.8rem',
+          paddingX: '1.25rem',
+          maxWidth: '23.4rem',
+          borderTopLeftRadius: '1rem',
+          borderTopRightRadius: '1rem',
+        },
+      }}
+    >
+      <HandleBar />
+      {children}
+    </SwipeableDrawer>
   );
 };
 
