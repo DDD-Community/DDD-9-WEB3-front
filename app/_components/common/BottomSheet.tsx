@@ -3,13 +3,12 @@
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import palette from '@styles/palette';
-import { useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { styled } from 'styled-components';
 
-import ScrapStore from '../scrap/ScrapStore';
 import Button from './Button';
 
-const BottomSheet = () => {
+const BottomSheet = ({ children }: PropsWithChildren) => {
   const [isShow, setIsShow] = useState(false);
 
   return (
@@ -32,9 +31,7 @@ const BottomSheet = () => {
         }}
       >
         <HandleBar />
-        <ScrapStore />
-        <ScrapStore />
-        <ScrapStore />
+        {children}
       </SwipeableDrawer>
     </>
   );
