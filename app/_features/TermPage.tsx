@@ -8,7 +8,7 @@ import { styled } from 'styled-components';
 export default function TermPage() {
   return (
     <Wrapper>
-      <TopNavigation version="BOTH" isXMargin={false} path={ROUTES.HOME} />
+      <TopNavigation version="BOTH" $isXMargin={false} path={ROUTES.HOME} />
       <Title>서비스 이용약관</Title>
       <Content>
         <div>

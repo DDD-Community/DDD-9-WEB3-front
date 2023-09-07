@@ -13,17 +13,17 @@ const NAVIGATION_VERSION = {
 } as const;
 
 interface TopNavigationProps {
+  $isXMargin?: boolean;
   version: keyof typeof NAVIGATION_VERSION;
-  isXMargin?: boolean;
   title?: string;
   path?: (typeof ROUTES)[keyof typeof ROUTES];
 }
 
-const TopNavigation = ({ version, isXMargin = true, title, path }: TopNavigationProps) => {
+const TopNavigation = ({ $isXMargin = true, version, title, path }: TopNavigationProps) => {
   const router = useRouter();
 
   return (
-    <NavigationBar isXMargin={isXMargin}>
+    <NavigationBar $isXMargin={$isXMargin}>
       {(version === NAVIGATION_VERSION.BACK || version === NAVIGATION_VERSION.BOTH) && (
         <BackButton type="button" onClick={() => router.back()}>
           <IconBack />
@@ -41,9 +41,9 @@ const TopNavigation = ({ version, isXMargin = true, title, path }: TopNavigation
 
 export default TopNavigation;
 
-const NavigationBar = styled.div<{ isXMargin: boolean }>`
+const NavigationBar = styled.div<{ $isXMargin: boolean }>`
   position: relative;
-  margin: ${({ isXMargin }) => (isXMargin ? '1.25rem' : '1.25rem 0')};
+  margin: ${({ $isXMargin }) => ($isXMargin ? '1.25rem' : '1.25rem 0')};
   height: 1.5rem;
   display: flex;
   justify-content: center;
