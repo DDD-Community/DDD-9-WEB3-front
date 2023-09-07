@@ -20,7 +20,7 @@ const ScrapStore = ({ storeInfo }: ScrapStoreProps) => {
   const { mutate: deleteScrapStore } = useDeleteScrap(storeInfo.storeId);
 
   const handleScrapButtonClick = () => {
-    setIsOpenDeleteScrapModal(true);
+    deleteScrapStore();
   };
 
   return (
@@ -28,7 +28,7 @@ const ScrapStore = ({ storeInfo }: ScrapStoreProps) => {
       <Wrapper>
         <ScrapHeader>
           <StoreName>{storeInfo.storeName}</StoreName>
-          <ScrapButton onClick={handleScrapButtonClick}>
+          <ScrapButton onClick={() => setIsOpenDeleteScrapModal(true)}>
             <IconScrap />
           </ScrapButton>
         </ScrapHeader>
@@ -55,7 +55,7 @@ const ScrapStore = ({ storeInfo }: ScrapStoreProps) => {
         content={`스크랩북에서\n삭제하시겠어요?`}
         buttonContent="삭제하기"
         onClose={() => setIsOpenDeleteScrapModal(false)}
-        onClick={deleteScrapStore}
+        onClick={handleScrapButtonClick}
       />
     </>
   );
