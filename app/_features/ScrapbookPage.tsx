@@ -1,16 +1,25 @@
 'use client';
 
-import { TopNavigation } from '@components/common';
+import { Spinner, TopNavigation } from '@components/common';
 import AuthProvider from '@components/providers/AuthProvider';
 import ScrapStore from '@components/scrap/ScrapStore';
+import { useGetScrap } from '@hooks/queries/useScrap';
+import { useIsLoggedIn } from '@store/auth';
 import { styled } from 'styled-components';
 
 const ScrapbookPage = () => {
+  const isLoggedIn = useIsLoggedIn();
+  const { data: scrapList, isLoading } = useGetScrap({ enabled: isLoggedIn });
+
   return (
     <AuthProvider>
       <Wrapper>
         <TopNavigation version="BACK" title="스크랩북" />
-        <ScrapStore />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          scrapList?.map(scrapItem => <ScrapStore key={scrapItem.storeId} storeInfo={scrapItem} />)
+        )}
       </Wrapper>
     </AuthProvider>
   );

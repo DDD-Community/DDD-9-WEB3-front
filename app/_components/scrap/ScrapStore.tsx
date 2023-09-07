@@ -5,11 +5,17 @@ import IconDropArrow from '@assets/svg/dropArrow.svg';
 import palette from '@styles/palette';
 import { styled } from 'styled-components';
 
-const ScrapStore = () => {
+import type { LottoStore } from '@/_types/response/scrap';
+
+interface ScrapStoreProps {
+  storeInfo: LottoStore;
+}
+
+const ScrapStore = ({ storeInfo }: ScrapStoreProps) => {
   return (
     <Wrapper>
       <ScrapHeader>
-        <StoreName>잉크와복권 화곡2호점</StoreName>
+        <StoreName>{storeInfo.storeName}</StoreName>
         <ScrapButton>
           <IconScrap />
         </ScrapButton>
@@ -24,11 +30,11 @@ const ScrapStore = () => {
       <ScrapFooter>
         <StoreInfo>
           <IconAddress />
-          <Description>서울 강서구 가로공원로76가길 12</Description>
+          <Description>{storeInfo.address}</Description>
         </StoreInfo>
         <StoreInfo>
           <IconContact />
-          <Description>010-1234-5678</Description>
+          <Description>{storeInfo.phone}</Description>
         </StoreInfo>
       </ScrapFooter>
     </Wrapper>
@@ -92,4 +98,8 @@ const StoreInfo = styled.div`
 
 const Description = styled.span`
   margin-left: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 `;
