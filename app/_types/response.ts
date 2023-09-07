@@ -13,11 +13,6 @@ export interface MemberResponse {
   nickname: string;
 }
 
-export interface ScrapResponse {
-  user_id: string;
-  store_id: string;
-}
-
 export type APIErrorResponse = {
   status: HttpStatusCode;
   statusText: string;
