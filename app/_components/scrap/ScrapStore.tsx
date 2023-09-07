@@ -39,7 +39,6 @@ export default ScrapStore;
 
 const Wrapper = styled.div`
   padding: 1rem 1.25rem;
-  margin: 0 -1.25rem;
   border-bottom: 1px solid ${palette.grey_70};
 `;
 
