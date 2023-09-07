@@ -2,7 +2,6 @@ import palette from '@/_styles/palette';
 import { Stack, Switch, Typography } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 type ToggleSwitchProps = {
   leftOption: {
@@ -14,6 +13,21 @@ type ToggleSwitchProps = {
     label: string;
     queryParams: string;
     value: string;
+  };
+};
+
+const OptionLabelStyle = ({ isFocused }: { isFocused: boolean }) => {
+  return {
+    position: 'absolute',
+    maxHeight: 'calc(100vh - 163px)',
+    top: '24%',
+    zIndex: '1',
+    cursor: 'pointer',
+    userSelect: 'none',
+    fontSize: ' 14px',
+    transition: 'color 0.3s ease-in-out',
+    fontWeight: isFocused ? 'bold' : 'normal',
+    color: isFocused ? palette.black : palette.grey_40,
   };
 };
 
@@ -43,13 +57,22 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
         position: 'relative',
       }}
     >
-      <LeftLabel
+      <Typography
         onClick={handleSwitchChange}
-        isfocused={searchParams.get(leftOption.queryParams) === leftOption.value}
+        sx={{
+          ...OptionLabelStyle({
+            isFocused:
+              !searchParams.get(leftOption.queryParams) ||
+              searchParams.get(leftOption.queryParams) === leftOption.value,
+          }),
+          left: '26%',
+          transform: 'translateX(-50%)',
+        }}
       >
         {leftOption.label}
-      </LeftLabel>
+      </Typography>
       <Switch
+        defaultChecked={false}
         checked={isChecked}
         onChange={handleSwitchChange}
         inputProps={{ 'aria-label': 'ant design' }}
@@ -58,6 +81,9 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
           height: 40,
           padding: 0,
           display: 'flex',
+          '&.MuiTypography-root': {
+            fontSize: 14,
+          },
           '&.MuiSwitch-root': {
             margin: 0,
           },
@@ -89,36 +115,20 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
           },
         }}
       />
-      <RightLabel
+      <Typography
         onClick={handleSwitchChange}
-        isfocused={searchParams.get(rightOption.queryParams) === rightOption.value}
+        sx={{
+          ...OptionLabelStyle({
+            isFocused: searchParams.get(rightOption.queryParams) === rightOption.value,
+          }),
+          right: '26%',
+          transform: 'translateX(50%)',
+        }}
       >
         {rightOption.label}
-      </RightLabel>
+      </Typography>
     </Stack>
   );
 };
-
-const Label = styled(Typography)<{ isfocused: boolean }>`
-  position: absolute;
-  top: 24%;
-  z-index: 1;
-  cursor: pointer;
-  user-select: none;
-  font-size: 14px;
-  color: ${({ isfocused }) => (isfocused ? palette.black : palette.grey_40)};
-  font-weight: ${({ isfocused }) => isfocused && 'bold'};
-  transition: color 0.3s ease-in-out;
-`;
-
-const LeftLabel = styled(Label)<{ isfocused: boolean }>`
-  left: 26%;
-  transform: translateX(-50%);
-`;
-
-const RightLabel = styled(Label)<{ isfocused: boolean }>`
-  right: 26%;
-  transform: translateX(50%);
-`;
 
 export default ToggleSwitch;
