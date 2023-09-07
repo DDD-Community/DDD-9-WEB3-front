@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-query';
 import type { AxiosError, AxiosResponse } from 'axios';
 
-import type { LottoStore, ScrapData, ScrapResponse } from '@/_types/response/scrap';
+import type { ScrapData, ScrapParams, ScrapResponse } from '@/_types/response/scrap';
 
 const SCRAP_QUERYKEY = getQueryKey('scrap');
 
@@ -36,8 +36,23 @@ export const useGetScrap = (
       })),
   });
 
+export const usePostScrap = (
+  storeId: ScrapParams,
+  options?: UseMutationOptions<AxiosResponse, AxiosError>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => scrapApi.postScrapStore(storeId),
+    ...options,
+    onSuccess: () => {
+      queryClient.invalidateQueries(SCRAP_QUERYKEY.lists());
+    },
+  });
+};
+
 export const useDeleteScrap = (
-  storeId: LottoStore['storeId'],
+  storeId: ScrapParams,
   options?: UseMutationOptions<AxiosResponse, AxiosError>,
 ) => {
   const queryClient = useQueryClient();

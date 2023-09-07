@@ -16,6 +16,8 @@ export interface ScrapData {
   get: LottoStore[];
 }
 
+export type ScrapParams = LottoStore['storeId'];
+
 export interface ScrapResponse {
   get: {
     store_id: string;
