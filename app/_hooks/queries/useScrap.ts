@@ -1,9 +1,15 @@
 import { scrapApi } from '@apis/scrap';
 import { getQueryKey } from '@lib/util/queryKey';
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import type { AxiosError } from 'axios';
+import {
+  useMutation,
+  type UseMutationOptions,
+  useQuery,
+  useQueryClient,
+  type UseQueryOptions,
+} from '@tanstack/react-query';
+import type { AxiosError, AxiosResponse } from 'axios';
 
-import type { ScrapData, ScrapResponse } from '@/_types/response/scrap';
+import type { LottoStore, ScrapData, ScrapResponse } from '@/_types/response/scrap';
 
 const SCRAP_QUERYKEY = getQueryKey('scrap');
 
@@ -13,6 +19,7 @@ export const useGetScrap = (
   useQuery<ScrapResponse['get'], AxiosError, ScrapData['get']>({
     queryKey: SCRAP_QUERYKEY.lists(),
     queryFn: scrapApi.getScrapStore,
+    ...options,
     select: data =>
       data.map(scrap => ({
         storeId: scrap.store_id,
@@ -27,5 +34,19 @@ export const useGetScrap = (
         address: scrap.new_address,
         phone: scrap.phone_no,
       })),
-    ...options,
   });
+
+export const useDeleteScrap = (
+  storeId: LottoStore['storeId'],
+  options?: UseMutationOptions<AxiosResponse, AxiosError>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => scrapApi.deleteScrapStore(storeId),
+    ...options,
+    onSuccess: () => {
+      queryClient.invalidateQueries(SCRAP_QUERYKEY.lists());
+    },
+  });
+};

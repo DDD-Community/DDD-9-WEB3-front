@@ -57,6 +57,7 @@ const ModalContent = styled.div`
   line-height: 133%;
   letter-spacing: -0.18px;
   padding: 1.25rem 0 1.8rem;
+  white-space: pre-line;
 `;
 
 const ButtonGroup = styled.div`

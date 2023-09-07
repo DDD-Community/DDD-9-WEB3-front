@@ -7,4 +7,5 @@ export const ERROR = {
     title: '일시적인 오류입니다',
     description: '서비스 이용에 불편을 드려서 죄송합니다. 잠시 후 재시도해주세요.',
   },
+  NO_DATA: '정보를 찾을 수 없습니다.',
 };
