@@ -1,4 +1,4 @@
-import palette from '@/_styles/palette';
+import palette from '@styles/palette';
 import { Stack, Switch, Typography } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
@@ -16,21 +16,6 @@ type ToggleSwitchProps = {
   };
 };
 
-const OptionLabelStyle = ({ isFocused }: { isFocused: boolean }) => {
-  return {
-    position: 'absolute',
-    maxHeight: 'calc(100vh - 163px)',
-    top: '24%',
-    zIndex: '1',
-    cursor: 'pointer',
-    userSelect: 'none',
-    fontSize: ' 14px',
-    transition: 'color 0.3s ease-in-out',
-    fontWeight: isFocused ? 'bold' : 'normal',
-    color: isFocused ? palette.black : palette.grey_40,
-  };
-};
-
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -40,6 +25,21 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
   const [isChecked, setIsChecked] = useState(
     searchParams.get(rightOption.queryParams) === rightOption.value,
   );
+
+  const getOptionLabelStyle = ({ isFocused }: { isFocused: boolean }) => {
+    return {
+      position: 'absolute',
+      maxHeight: 'calc(100vh - 163px)',
+      top: '24%',
+      zIndex: '1',
+      cursor: 'pointer',
+      userSelect: 'none',
+      fontSize: ' 14px',
+      transition: 'color 0.3s ease-in-out',
+      fontWeight: isFocused ? 'bold' : 'normal',
+      color: isFocused ? palette.black : palette.grey_40,
+    };
+  };
 
   const handleSwitchChange = () => {
     setIsChecked(!isChecked);
@@ -60,7 +60,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
       <Typography
         onClick={handleSwitchChange}
         sx={{
-          ...OptionLabelStyle({
+          ...getOptionLabelStyle({
             isFocused:
               !searchParams.get(leftOption.queryParams) ||
               searchParams.get(leftOption.queryParams) === leftOption.value,
@@ -118,7 +118,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
       <Typography
         onClick={handleSwitchChange}
         sx={{
-          ...OptionLabelStyle({
+          ...getOptionLabelStyle({
             isFocused: searchParams.get(rightOption.queryParams) === rightOption.value,
           }),
           right: '26%',
