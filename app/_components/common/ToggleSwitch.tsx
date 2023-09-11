@@ -1,7 +1,7 @@
-import palette from '@styles/palette';
+import palette from '@/_styles/palette';
 import { Stack, Switch, Typography } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type ToggleSwitchProps = {
   leftOption: {
@@ -25,6 +25,13 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
   const [isChecked, setIsChecked] = useState(
     searchParams.get(rightOption.queryParams) === rightOption.value,
   );
+
+  useEffect(() => {
+    if (!searchParams.get(rightOption.queryParams)) {
+      setIsChecked(false);
+      return;
+    }
+  }, [searchParams, rightOption]);
 
   const getOptionLabelStyle = ({ isFocused }: { isFocused: boolean }) => {
     return {
@@ -72,7 +79,6 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ leftOption, rightOption }) 
         {leftOption.label}
       </Typography>
       <Switch
-        defaultChecked={false}
         checked={isChecked}
         onChange={handleSwitchChange}
         inputProps={{ 'aria-label': 'ant design' }}
