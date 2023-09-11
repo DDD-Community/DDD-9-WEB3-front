@@ -17,6 +17,14 @@ const Selector: React.FC<SelectorProps> = ({ selectOption, onChange, options }) 
       onChange={onChange}
       displayEmpty
       inputProps={{ 'aria-label': 'Without label' }}
+      MenuProps={{
+        PaperProps: {
+          style: {
+            marginTop: 7,
+            maxHeight: 275,
+          },
+        },
+      }}
       sx={{
         height: 42,
         width: '100%',
@@ -30,8 +38,15 @@ const Selector: React.FC<SelectorProps> = ({ selectOption, onChange, options }) 
         '&:hover .MuiOutlinedInput-notchedOutline': {
           borderColor: palette.grey_60,
         },
-        '.MuiSvgIcon-root ': {
+        '.MuiSvgIcon-root': {
           fill: 'palette.black !important',
+        },
+        '&.MuiSelect-root::-webkit-scrollbar': {
+          width: '120px',
+        },
+        '&.MuiSelect-root::-webkit-scrollbar-thumb': {
+          backgroundColor: '#888',
+          borderRadius: '6px',
         },
       }}
     >
@@ -44,6 +59,15 @@ const Selector: React.FC<SelectorProps> = ({ selectOption, onChange, options }) 
   );
 };
 
-const SelectorBlock = styled(Select)``;
+const SelectorBlock = styled(Select)`
+  &::-webkit-scrollbar {
+    width: '120px'; // 스크롤바의 너비를 조절할 수 있습니다.
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: '#888'; // 스크롤바 색상을 설정할 수 있습니다.
+    border-radius: '6px'; // 스크롤바의 모서리를 둥글게 만들 수 있습니다.
+  }
+`;
 
 export default Selector;

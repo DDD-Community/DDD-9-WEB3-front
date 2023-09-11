@@ -34,7 +34,7 @@ const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = ({ numbers }) 
   };
 
   return (
-    <DoughnutChartWrapperBlock>
+    <DoughnutChartWrapperBlock className="doughnut-chart">
       <PieChartTitle>
         가장 많이 출현한
         <br />

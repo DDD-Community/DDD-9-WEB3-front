@@ -13,7 +13,7 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers }) => {
 
   /* 당첨횟수순 > 1~10 필터 미완 */
   return (
-    <BarChartWrapperBlock>
+    <BarChartWrapperBlock className="bar-chart">
       {/* {searchParams.get('sortOption') === 'desc' && (
         <NumberBar>
           <PrevButton>

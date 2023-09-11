@@ -5,18 +5,16 @@ import styled from 'styled-components';
 import DoughnutChartWrapper from '../chart/DoughnutChartWrapper';
 import BarChartWrapper from '../chart/BarChartWrapper';
 import PeriodicAnalysisDateBar from './PeriodicAnalysisDateBar';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import usePeriodNumber from '@/_hooks/usePeriodNumber';
 import NavTabs from '@/_components/common/NavTabs';
 import { SortType } from '@/_types/analysis';
+import ToggleSwitch from '@/_components/common/ToggleSwitch';
 
 type PeriodicAnalysisHubProps = {};
 
 const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const newParams = new URLSearchParams(searchParams.toString());
   const { periodNumbers: periodNumbersByDesc } = usePeriodNumber({
     sortOption: 'desc',
     sortType: 'COUNT',
@@ -26,46 +24,51 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
     sortType: searchParams.get('sortType') as SortType,
   });
 
-  const tabOptions = [
-    {
-      label: '월별',
-      value: '/analysis/period?category=month',
-    },
-    {
-      label: '연도별',
-      value: '/analysis/period?category=year',
-    },
-  ];
-
   return (
     <PeriodicAnalysisHubBlock>
-      <NavTabs tabOptions={tabOptions} />
+      <NavTabs
+        tabOptions={[
+          {
+            label: '월별',
+            queryParams: 'category',
+            value: 'month',
+          },
+          {
+            label: '연도별',
+            queryParams: 'category',
+            value: 'year',
+          },
+        ]}
+      />
       <PeriodicAnalysisDateBar />
       <ChartWrapper>
         <DoughnutChartWrapper numbers={periodNumbersByDesc} />
-        <button
-          onClick={() => {
-            newParams.set('sortType', 'NO');
-            router.push(`${pathname}?${newParams.toString()}`);
+        <ToggleSwitch
+          leftOption={{
+            label: '번호순',
+            queryParams: 'sortType',
+            value: 'NO',
           }}
-        >
-          번호순
-        </button>
-        <button
-          onClick={() => {
-            newParams.set('sortType', 'COUNT');
-            router.push(`${pathname}?${newParams.toString()}`);
+          rightOption={{
+            label: '당첨횟수순',
+            queryParams: 'sortType',
+            value: 'COUNT',
           }}
-        >
-          당첨횟수순
-        </button>
+        />
         <BarChartWrapper numbers={periodNumbersByAsc} />
       </ChartWrapper>
     </PeriodicAnalysisHubBlock>
   );
 };
 
-const PeriodicAnalysisHubBlock = styled.div``;
+const PeriodicAnalysisHubBlock = styled.div`
+  .doughnut-chart {
+    margin-bottom: 42px;
+  }
+  .bar-chart {
+    margin-top: 30px;
+  }
+`;
 
 const ChartWrapper = styled.div`
   padding: 24px 20px;

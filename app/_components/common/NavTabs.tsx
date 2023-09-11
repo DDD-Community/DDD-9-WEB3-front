@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Link from 'next/link';
 import palette from '@/_styles/palette';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type NavTabsProps = {
-  tabOptions: { label: string; value: string }[];
+  tabOptions: { label: string; queryParams: string; value: string }[];
 };
 
 const NavTabs: React.FC<NavTabsProps> = ({ tabOptions }) => {
-  const [value, setValue] = useState(tabOptions[0].value);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [value, setValue] = useState(searchParams.get(tabOptions[0].queryParams));
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -33,8 +36,9 @@ const NavTabs: React.FC<NavTabsProps> = ({ tabOptions }) => {
           label={tab.label}
           value={tab.value}
           key={i}
-          component={Link}
-          href={tab.value}
+          onClick={() => {
+            router.push(`${pathname}?${tab.queryParams}=${tab.value}`);
+          }}
           sx={{
             '&.Mui-selected': {
               fontWeight: 700,

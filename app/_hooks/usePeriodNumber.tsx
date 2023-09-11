@@ -13,15 +13,17 @@ const usePeriodNumber = ({
   const monthFormatDate = format(new Date(), 'yyyyMM');
   const yearFormatDate = format(new Date(), 'yyyy');
   const category = (searchParams.get('category') || 'month') as 'year' | 'month';
+  const startDt = searchParams.get('startDt');
+  const endDt = searchParams.get('endDt');
 
   const params = {
     month: {
-      startDt: searchParams.get('startDt') || searchParams.get('endDt') || monthFormatDate,
-      endDt: searchParams.get('endDt') || monthFormatDate,
+      startDt: startDt || endDt || monthFormatDate,
+      endDt: endDt || monthFormatDate,
     },
     year: {
-      startDt: `${searchParams.get('startDt') || searchParams.get('endDt') || yearFormatDate}01`,
-      endDt: `${searchParams.get('endDt') || yearFormatDate}12`,
+      startDt: `${startDt || endDt || yearFormatDate}01`,
+      endDt: `${endDt || yearFormatDate}12`,
     },
   };
 
@@ -41,7 +43,7 @@ const usePeriodNumber = ({
   };
 
   const { data, error, isFetching, isLoading } = useQuery(
-    ['PeriodNumberData', { params, sortType }],
+    ['PeriodNumberData', { category, sortOption, startDt, endDt, sortType }],
     fetcher,
     {
       retry: 0,
