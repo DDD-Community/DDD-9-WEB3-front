@@ -15,11 +15,13 @@ const AmountAnalysisWrapper: React.FC<AmountAnalysisWrapperProps> = () => {
   const tabOptions = [
     {
       label: '당첨금액 높은 순',
-      value: '/analysis/amount?type=desc',
+      queryParams: 'type',
+      value: 'desc',
     },
     {
       label: '당첨금액 낮은 순',
-      value: '/analysis/amount?type=asc',
+      queryParams: 'type',
+      value: 'asc',
     },
   ];
 

@@ -1,12 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import PrizeAmountListItem from './PrizeAmountListItem';
+import useRankDetail from '@/_hooks/useRankDetail';
+import { useSearchParams } from 'next/navigation';
 
-type PrizeAmountListProps = {
-  type?: 'asc' | 'desc';
-};
+type PrizeAmountListProps = {};
 
-const PrizeAmountList: React.FC<PrizeAmountListProps> = ({ type = 'desc' }) => {
+const PrizeAmountList: React.FC<PrizeAmountListProps> = () => {
+  const searchParams = useSearchParams();
+  const { rankDetailData } = useRankDetail({
+    size: 5,
+    sortOption: searchParams.get('type') || 'desc',
+  });
+
+  console.log(rankDetailData);
+
   return (
     <PrizeAmountListBlock>
       <PrizeAmountTopBox>
@@ -17,11 +25,9 @@ const PrizeAmountList: React.FC<PrizeAmountListProps> = ({ type = 'desc' }) => {
         </Title>
 
         <PrizeAmountListBox>
-          {Array(5)
-            .fill('')
-            .map((test, i) => (
-              <PrizeAmountListItem isTop={i === 0} key={i} index={i + 1} />
-            ))}
+          {rankDetailData.map((rankDetail, i) => (
+            <PrizeAmountListItem isTop={i === 0} key={i} rankDetail={rankDetail} index={i + 1} />
+          ))}
         </PrizeAmountListBox>
       </PrizeAmountTopBox>
     </PrizeAmountListBlock>

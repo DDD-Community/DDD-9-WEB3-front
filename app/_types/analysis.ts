@@ -18,6 +18,12 @@ export interface NumberResponseType {
   count: number;
 }
 
+export interface RankDeatilResponseType {
+  drwt_no: number;
+  first_win_amount: number;
+  first_win_amount_tax: number;
+}
+
 export type SortOption = 'asc' | 'desc'; //? 정렬옵션
 
 export type SortType = 'NO' | 'COUNT'; //? 정렬구분
@@ -40,6 +46,11 @@ export interface RankNumbersParamsType {
   rankSortOption?: SortOption; //? 랭크 정렬옵션
   sortOption?: SortOption;
   sortType?: SortType;
+}
+
+export interface RankDetailParamsType {
+  size: number;
+  sortOption?: SortOption;
 }
 
 export interface RoundNumbersParamsType {

@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import BarChartWrapper from '../chart/BarChartWrapper';
 import useRankNumber from '@/_hooks/useRankNumber';
+import { useSearchParams } from 'next/navigation';
 
 type PrizeRankAnalysisWrapperProps = {};
 
 const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => {
+  const searchParams = useSearchParams();
   const { latestRoundsNumber } = useLatestNumber();
 
   const [selectedStartRank, setSelectedStartRank] = useState({
@@ -27,7 +29,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
   const { rankNumbersData } = useRankNumber({
     startRank: selectedStartRank.value,
     size: selectedEndRank.value - selectedStartRank.value + 1,
-    sortOption: 'asc',
+    rankSortOption: searchParams.get('type'),
   });
 
   return (

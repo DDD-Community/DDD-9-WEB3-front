@@ -21,7 +21,7 @@ const AnalyticsDashboardMenu: React.FC<AnalyticsDashboardMenuProps> = () => {
         </div>
       </HorizontalMenuBox>
       <VerticalMenuWrapper>
-        <VerticalMenuBox href="/analysis/amount">
+        <VerticalMenuBox href="/analysis/amount?type=desc">
           <AmountIcon />
           <VerticalTitle>당첨금액별</VerticalTitle>
           <Description>금액이 높은 순으로 조회하기</Description>

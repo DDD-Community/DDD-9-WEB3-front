@@ -1,22 +1,32 @@
 import palette from '@/_styles/palette';
+import { RankDeatilResponseType } from '@/_types/analysis';
 import React from 'react';
 import styled from 'styled-components';
 
 type PrizeAmountListItemProps = {
   isTop?: boolean;
   index: number;
+  rankDetail: RankDeatilResponseType;
 };
 
-const PrizeAmountListItem: React.FC<PrizeAmountListItemProps> = ({ isTop = false, index }) => {
+const PrizeAmountListItem: React.FC<PrizeAmountListItemProps> = ({
+  isTop = false,
+  index,
+  rankDetail,
+}) => {
   return (
     <PrizeAmountListItemBlock isTop={isTop}>
       <OrderBox>
         <OrderNum isTop={isTop}>{index}</OrderNum>
-        <RoundNum isTop={isTop}>1074회</RoundNum>
+        <RoundNum isTop={isTop}>{rankDetail.drwt_no}회</RoundNum>
       </OrderBox>
       <AmountBox>
-        <BeforeTaxAmount isTop={isTop}>{(25797503633).toLocaleString()}원</BeforeTaxAmount>
-        <AfterTaxAmount isTop={isTop}>{(25797503633).toLocaleString()}원</AfterTaxAmount>
+        <BeforeTaxAmount isTop={isTop}>
+          {rankDetail.first_win_amount.toLocaleString()}원
+        </BeforeTaxAmount>
+        <AfterTaxAmount isTop={isTop}>
+          {rankDetail.first_win_amount_tax.toLocaleString()}원
+        </AfterTaxAmount>
       </AmountBox>
     </PrizeAmountListItemBlock>
   );

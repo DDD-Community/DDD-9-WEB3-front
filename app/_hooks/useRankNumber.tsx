@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 const useRankNumber = ({
   startRank,
   size,
-  rankSortOption = 'asc',
+  rankSortOption = 'desc',
   sortOption = 'asc',
   sortType = 'NO',
 }: RankNumbersParamsType) => {
