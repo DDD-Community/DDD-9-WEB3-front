@@ -3,14 +3,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
+import { Box, CircularProgress } from '@mui/material';
 
 Chart.register(...registerables);
 
 type DoughnutChartWrapperProps = {
   numbers: { no: number; count: number }[];
+  isLoading: boolean;
 };
 
-const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = ({ numbers }) => {
+const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = ({ numbers, isLoading }) => {
   const mostNumbersList = numbers.slice(0, 6);
 
   const data = {
@@ -40,51 +42,65 @@ const DoughnutChartWrapper: React.FC<DoughnutChartWrapperProps> = ({ numbers }) 
         <br />
         6개의 번호를 확인해보세요.
       </PieChartTitle>
-      <DoughnutBox>
-        <Doughnut
-          data={data}
-          options={{
-            plugins: {
-              legend: {
-                display: true,
-                position: 'bottom',
-                labels: {
-                  boxHeight: 5,
-                  boxWidth: 2,
-                  usePointStyle: true,
-                  font: {
-                    weight: '700',
-                  },
-                },
-              },
-              tooltip: {
-                xAlign: 'center',
-                yAlign: 'bottom',
-                cornerRadius: 13,
-                padding: {
-                  top: 6,
-                  bottom: 5,
-                  right: 15,
-                  left: 15,
-                },
-                backgroundColor: palette.grey_20,
-                displayColors: false,
-                usePointStyle: true,
-                callbacks: {
-                  title: () => {
-                    let title = ``;
-                    return title;
-                  },
-                  label: function (context) {
-                    let label = `${context.raw}회 출현`;
-                    return label;
-                  },
-                },
-              },
-            },
+      {isLoading ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 200,
+            color: palette.grey_60,
           }}
-        />
-      </DoughnutBox>
+        >
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : (
+        <DoughnutBox>
+          <Doughnut
+            data={data}
+            options={{
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'bottom',
+                  labels: {
+                    boxHeight: 5,
+                    boxWidth: 2,
+                    usePointStyle: true,
+                    font: {
+                      weight: '700',
+                    },
+                  },
+                },
+                tooltip: {
+                  xAlign: 'center',
+                  yAlign: 'bottom',
+                  cornerRadius: 13,
+                  padding: {
+                    top: 6,
+                    bottom: 5,
+                    right: 15,
+                    left: 15,
+                  },
+                  backgroundColor: palette.grey_20,
+                  displayColors: false,
+                  usePointStyle: true,
+                  callbacks: {
+                    title: () => {
+                      let title = ``;
+                      return title;
+                    },
+                    label: function (context) {
+                      let label = `${context.raw}회 출현`;
+                      return label;
+                    },
+                  },
+                },
+              },
+            }}
+          />
+        </DoughnutBox>
+      )}
     </DoughnutChartWrapperBlock>
   );
 };

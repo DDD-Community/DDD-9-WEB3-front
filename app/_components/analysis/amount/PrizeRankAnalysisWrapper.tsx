@@ -26,7 +26,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
     value: index + 1,
   }));
 
-  const { rankNumbersData } = useRankNumber({
+  const { rankNumbersData, isLoading } = useRankNumber({
     startRank: selectedStartRank.value,
     size: selectedEndRank.value - selectedStartRank.value + 1,
     rankSortOption: searchParams.get('type'),
@@ -67,7 +67,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
           options={selectOptions}
         />
       </RoundsAnalysisSelectorBlock>
-      <BarChartWrapper numbers={rankNumbersData} />
+      <BarChartWrapper numbers={rankNumbersData} isLoading={isLoading} />
     </PrizeRankAnalysisWrapperBlock>
   );
 };

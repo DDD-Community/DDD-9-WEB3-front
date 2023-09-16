@@ -15,11 +15,11 @@ type PeriodicAnalysisHubProps = {};
 
 const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
   const searchParams = useSearchParams();
-  const { periodNumbers: periodNumbersByDesc } = usePeriodNumber({
+  const { periodNumbers: periodNumbersByDesc, isLoading } = usePeriodNumber({
     sortOption: 'desc',
     sortType: 'COUNT',
   });
-  const { periodNumbers: periodNumbersByAsc } = usePeriodNumber({
+  const { periodNumbers: periodNumbersByAsc, isLoading: isLoadingByAsc } = usePeriodNumber({
     sortOption: searchParams.get('sortType') === 'COUNT' ? 'desc' : 'asc',
     sortType: searchParams.get('sortType') as SortType,
   });
@@ -42,7 +42,7 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
       />
       <PeriodicAnalysisDateBar />
       <ChartWrapper>
-        <DoughnutChartWrapper numbers={periodNumbersByDesc} />
+        <DoughnutChartWrapper numbers={periodNumbersByDesc} isLoading={isLoading} />
         <ToggleSwitch
           leftOption={{
             label: '번호순',
@@ -55,7 +55,7 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
             value: 'COUNT',
           }}
         />
-        <BarChartWrapper numbers={periodNumbersByAsc} />
+        <BarChartWrapper numbers={periodNumbersByAsc} isLoading={isLoadingByAsc} />
       </ChartWrapper>
     </PeriodicAnalysisHubBlock>
   );

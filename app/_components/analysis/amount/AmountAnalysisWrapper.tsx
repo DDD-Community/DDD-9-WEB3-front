@@ -10,7 +10,6 @@ type AmountAnalysisWrapperProps = {};
 
 const AmountAnalysisWrapper: React.FC<AmountAnalysisWrapperProps> = () => {
   const searchParams = useSearchParams();
-  const type = searchParams.get('type') as SortOption;
 
   const tabOptions = [
     {
@@ -28,7 +27,7 @@ const AmountAnalysisWrapper: React.FC<AmountAnalysisWrapperProps> = () => {
   return (
     <AmountAnalysisWrapperBlock>
       <NavTabs tabOptions={tabOptions} />
-      <PrizeAmountList type={type} />
+      <PrizeAmountList />
       <Line />
       <PrizeRankAnalysisWrapper />
     </AmountAnalysisWrapperBlock>

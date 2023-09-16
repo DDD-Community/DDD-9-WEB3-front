@@ -3,12 +3,14 @@ import styled, { keyframes } from 'styled-components';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import palette from '@/_styles/palette';
 import { useSearchParams } from 'next/navigation';
+import { Box, CircularProgress } from '@mui/material';
 
 type BarChartWrapperProps = {
   numbers: { no: number; count: number }[];
+  isLoading: boolean;
 };
 
-const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers }) => {
+const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers, isLoading }) => {
   const searchParams = useSearchParams();
 
   /* 당첨횟수순 > 1~10 필터 미완 */
@@ -26,14 +28,28 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers }) => {
         </NumberBar>
       )} */}
 
-      <BarList>
-        {numbers.map(num => (
-          <BarItem key={num.no}>
-            <Num>{num.no}</Num>
-            <StatisticalBar $count={num.count} />
-          </BarItem>
-        ))}
-      </BarList>
+      {isLoading ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 200,
+            color: palette.grey_60,
+          }}
+        >
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : (
+        <BarList>
+          {numbers.map(num => (
+            <BarItem key={num.no}>
+              <Num>{num.no}</Num>
+              <StatisticalBar $count={num.count} />
+            </BarItem>
+          ))}
+        </BarList>
+      )}
     </BarChartWrapperBlock>
   );
 };

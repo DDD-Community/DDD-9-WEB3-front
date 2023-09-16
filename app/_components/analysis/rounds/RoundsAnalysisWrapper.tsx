@@ -28,14 +28,14 @@ const RoundsAnalysisWrapper: React.FC<RoundsAnalysisWrapperProps> = () => {
     value: latestRoundsNumber - index,
   }));
 
-  const { roundNumbersData } = useRoundsNumber({
+  const { roundNumbersData, isLoading } = useRoundsNumber({
     startNo: selectedStartRound.value,
     endNo: selectedEndRound.value,
     sortType: 'COUNT',
     sortOption: 'desc',
   });
 
-  const { roundNumbersData: descRoundNumbersData } = useRoundsNumber({
+  const { roundNumbersData: roundNumbersDataByAsc, isLoading: isLoadingByAsc } = useRoundsNumber({
     startNo: selectedStartRound.value,
     endNo: selectedEndRound.value,
     sortOption: 'asc',
@@ -77,8 +77,8 @@ const RoundsAnalysisWrapper: React.FC<RoundsAnalysisWrapperProps> = () => {
         />
       </RoundsAnalysisSelectorBlock>
 
-      <DoughnutChartWrapper numbers={roundNumbersData} />
-      <BarChartWrapper numbers={descRoundNumbersData} />
+      <DoughnutChartWrapper numbers={roundNumbersData} isLoading={isLoading} />
+      <BarChartWrapper numbers={roundNumbersDataByAsc} isLoading={isLoadingByAsc} />
     </RoundsAnalysisWrapperBlock>
   );
 };
