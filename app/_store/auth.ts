@@ -1,18 +1,18 @@
 import { create } from 'zustand';
 
-export interface AuthActions {
-  /**
-   * 로그인 여부 설정
-   */
-  setIsLoggedIn: (value: boolean) => void;
-}
-
 export interface AuthState {
   /**
    * 로그인 여부
    */
   isLoggedIn: boolean;
   actions: AuthActions;
+}
+
+export interface AuthActions {
+  /**
+   * 로그인 여부 설정
+   */
+  setIsLoggedIn: (value: boolean) => void;
 }
 
 export const authStore = create<AuthState>(set => ({

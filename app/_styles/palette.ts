@@ -9,6 +9,7 @@ const palette = {
   grey_50: '#BCBCC1',
   grey_60: '#DCDCDF',
   grey_70: '#F6F6F9',
+  grey_80: '#EFF3F8',
   orange_10: '#E1320B',
   orange_20: '#FF441B',
   orange_30: '#FF5018',

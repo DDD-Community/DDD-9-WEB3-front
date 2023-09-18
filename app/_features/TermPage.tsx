@@ -1,6 +1,6 @@
 'use client';
 
-import TopNavigation from '@components/common/TopNavigation';
+import { TopNavigation } from '@components/common';
 import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
 import { styled } from 'styled-components';

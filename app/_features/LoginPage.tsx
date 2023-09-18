@@ -2,10 +2,8 @@
 
 import IconKakao from '@assets/svg/kakao.svg';
 import { Button } from '@components/common';
-import TopNavigation from '@components/common/TopNavigation';
 import LottoBallSlider from '@components/login/LottoBallSlider';
 import { KAKAO_LOGIN_URL } from '@constants/auth';
-import { ROUTES } from '@constants/routes';
 import palette from '@styles/palette';
 import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
@@ -15,7 +13,6 @@ export default function LoginPage() {
 
   return (
     <Wrapper>
-      <TopNavigation version="CLOSE" path={ROUTES.HOME} />
       <div>
         <Intro>안녕하세요 👋</Intro>
         <div>

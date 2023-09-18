@@ -3,7 +3,8 @@
 import { authApi } from '@apis/auth';
 import { setAccessToken } from '@apis/core';
 import { ROUTES } from '@constants/routes';
-import { isExpiredAccessToken, storage } from '@lib/util/storage';
+import { isExpiredAccessToken } from '@lib/util/http';
+import { storage } from '@lib/util/storage';
 import { useAuthActions, useIsLoggedIn } from '@store/auth';
 import { useRouter } from 'next/navigation';
 import { PropsWithChildren, useEffect } from 'react';
@@ -19,10 +20,12 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       return;
     }
 
+    const isMember = storage.getUserId();
+
     /** 로그인 상태는 아니지만 쿠키에 토큰이 남아있는 경우 */
     const accessToken = storage.getAccessToken();
 
-    if (accessToken) {
+    if (isMember && accessToken) {
       setAccessToken(accessToken);
       setIsLoggedIn(true);
 
@@ -32,7 +35,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     /** 로그인 상태는 아니지만 쿠키에 리프레시 토큰이 남아있는 경우, 토큰 재발급 */
     const refreshToken = storage.getRefreshToken();
 
-    if (refreshToken) {
+    if (isMember && refreshToken) {
       (async () => {
         const { id_token, refresh_token } = await authApi.silentRefresh();
 

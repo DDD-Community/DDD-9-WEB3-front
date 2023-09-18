@@ -1,5 +1,6 @@
 import { HTTP_STATUS_CODE } from '@constants/http';
-import { isExpiredAccessToken, storage } from '@lib/util/storage';
+import { isExpiredAccessToken, isNotExistAuthHeader, isNotRegisteredMember } from '@lib/util/http';
+import { storage } from '@lib/util/storage';
 import axios, { type AxiosResponse } from 'axios';
 
 import { authApi } from './auth';
@@ -30,23 +31,41 @@ instance.interceptors.response.use(
   async error => {
     const {
       config: originalRequest,
-      response: { status },
+      response: {
+        status,
+        data: { message },
+      },
     } = error;
 
-    /**
-     * [status:401] Access Token이 만료된 경우 Refresh Token으로 재발급 후, api 재요청
-     */
     if (originalRequest && status === HTTP_STATUS_CODE.UNAUTHORIZED) {
-      const { id_token, refresh_token } = await authApi.silentRefresh();
-
-      setAccessToken(id_token);
-      storage.setAccessToken(id_token);
-
-      if (isExpiredAccessToken(refresh_token)) {
-        storage.setRefreshToken(refresh_token);
+      if (isNotRegisteredMember(message)) {
+        /**
+         * [status:401] 등록된 기존 회원이 아닌 경우
+         */
+        return Promise.reject(error);
       }
 
-      return instance(originalRequest);
+      if (isNotExistAuthHeader(message)) {
+        /**
+         * [status:401] 헤더에 token이 없는 경우
+         */
+        const accessToken = storage.getAccessToken();
+
+        if (accessToken) {
+          setAccessToken(accessToken);
+        } else {
+          const { id_token, refresh_token } = await authApi.silentRefresh();
+
+          setAccessToken(id_token);
+          storage.setAccessToken(id_token);
+
+          if (isExpiredAccessToken(refresh_token)) {
+            storage.setRefreshToken(refresh_token);
+          }
+        }
+
+        return instance(originalRequest);
+      }
     }
 
     return Promise.reject(error);
