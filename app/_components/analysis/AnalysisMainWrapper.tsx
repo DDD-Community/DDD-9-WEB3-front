@@ -21,6 +21,9 @@ const AnalysisMainWrapper: React.FC = () => {
   const [selectNumbers, setSelectNumbers] = useState<LatestNumberResponseType>();
 
   useEffect(() => {
+    if (!latestNumbers) {
+      return console.log('no number');
+    }
     setSelectNumbers(latestNumbers);
   }, [latestNumbers]);
 
@@ -29,6 +32,7 @@ const AnalysisMainWrapper: React.FC = () => {
   const weekNumber = Math.ceil(parsedDate.getDate() / 7);
 
   if (isLoading) return <p>loading</p>; //로딩 UI 필요
+  //latestNumbers 없을 때 행동
 
   return (
     <AuthProvider>

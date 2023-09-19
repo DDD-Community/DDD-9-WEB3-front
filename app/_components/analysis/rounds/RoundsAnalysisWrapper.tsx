@@ -78,7 +78,11 @@ const RoundsAnalysisWrapper: React.FC<RoundsAnalysisWrapperProps> = () => {
       </RoundsAnalysisSelectorBlock>
 
       <DoughnutChartWrapper numbers={roundNumbersData} isLoading={isLoading} />
-      <BarChartWrapper numbers={roundNumbersDataByAsc} isLoading={isLoadingByAsc} />
+      <BarChartWrapper
+        hasSwitch={true}
+        numbers={roundNumbersDataByAsc}
+        isLoading={isLoadingByAsc}
+      />
     </RoundsAnalysisWrapperBlock>
   );
 };

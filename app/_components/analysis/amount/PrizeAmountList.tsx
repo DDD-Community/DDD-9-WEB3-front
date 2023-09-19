@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PrizeAmountListItem from './PrizeAmountListItem';
 import useRankDetail from '@/_hooks/useRankDetail';
 import { useSearchParams } from 'next/navigation';
+import { SortOption } from '@/_types/analysis';
 
 type PrizeAmountListProps = {};
 
@@ -10,7 +11,7 @@ const PrizeAmountList: React.FC<PrizeAmountListProps> = () => {
   const searchParams = useSearchParams();
   const { rankDetailData } = useRankDetail({
     size: 5,
-    sortOption: searchParams.get('type') || 'desc',
+    sortOption: (searchParams.get('type') || 'desc') as SortOption,
   });
 
   console.log(rankDetailData);

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import BarChartWrapper from '../chart/BarChartWrapper';
 import useRankNumber from '@/_hooks/useRankNumber';
 import { useSearchParams } from 'next/navigation';
+import { SortOption } from '@/_types/analysis';
 
 type PrizeRankAnalysisWrapperProps = {};
 
@@ -29,7 +30,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
   const { rankNumbersData, isLoading } = useRankNumber({
     startRank: selectedStartRank.value,
     size: selectedEndRank.value - selectedStartRank.value + 1,
-    rankSortOption: searchParams.get('type'),
+    rankSortOption: searchParams.get('type') as SortOption,
   });
 
   return (
@@ -67,7 +68,7 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
           options={selectOptions}
         />
       </RoundsAnalysisSelectorBlock>
-      <BarChartWrapper numbers={rankNumbersData} isLoading={isLoading} />
+      <BarChartWrapper hasSwitch={true} numbers={rankNumbersData} isLoading={isLoading} />
     </PrizeRankAnalysisWrapperBlock>
   );
 };

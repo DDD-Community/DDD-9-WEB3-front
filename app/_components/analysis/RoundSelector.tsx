@@ -1,13 +1,12 @@
 import instance from '@/_apis/core';
 import { LatestNumberResponseType } from '@/_types/analysis';
-import { AxiosResponse } from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 
 type RoundSelectorProps = {
   lastestRound: number;
   setIsOpenScrapBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectNumbers: any;
+  setSelectNumbers: React.Dispatch<React.SetStateAction<LatestNumberResponseType | undefined>>;
 };
 
 const RoundSelector: React.FC<RoundSelectorProps> = ({
@@ -19,11 +18,12 @@ const RoundSelector: React.FC<RoundSelectorProps> = ({
 
   const onSelect = async (drwtNo: number) => {
     try {
-      const data = await instance.get(`/api/number`, {
+      const data = await instance.get<undefined, LatestNumberResponseType>(`/api/number`, {
         params: {
           drwtNo,
         },
       });
+
       setSelectNumbers(data);
     } catch (err) {
       console.log('err', err);

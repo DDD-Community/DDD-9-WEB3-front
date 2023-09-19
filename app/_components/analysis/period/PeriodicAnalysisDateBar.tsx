@@ -113,6 +113,7 @@ const PrevButton = styled(NextButton)`
 
 const CurrentDate = styled.p`
   font-weight: bold;
+  margin: 0 8px;
 `;
 
 const AnalysisDateBarBox = styled.div`

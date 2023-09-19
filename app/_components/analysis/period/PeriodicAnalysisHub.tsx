@@ -55,7 +55,11 @@ const PeriodicAnalysisHub: React.FC<PeriodicAnalysisHubProps> = () => {
             value: 'COUNT',
           }}
         />
-        <BarChartWrapper numbers={periodNumbersByAsc} isLoading={isLoadingByAsc} />
+        <BarChartWrapper
+          hasSwitch={searchParams.get('sortType') === 'COUNT'}
+          numbers={periodNumbersByAsc}
+          isLoading={isLoadingByAsc}
+        />
       </ChartWrapper>
     </PeriodicAnalysisHubBlock>
   );

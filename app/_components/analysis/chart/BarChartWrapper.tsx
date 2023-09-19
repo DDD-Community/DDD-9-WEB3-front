@@ -1,33 +1,58 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import ArrowIcon from '@assets/svg/arrow.svg';
 import palette from '@/_styles/palette';
-import { useSearchParams } from 'next/navigation';
 import { Box, CircularProgress } from '@mui/material';
+import { useSearchParams } from 'next/navigation';
 
 type BarChartWrapperProps = {
+  hasSwitch?: boolean;
   numbers: { no: number; count: number }[];
   isLoading: boolean;
 };
 
-const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers, isLoading }) => {
-  const searchParams = useSearchParams();
+const START_NUM = 1;
+const END_NUM = 10;
+const MAX_NUM = 45;
 
-  /* 당첨횟수순 > 1~10 필터 미완 */
+const BarChartWrapper: React.FC<BarChartWrapperProps> = ({
+  hasSwitch = false,
+  numbers,
+  isLoading,
+}) => {
+  const searchParams = useSearchParams();
+  const [start, setStart] = useState(START_NUM);
+  const [end, setEnd] = useState(END_NUM);
+
+  const handleNumbers = (arrow: 'next' | 'prev') => {
+    if (arrow === 'next') {
+      setStart(end + 1);
+      setEnd(end + END_NUM);
+      return;
+    }
+
+    setStart(start - END_NUM);
+    setEnd(start - 1);
+  };
+
+  const filterByNumbers = useMemo(() => {
+    if (numbers.length && hasSwitch) {
+      const sliceNums = numbers.slice(start - 1, end);
+      if (sliceNums.length !== END_NUM) {
+        setEnd(numbers[numbers.length - 1]?.no);
+      }
+      return sliceNums;
+    }
+    return numbers;
+  }, [numbers, hasSwitch, start, end]);
+
+  useEffect(() => {
+    setStart(START_NUM);
+    setEnd(END_NUM);
+  }, [searchParams]);
+
   return (
     <BarChartWrapperBlock className="bar-chart">
-      {/* {searchParams.get('sortOption') === 'desc' && (
-        <NumberBar>
-          <PrevButton>
-            <ArrowIcon />
-          </PrevButton>
-          <Text>1 ~ 10</Text>
-          <NextButton>
-            <ArrowIcon />
-          </NextButton>
-        </NumberBar>
-      )} */}
-
       {isLoading ? (
         <Box
           sx={{
@@ -41,14 +66,29 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({ numbers, isLoading })
           <CircularProgress color="inherit" />
         </Box>
       ) : (
-        <BarList>
-          {numbers.map(num => (
-            <BarItem key={num.no}>
-              <Num>{num.no}</Num>
-              <StatisticalBar $count={num.count} />
-            </BarItem>
-          ))}
-        </BarList>
+        <>
+          {hasSwitch && (
+            <NumberBar>
+              <PrevButton disabled={start === START_NUM} onClick={() => handleNumbers('prev')}>
+                <ArrowIcon />
+              </PrevButton>
+              <Text>
+                {start} ~ {end}
+              </Text>
+              <NextButton disabled={end === MAX_NUM} onClick={() => handleNumbers('next')}>
+                <ArrowIcon />
+              </NextButton>
+            </NumberBar>
+          )}
+          <BarList>
+            {filterByNumbers.map(num => (
+              <BarItem key={num.no}>
+                <Num>{num.no}</Num>
+                <StatisticalBar $count={num.count} />
+              </BarItem>
+            ))}
+          </BarList>
+        </>
       )}
     </BarChartWrapperBlock>
   );
@@ -67,6 +107,7 @@ const NumberBar = styled.div`
 
 const Text = styled.p`
   font-weight: bold;
+  margin: 0 8px;
 `;
 
 const NextButton = styled.button`
@@ -74,10 +115,24 @@ const NextButton = styled.button`
   align-items: center;
   border: none;
   background-color: transparent;
+
+  &:disabled {
+    cursor: default;
+    path {
+      fill: ${palette.grey_60};
+    }
+  }
 `;
 
 const PrevButton = styled(NextButton)`
   transform: rotate(-180deg);
+
+  &:disabled {
+    cursor: default;
+    path {
+      fill: ${palette.grey_60};
+    }
+  }
 `;
 
 const BarList = styled.ul`
