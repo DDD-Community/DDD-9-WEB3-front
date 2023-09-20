@@ -40,9 +40,10 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
           selectOption={selectedStartRank}
           onChange={event => {
             if (Number(event.target.value) > selectedEndRank.value) {
-              console.log('선택된 마지막 회차를 넘기면 안됨');
-              //토스트 필요
-              return;
+              setSelectedEndRank({
+                label: `${event.target.value}등`,
+                value: Number(event.target.value),
+              });
             }
             setSelectedStartRank({
               label: `${event.target.value}등`,
@@ -56,9 +57,10 @@ const PrizeRankAnalysisWrapper: React.FC<PrizeRankAnalysisWrapperProps> = () => 
           selectOption={selectedEndRank}
           onChange={event => {
             if (Number(event.target.value) < selectedStartRank.value) {
-              console.log('선택된 시작 회차보다 적으면 안됨');
-              //토스트 필요
-              return;
+              setSelectedStartRank({
+                label: `${event.target.value}등`,
+                value: Number(event.target.value),
+              });
             }
             setSelectedEndRank({
               label: `${event.target.value}등`,

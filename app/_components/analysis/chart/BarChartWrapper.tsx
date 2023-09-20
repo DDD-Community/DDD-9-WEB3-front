@@ -49,7 +49,7 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({
   useEffect(() => {
     setStart(START_NUM);
     setEnd(END_NUM);
-  }, [searchParams]);
+  }, [numbers]);
 
   return (
     <BarChartWrapperBlock className="bar-chart">

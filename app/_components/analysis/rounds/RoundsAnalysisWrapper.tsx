@@ -48,9 +48,10 @@ const RoundsAnalysisWrapper: React.FC<RoundsAnalysisWrapperProps> = () => {
           selectOption={selectedStartRound}
           onChange={event => {
             if (Number(event.target.value) > selectedEndRound.value) {
-              console.log('선택된 마지막 회차를 넘기면 안됨');
-              //토스트 필요
-              return;
+              setSelectedEndRound({
+                label: `${event.target.value}회`,
+                value: Number(event.target.value),
+              });
             }
             setSelectedStartRound({
               label: `${event.target.value}회`,
@@ -64,9 +65,10 @@ const RoundsAnalysisWrapper: React.FC<RoundsAnalysisWrapperProps> = () => {
           selectOption={selectedEndRound}
           onChange={event => {
             if (Number(event.target.value) < selectedStartRound.value) {
-              console.log('선택된 시작 회차보다 적으면 안됨');
-              //토스트 필요
-              return;
+              setSelectedStartRound({
+                label: `${event.target.value}회`,
+                value: Number(event.target.value),
+              });
             }
             setSelectedEndRound({
               label: `${event.target.value}회`,
