@@ -20,7 +20,6 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({
   numbers,
   isLoading,
 }) => {
-  const searchParams = useSearchParams();
   const [start, setStart] = useState(START_NUM);
   const [end, setEnd] = useState(END_NUM);
 
@@ -75,7 +74,10 @@ const BarChartWrapper: React.FC<BarChartWrapperProps> = ({
               <Text>
                 {start} ~ {end}
               </Text>
-              <NextButton disabled={end === MAX_NUM} onClick={() => handleNumbers('next')}>
+              <NextButton
+                disabled={filterByNumbers.length !== END_NUM}
+                onClick={() => handleNumbers('next')}
+              >
                 <ArrowIcon />
               </NextButton>
             </NumberBar>
