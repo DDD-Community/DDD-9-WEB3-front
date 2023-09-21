@@ -8,7 +8,7 @@ import { styled } from 'styled-components';
 export default function TermPage() {
   return (
     <Wrapper>
-      <TopNavigation version="BOTH" path={ROUTES.HOME} />
+      <TopNavigation version="BOTH" $isXMargin={false} path={ROUTES.HOME} />
       <Title>서비스 이용약관</Title>
       <Content>
         <div>
@@ -366,7 +366,7 @@ export default function TermPage() {
 const Wrapper = styled.div`
   position: relative;
   height: calc(100vh - 10.8rem);
-  padding: 8.1rem 1.2rem 2.7rem;
+  padding: 8.1rem 1.25rem 2.7rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

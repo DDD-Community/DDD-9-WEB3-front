@@ -24,7 +24,7 @@ const AgreeForm = ({
 }: PropsWithChildren<AgreeFormProps>) => {
   return (
     <Form onSubmit={onSubmit}>
-      <TopNavigation version="CLOSE" path={navigationPath} />
+      <TopNavigation version="CLOSE" $isXMargin={false} path={navigationPath} />
       <FormBody>
         <div>
           <Title>{title}</Title>

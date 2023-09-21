@@ -3,7 +3,7 @@ import { getQueryKey } from '@lib/util/queryKey';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
-import { MemberResponse } from '@/_types/response';
+import type { MemberResponse } from '@/_types/response/member';
 
 const MEMBER_QUERYKEY = getQueryKey('member');
 

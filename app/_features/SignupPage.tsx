@@ -63,7 +63,7 @@ export default function SignupPage() {
       return;
     }
 
-    const { user_id } = await memberApi.registerMember(memberInfo);
+    const { user_id } = await memberApi.postMember(memberInfo);
 
     storage.setUserId(user_id);
     setIsLoggedIn(true);
