@@ -4,17 +4,17 @@ import PrizeAmountListItem from './PrizeAmountListItem';
 import useRankDetail from '@/_hooks/useRankDetail';
 import { useSearchParams } from 'next/navigation';
 import { SortOption } from '@/_types/analysis';
+import { Box, CircularProgress } from '@mui/material';
+import palette from '@/_styles/palette';
 
 type PrizeAmountListProps = {};
 
 const PrizeAmountList: React.FC<PrizeAmountListProps> = () => {
   const searchParams = useSearchParams();
-  const { rankDetailData } = useRankDetail({
+  const { rankDetailData, isLoading } = useRankDetail({
     size: 5,
     sortOption: (searchParams.get('type') || 'desc') as SortOption,
   });
-
-  console.log(rankDetailData);
 
   return (
     <PrizeAmountListBlock>
@@ -26,9 +26,23 @@ const PrizeAmountList: React.FC<PrizeAmountListProps> = () => {
         </Title>
 
         <PrizeAmountListBox>
-          {rankDetailData.map((rankDetail, i) => (
-            <PrizeAmountListItem isTop={i === 0} key={i} rankDetail={rankDetail} index={i + 1} />
-          ))}
+          {isLoading ? (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 380,
+                color: palette.grey_60,
+              }}
+            >
+              <CircularProgress color="inherit" />
+            </Box>
+          ) : (
+            rankDetailData.map((rankDetail, i) => (
+              <PrizeAmountListItem isTop={i === 0} key={i} rankDetail={rankDetail} index={i + 1} />
+            ))
+          )}
         </PrizeAmountListBox>
       </PrizeAmountTopBox>
     </PrizeAmountListBlock>
