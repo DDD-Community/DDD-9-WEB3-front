@@ -3,6 +3,7 @@ import type { ComponentPropsWithoutRef, CSSProperties, PropsWithChildren } from 
 import { styled } from 'styled-components';
 
 const SIZE_STYLE = {
+  small: '4.5rem',
   medium: '9.6rem',
   full: '100%',
 } as const;

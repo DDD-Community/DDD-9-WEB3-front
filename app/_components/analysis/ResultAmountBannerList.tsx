@@ -2,54 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '@/_styles/palette';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import useLatestNumber from '@/_hooks/useLatestNumber';
+import { LatestNumberResponseType } from '@/_types/analysis';
 
-type ResultAmountBannerListProps = {};
+type ResultAmountBannerListProps = {
+  roundNumbers: LatestNumberResponseType;
+};
 
-const ResultAmountBannerList: React.FC<ResultAmountBannerListProps> = () => {
-  const testList = [
-    {
-      count: 1,
-      amount: 2539849237,
-    },
-    {
-      count: 1,
-      amount: 2539849237,
-    },
-    {
-      count: 1,
-      amount: 2539849237,
-    },
-    {
-      count: 1,
-      amount: 2539849237,
-    },
-    {
-      count: 1,
-      amount: 2539849237,
-    },
-    {
-      count: 1,
-      amount: 2539849237,
-    },
-  ];
-
+const ResultAmountBannerList: React.FC<ResultAmountBannerListProps> = ({ roundNumbers }) => {
   return (
     <ResultAmountBannerListBlock
-      direction={'horizontal'}
-      slidesPerView={'auto'}
+      direction="horizontal"
+      slidesPerView="auto"
       className="swiper-banner"
     >
-      {testList.map((test, i) => (
-        <SwiperSlide key={i}>
+      {roundNumbers && (
+        <SwiperSlide>
           <ResultAmountBannerItem>
             <ItemInner>
-              <p>{i + 1}등</p>
-              <p>{test.count}명</p>
+              <p>1등</p>
+              <p>{roundNumbers.first_win_count}명</p>
             </ItemInner>
-            <ItemAmount>{test.amount.toLocaleString()}원</ItemAmount>
+            <ItemAmount>{roundNumbers.first_win_amount.toLocaleString()}원</ItemAmount>
           </ResultAmountBannerItem>
         </SwiperSlide>
-      ))}
+      )}
     </ResultAmountBannerListBlock>
   );
 };
@@ -71,9 +48,10 @@ const ResultAmountBannerListBlock = styled(Swiper)`
 `;
 
 const ResultAmountBannerItem = styled.li`
+  width: 108px;
   display: flex;
   flex-direction: column;
-  padding: 20px 14px;
+  padding: 20px 15px;
   background-color: ${palette.white};
   border-radius: 10px;
 `;

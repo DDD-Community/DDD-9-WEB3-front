@@ -4,6 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import palette from '@styles/palette';
 import type { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
+import CloseIconSVG from '@assets/svg/close.svg';
 
 const CUSTOM_STYLE = {
   margin: '0 auto',
@@ -32,6 +33,7 @@ interface BottomSheetProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  title?: string;
 }
 
 const BottomSheet = ({
@@ -39,6 +41,7 @@ const BottomSheet = ({
   isOpen,
   onOpen,
   onClose,
+  title,
 }: PropsWithChildren<BottomSheetProps>) => {
   const isMobile = useMediaQuery('(max-width:576px)');
 
@@ -51,6 +54,15 @@ const BottomSheet = ({
       sx={isMobile ? MOBILE_CUSTOM_STYLE : DESKTOP_CUSTOM_STYLE}
     >
       <HandleBar />
+      {title && (
+        <Header>
+          <Title>{title}</Title>
+
+          <CloseButton onClick={onClose}>
+            <CloseIcon />
+          </CloseButton>
+        </Header>
+      )}
       <BottomSheetBody>{children}</BottomSheetBody>
     </SwipeableDrawer>
   );
@@ -67,6 +79,30 @@ const HandleBar = styled(Box)`
   transform: translateX(-50%);
   border-radius: 0.18rem;
   background-color: ${palette.grey_60};
+`;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 32px;
+`;
+
+const Title = styled.p`
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  right: 20px;
+`;
+
+const CloseIcon = styled(CloseIconSVG)`
+  path {
+    fill: ${palette.black};
+  }
 `;
 
 const BottomSheetBody = styled.div`
